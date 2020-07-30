@@ -348,7 +348,7 @@ tar_make()
 
 ## Check the targets for problems
 
-- `tar_load()` and `tar_read()` get targets from the cache.
+- `tar_load()` and `tar_read()` get targets from the `_targets/` data store.
 
 
 ```r
@@ -659,6 +659,7 @@ tar_visnetwork()
 
 ```r
 tar_make()
+#&gt; ✓ skip target churn_file
 #&gt; ✓ skip target churn_data
 #&gt; ✓ skip target churn_recipe
 #&gt; ● run target run_relu
@@ -676,6 +677,7 @@ tar_make()
 
 ```r
 tar_make()
+#&gt; ● run target churn_file
 #&gt; ● run target churn_data
 #&gt; ● run target churn_recipe
 #&gt; ● run target run_relu

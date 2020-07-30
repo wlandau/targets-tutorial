@@ -362,7 +362,7 @@ tar_make(callr_function = NULL)
 
 ## Check the targets for problems
 
-- `tar_load()` and `tar_read()` get targets from the cache.
+- `tar_load()` and `tar_read()` get targets from the `_targets/` data store.
 
 ```{r}
 ncol(training(tar_read(churn_data)))
@@ -679,6 +679,7 @@ tar_visnetwork()
 
 ```{r, eval = FALSE}
 tar_make()
+#> ✓ skip target churn_file
 #> ✓ skip target churn_data
 #> ✓ skip target churn_recipe
 #> ● run target run_relu
@@ -695,6 +696,7 @@ tar_make()
 
 ```{r, eval = FALSE}
 tar_make()
+#> ● run target churn_file
 #> ● run target churn_data
 #> ● run target churn_recipe
 #> ● run target run_relu
