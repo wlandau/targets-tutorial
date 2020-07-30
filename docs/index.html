@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Reproducible computation at scale in R</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Will Landau" />
+    <script src="index_files/header-attrs/header-attrs.js"></script>
+    <link href="index_files/remark-css/default.css" rel="stylesheet" />
+    <link href="index_files/remark-css/default-fonts.css" rel="stylesheet" />
+    <script src="index_files/htmlwidgets/htmlwidgets.js"></script>
+    <link href="index_files/vis/vis.css" rel="stylesheet" />
+    <script src="index_files/vis/vis.min.js"></script>
+    <script src="index_files/visNetwork-binding/visNetwork.js"></script>
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Reproducible computation at scale in R
+### Will Landau
+
+---
+
+
+&lt;style&gt;
+.inverse {
+background-color: transparent;
+text-shadow: 0 0 0px transparent;
+}
+.title-slide {
+vertical-align: bottom !important; 
+text-align: center !important;
+}
+.title-slide h1 {
+position: absolute;
+top: 0;
+left: 0;
+right: 0;
+width: 100%;
+line-height: 4em;
+color: #666666;
+}
+.title-slide h3 {
+line-height: 6em;
+color: #666666;
+}
+.title-slide {
+background-color: white;
+background-image: url('images/logo.png');
+background-repeat: no-repeat;
+background-size: 25%;
+}
+.remark-slide-content:after {
+content: "Copyright Eli Lilly and Company";
+position: absolute;
+bottom: -5px;
+left: 10px;
+height: 40px;
+width: 100%;
+font-family: Helvetica, Arial, sans-serif;
+font-size: 0.7em;
+color: gray;
+background-repeat: no-repeat;
+background-size: contain;
+}
+&lt;/style&gt;
+
+
+
+
+
+## Large statistical computation
+
+* [Bayesian data analysis](https://mc-stan.org/)
+* [Bayesian network meta-analysis](https://bookdown.org/MathiasHarrer/Doing_Meta_Analysis_in_R/bayesian-network-meta-analysis.html)
+* [Graph-based multiple comparison procedures](https://github.com/kornl/gMCP)
+* [Subgroup identification](https://cran.r-project.org/web/packages/TSDT/index.html)
+* [Predictive modeling](http://appliedpredictivemodeling.com/computing)
+* [Deep neural networks](https://keras.rstudio.com/)
+* [PK/PD modeling](https://github.com/nlmixrdevelopment/nlmixr)
+* Clinical trial simulation
+* Target identification
+
+---
+
+## Common features
+
+1. Heavy use of the [R language](https://www.r-project.org/).
+2. Long runtimes.
+3. Multiple sub-tasks.
+4. Frequent changes to code and data.
+
+&lt;img src = "./images/sisyphus.svg" align="left" style="border: none; box-shadow: none; height: 375px; text-align: center;"&gt;
+&lt;br&gt;
+
+* &lt;https://openclipart.org/detail/275842/sisyphus-overcoming-silhouette&gt;
+
+---
+
+## Interconnected tasks
+&lt;center&gt;
+&lt;img src = "./images/workflow.png" align="middle" style="border: none; box-shadow: none; text-align: center;"&gt;
+&lt;/center&gt;
+
+---
+
+## Changes
+
+&lt;center&gt;
+&lt;img src = "./images/change.png" align="middle" style="border: none; box-shadow: none; text-align: center;"&gt;
+&lt;/center&gt;
+
+---
+
+## Consequences
+
+&lt;center&gt;
+&lt;img src = "./images/downstream.png" align="middle" style="border: none; box-shadow: none; text-align: center;"&gt;
+&lt;/center&gt;
+
+---
+
+## Pipeline tools and workflow managers
+
+&lt;center&gt;
+&lt;img src = "./images/infographic.svg" align="middle" style="border: none; box-shadow: none; text-align: center;"&gt;
+&lt;/center&gt;
+
+- Tons exist already: [github.com/pditommaso/awesome-pipeline](https://github.com/pditommaso/awesome-pipeline).
+- Most are language-agnostic or designed for Python or the shell.
+
+---
+
+## What distinguishes `targets`?
+
+&lt;center&gt;
+&lt;img src = "./images/R.png" align="middle" style="border: none; box-shadow: none; text-align: center; height: 200px"&gt;
+&lt;/center&gt;
+
+.large[
+* Respects the way R works.
+* Better code, i.e. functions.
+* Time savings allow for an incremental development strategy:
+    1. Change a couple things.
+    2. Run the workflow.
+    3. Inspect results.
+    4. *Repeat often*.
+]
+
+---
+
+## What about `drake`?
+
+&lt;center&gt;
+&lt;img src = "./images/drake.png" align="middle" style="border: none; box-shadow: none; text-align: center; height: 200px"&gt;
+&lt;/center&gt;
+
+.large[
+* `drake` is still supported and maintained.
+* `targets` is the long-term successor to `drake`.
+* Advantages of `targets` over `drake`:
+    * Better guardrails by design.
+    * Lighter, friendlier data management.
+    * Transparent introspection of global objects.
+    * More powerful dynamic branching.
+    * Improved parallel efficiency.
+    * Easier metaprogramming, e.g. target archetypes: &lt;https://wlandau.github.io/tarchetypes&gt;.
+* Details: &lt;https://wlandau.github.io/targets/articles/need.html&gt;
+]
+
+---
+
+## Example targets workflow
+
+- Find the model that best predicts which customers will cancel their telecom subscriptions.
+- [IBM Watson Telco Customer Churn dataset](https://www.ibm.com/communities/analytics/watson-analytics-blog/predictive-insights-in-the-telco-customer-churn-data-set/).
+- Workflow principles generalize to the other fields, such as the life sciences.
+
+&lt;img src = "./images/combine.png" style="border: none; box-shadow: none; height: 200px"&gt;
+
+&lt;div style="font-size: 0.5em;"&gt;&lt;a href="https://openclipart.org/detail/90739/newplus"&gt;https://openclipart.org/detail/90739/newplus&lt;/a&gt;, &lt;a href="https://github.com/rstudio/keras"&gt;https://github.com/rstudio/keras&lt;/a&gt;&lt;/div&gt;
+
+---
+
+background-image: ./images/not.png
+
+## &lt;img src="./images/no.png" width="40" height="40"&gt; Say goodbye to numbered imperative scripts!
+
+
+```r
+run_everything.R
+R/
+├── 01-data.R
+├── 02-munge.R
+├── 03-model.R
+├── 04-results.R
+└── 05-plot.R
+data/
+└── customer_churn.csv
+```
+
+---
+
+## &lt;img src="./images/yes.png" width="60" height="40"&gt; drake wants you to write **functions**.
+
+&gt;    - Everything that exists is an object.
+&gt;    - Everything that happens is a function call.
+&gt;
+&gt; John Chambers
+
+
+```r
+add_things &lt;- function(argument1, argument2) {
+  argument1 + argument2
+}
+
+add_things(1, 2)
+#&gt; [1] 3
+
+add_things(c(3, 4), c(5, 6))
+#&gt; [1]  8 10
+```
+
+---
+
+## Functions in a targets workflow
+
+
+```r
+split_data &lt;- function(churn_file) {
+  read_csv(churn_file, col_types = cols()) %&gt;%
+    initial_split(prop = 0.3)
+}
+
+prepare_recipe &lt;- function(churn_data) {
+  churn_data %&gt;%
+    training() %&gt;%
+    recipe(Churn ~ .) %&gt;%
+    step_rm(customerID) %&gt;%
+    step_naomit(all_outcomes(), all_predictors()) %&gt;%
+    step_discretize(tenure, options = list(cuts = 6)) %&gt;%
+    step_log(TotalCharges) %&gt;%
+    step_mutate(Churn = ifelse(Churn == "Yes", 1, 0)) %&gt;%
+    step_dummy(all_nominal(), -all_outcomes()) %&gt;%
+    step_center(all_predictors(), -all_outcomes()) %&gt;%
+    step_scale(all_predictors(), -all_outcomes()) %&gt;%
+    prep()
+}
+```
+
+---
+
+## Functions in a drake workflow
+
+
+```r
+define_model &lt;- function(churn_recipe, units1, units2, act1, act2, act3) {
+  # ...
+}
+
+train_model &lt;- function(churn_recipe, units1, units2, act1, act2, act3) {
+  # ...
+}
+
+test_accuracy &lt;- function(churn_data, churn_recipe, model) {
+  # ...
+}
+
+test_model &lt;- function(churn_data, churn_recipe, units1, units2, act1, act2, act3) {
+  # ...
+}
+
+train_best_model &lt;- function(best_run, churn_recipe) {
+  # ...
+}
+```
+
+---
+
+## Typical project structure
+
+* There are *many* variations on this theme.
+
+
+```r
+_targets/  # Output data objects are automatically written here.
+_targets.R # Required top-level configuration file.
+R/
+*└── functions.R
+data/
+└── customer_churn.csv
+```
+
+---
+
+## Build up your workflow in a pipeline of targets.
+
+
+```r
+# _targets.R
+library(targets)
+source("R/functions.R")
+tar_options(packages = c("keras", "tidyverse", "rsample", "recipes", "yardstick"))
+tar_pipeline(
+  tar_target(churn_file, "data/customer_churn.csv", format = "file"),
+  tar_target(churn_data, split_data(churn_file)),
+  tar_target(churn_recipe, prepare_recipe(churn_data))
+)
+```
+
+
+
+---
+
+## The pipeline is a collection of skippable *targets*.
+
+
+```r
+tar_manifest(fields = c("name", "command"))
+#&gt; # A tibble: 3 x 2
+#&gt;   name         command                      
+#&gt;   &lt;chr&gt;        &lt;chr&gt;                        
+#&gt; 1 churn_recipe "prepare_recipe(churn_data)" 
+#&gt; 2 churn_data   "split_data(churn_file)"     
+#&gt; 3 churn_file   "\"data/customer_churn.csv\""
+```
+
+---
+
+## targets understands code and data dependencies.
+
+
+```r
+tar_visnetwork(reporter = "silent")
+```
+
+<div id="htmlwidget-8945c6bb40bc1e8c9325" style="width:80%;height:80%;" class="visNetwork html-widget"></div>
+<script type="application/json" data-for="htmlwidget-8945c6bb40bc1e8c9325">{"x":{"nodes":{"name":["churn_data","churn_file","churn_recipe","define_model","prepare_recipe","split_data","test_accuracy","test_model","train_best_model","train_model"],"type":["stem","stem","stem","function","function","function","function","function","function","function"],"status":["outdated","outdated","outdated","outdated","outdated","outdated","outdated","outdated","outdated","outdated"],"seconds":[null,null,null,null,null,null,null,null,null,null],"bytes":[null,null,null,null,null,null,null,null,null,null],"children":[null,null,null,null,null,null,null,null,null,null],"id":["churn_data","churn_file","churn_recipe","define_model","prepare_recipe","split_data","test_accuracy","test_model","train_best_model","train_model"],"label":["churn_data","churn_file","churn_recipe","define_model","prepare_recipe","split_data","test_accuracy","test_model","train_best_model","train_model"],"font.size":[20,20,20,20,20,20,20,20,20,20],"level":[2,1,3,1,1,1,1,3,3,2],"color":["#3B9AB2","#3B9AB2","#3B9AB2","#3B9AB2","#3B9AB2","#3B9AB2","#3B9AB2","#3B9AB2","#3B9AB2","#3B9AB2"],"shape":["dot","dot","dot","triangle","triangle","triangle","triangle","triangle","triangle","triangle"]},"edges":{"from":["define_model","train_model","train_model","test_accuracy","churn_data","prepare_recipe","churn_file","split_data"],"to":["train_model","test_model","train_best_model","test_model","churn_recipe","churn_recipe","churn_data","churn_data"],"arrows":["to","to","to","to","to","to","to","to"]},"nodesToDataframe":true,"edgesToDataframe":true,"options":{"width":"100%","height":"100%","nodes":{"shape":"dot","physics":false},"manipulation":{"enabled":false},"edges":{"smooth":{"type":"cubicBezier","forceDirection":"horizontal"}},"layout":{"hierarchical":{"enabled":true,"direction":"LR"}}},"groups":null,"width":null,"height":null,"idselection":{"enabled":false,"style":"width: 150px; height: 26px","useLabels":true,"main":"Select by id"},"byselection":{"enabled":false,"style":"width: 150px; height: 26px","multiple":false,"hideColor":"rgba(200,200,200,0.5)","highlight":false},"main":{"text":"","style":"font-family:Georgia, Times New Roman, Times, serif;font-weight:bold;font-size:20px;text-align:center;"},"submain":null,"footer":null,"background":"rgba(0, 0, 0, 0)","highlight":{"enabled":false,"hoverNearest":false,"degree":1,"algorithm":"all","hideColor":"rgba(200,200,200,0.5)","labelOnly":true},"collapse":{"enabled":true,"fit":false,"resetHighlight":true,"clusterOptions":null,"keepCoord":true,"labelSuffix":"(cluster)"},"legend":{"width":0.2,"useGroups":false,"position":"left","ncol":1,"stepX":100,"stepY":100,"zoom":true,"nodes":{"label":["Outdated","Stem","Function"],"color":["#3B9AB2","#899DA4","#899DA4"],"shape":["dot","dot","triangle"],"font.size":[20,20,20]},"nodesToDataframe":true}},"evals":[],"jsHooks":[]}</script>
+
+---
+
+## Build your first targets.
+
+
+```r
+tar_make()
+```
+
+
+```
+#&gt; ● run target churn_file
+#&gt; ● run target churn_data
+#&gt; ● run target churn_recipe
+```
+
+---
+
+## Check the targets for problems
+
+- `tar_load()` and `tar_read()` get targets from the cache.
+
+
+```r
+ncol(training(tar_read(churn_data)))
+#&gt; [1] 21
+
+tar_load(churn_recipe)
+ncol(juice(churn_recipe))
+#&gt; [1] 36
+```
+
+---
+
+## Build up the plan *gradually*.
+
+.large[
+1. Add a couple targets.
+2. Build targets with `make(plan)`.
+3. Inspect targets with `tar_load()` and `tar_read()`.
+4. *Repeat often*. Not as time-consuming as you might think!
+]
+
+---
+
+## Add some model runs.
+
+
+```r
+# _targets.R
+library(targets)
+source("R/functions.R")
+tar_options(packages = c("keras", "tidyverse", "rsample", "recipes", "yardstick"))
+tar_pipeline(
+  tar_target(churn_file, "data/customer_churn.csv", format = "file"),
+  tar_target(churn_data, split_data(churn_file)),
+  tar_target(churn_recipe, prepare_recipe(churn_data)),
+* tar_target(run_relu, test_model(act1 = "relu", churn_data, churn_recipe)),
+* tar_target(run_sigmoid, test_model(act1 = "sigmoid", churn_data, churn_recipe))
+)
+```
+
+
+
+---
+
+## Previous work is still up to date.
+
+
+```r
+tar_outdated(reporter = "silent")
+#&gt; [1] "run_relu"    "run_sigmoid"
+```
+
+---
+
+## Previous work is still up to date.
+
+
+```r
+tar_visnetwork(reporter = "silent")
+```
+
+<div id="htmlwidget-d9c83776441c5091499d" style="width:80%;height:80%;" class="visNetwork html-widget"></div>
+<script type="application/json" data-for="htmlwidget-d9c83776441c5091499d">{"x":{"nodes":{"name":["churn_data","churn_file","churn_recipe","run_relu","run_sigmoid","define_model","prepare_recipe","split_data","test_accuracy","test_model","train_best_model","train_model"],"type":["stem","stem","stem","stem","stem","function","function","function","function","function","function","function"],"status":["uptodate","uptodate","uptodate","outdated","outdated","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate"],"seconds":[0.138,0.001,0.252,null,null,null,null,null,null,null,null,null],"bytes":[160022,984545,639206,null,null,null,null,null,null,null,null,null],"children":[null,null,null,null,null,null,null,null,null,null,null,null],"id":["churn_data","churn_file","churn_recipe","run_relu","run_sigmoid","define_model","prepare_recipe","split_data","test_accuracy","test_model","train_best_model","train_model"],"label":["churn_data","churn_file","churn_recipe","run_relu","run_sigmoid","define_model","prepare_recipe","split_data","test_accuracy","test_model","train_best_model","train_model"],"font.size":[20,20,20,20,20,20,20,20,20,20,20,20],"level":[2,1,3,4,4,1,1,1,1,3,3,2],"color":["#0B775E","#0B775E","#0B775E","#3B9AB2","#3B9AB2","#0B775E","#0B775E","#0B775E","#0B775E","#0B775E","#0B775E","#0B775E"],"shape":["dot","dot","dot","dot","dot","triangle","triangle","triangle","triangle","triangle","triangle","triangle"]},"edges":{"from":["define_model","train_model","train_model","test_accuracy","churn_data","churn_recipe","test_model","churn_data","prepare_recipe","churn_data","churn_recipe","test_model","churn_file","split_data"],"to":["train_model","test_model","train_best_model","test_model","run_relu","run_relu","run_relu","churn_recipe","churn_recipe","run_sigmoid","run_sigmoid","run_sigmoid","churn_data","churn_data"],"arrows":["to","to","to","to","to","to","to","to","to","to","to","to","to","to"]},"nodesToDataframe":true,"edgesToDataframe":true,"options":{"width":"100%","height":"100%","nodes":{"shape":"dot","physics":false},"manipulation":{"enabled":false},"edges":{"smooth":{"type":"cubicBezier","forceDirection":"horizontal"}},"layout":{"hierarchical":{"enabled":true,"direction":"LR"}}},"groups":null,"width":null,"height":null,"idselection":{"enabled":false,"style":"width: 150px; height: 26px","useLabels":true,"main":"Select by id"},"byselection":{"enabled":false,"style":"width: 150px; height: 26px","multiple":false,"hideColor":"rgba(200,200,200,0.5)","highlight":false},"main":{"text":"","style":"font-family:Georgia, Times New Roman, Times, serif;font-weight:bold;font-size:20px;text-align:center;"},"submain":null,"footer":null,"background":"rgba(0, 0, 0, 0)","highlight":{"enabled":false,"hoverNearest":false,"degree":1,"algorithm":"all","hideColor":"rgba(200,200,200,0.5)","labelOnly":true},"collapse":{"enabled":true,"fit":false,"resetHighlight":true,"clusterOptions":null,"keepCoord":true,"labelSuffix":"(cluster)"},"legend":{"width":0.2,"useGroups":false,"position":"left","ncol":1,"stepX":100,"stepY":100,"zoom":true,"nodes":{"label":["Up to date","Outdated","Stem","Function"],"color":["#0B775E","#3B9AB2","#899DA4","#899DA4"],"shape":["dot","dot","dot","triangle"],"font.size":[20,20,20,20]},"nodesToDataframe":true}},"evals":[],"jsHooks":[]}</script>
+
+---
+
+## Up-to-date targets are skipped.
+
+
+```r
+tar_make()
+```
+
+
+```
+#&gt; ✓ skip target churn_file
+#&gt; ✓ skip target churn_data
+#&gt; ✓ skip target churn_recipe
+#&gt; ● run target run_relu
+#&gt; ● run target run_sigmoid
+```
+
+---
+
+## Inspect the newest targets.
+
+
+```r
+tar_read(run_relu)
+#&gt; # A tibble: 1 x 6
+#&gt;   accuracy units1 units2 act1  act2  act3   
+#&gt;      &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;  
+#&gt; 1    0.799     16     16 relu  relu  sigmoid
+
+tar_read(run_sigmoid)
+#&gt; # A tibble: 1 x 6
+#&gt;   accuracy units1 units2 act1    act2  act3   
+#&gt;      &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;  
+#&gt; 1    0.800     16     16 sigmoid relu  sigmoid
+```
+
+---
+
+## Find the best model
+
+
+```r
+# _targets.R
+library(targets)
+source("R/functions.R")
+tar_options(packages = c("keras", "tidyverse", "rsample", "recipes", "yardstick"))
+tar_pipeline(
+  tar_target(churn_file, "data/customer_churn.csv", format = "file"),
+  tar_target(churn_data, split_data(churn_file)),
+  tar_target(churn_recipe, prepare_recipe(churn_data)),
+  tar_target(run_relu, test_model(act1 = "relu", churn_data, churn_recipe)),
+  tar_target(run_sigmoid, test_model(act1 = "sigmoid", churn_data, churn_recipe)),
+* tar_target(
+*   best_run,
+*   bind_rows(run_relu, run_sigmoid) %&gt;%
+*     top_n(1, accuracy) %&gt;%
+*     head(1)
+* ),
+  tar_target(
+*   best_model,
+*   train_best_model(best_run, churn_recipe),
+*   format = "keras"
+* )
+)
+```
+
+
+
+---
+
+## Find the best model
+
+
+```r
+tar_make()
+```
+
+
+```
+#&gt; ✓ skip target churn_file
+#&gt; ✓ skip target churn_data
+#&gt; ✓ skip target churn_recipe
+#&gt; ✓ skip target run_relu
+#&gt; ✓ skip target run_sigmoid
+#&gt; ● run target best_run
+#&gt; ● run target best_model
+```
+
+---
+
+## Find the best model
+
+
+```r
+tar_read(best_model)
+#&gt; Model
+#&gt; ________________________________________________________________________________
+#&gt; Layer (type)                        Output Shape                    Param #     
+#&gt; ================================================================================
+#&gt; dense_6 (Dense)                     (None, 16)                      576         
+#&gt; ________________________________________________________________________________
+#&gt; dropout_4 (Dropout)                 (None, 16)                      0           
+#&gt; ________________________________________________________________________________
+#&gt; dense_7 (Dense)                     (None, 16)                      272         
+#&gt; ________________________________________________________________________________
+#&gt; dropout_5 (Dropout)                 (None, 16)                      0           
+#&gt; ________________________________________________________________________________
+#&gt; dense_8 (Dense)                     (None, 1)                       17          
+#&gt; ================================================================================
+#&gt; Total params: 865
+#&gt; Trainable params: 865
+#&gt; Non-trainable params: 0
+#&gt; ________________________________________________________________________________
+```
+
+---
+
+## Try another model.
+
+
+```r
+# _targets.R
+library(targets)
+source("R/functions.R")
+tar_options(packages = c("keras", "tidyverse", "rsample", "recipes", "yardstick"))
+tar_pipeline(
+  tar_target(churn_file, "data/customer_churn.csv", format = "file"),
+  tar_target(churn_data, split_data(churn_file)),
+  tar_target(churn_recipe, prepare_recipe(churn_data)),
+  tar_target(run_relu, test_model(act1 = "relu", churn_data, churn_recipe)),
+  tar_target(run_sigmoid, test_model(act1 = "sigmoid", churn_data, churn_recipe)),
+* tar_target(run_softmax, test_model(act1 = "softmax", churn_data, churn_recipe)),
+  tar_target(
+    best_run,
+*   bind_rows(run_relu, run_sigmoid, run_softmax) %&gt;%
+      top_n(1, accuracy) %&gt;%
+      head(1)
+  ),
+  tar_target(
+    best_model,
+    train_best_model(best_run, churn_recipe),
+    format = "keras"
+  )
+)
+```
+
+
+
+---
+
+## What gets done stays done.
+
+
+```r
+tar_outdated(reporter = "silent")
+#&gt; [1] "run_softmax" "best_run"    "best_model"
+```
+
+---
+
+## What gets done stays done.
+
+
+```r
+tar_visnetwork(reporter = "silent")
+```
+
+<div id="htmlwidget-2ea65e4225db890d2a90" style="width:80%;height:80%;" class="visNetwork html-widget"></div>
+<script type="application/json" data-for="htmlwidget-2ea65e4225db890d2a90">{"x":{"nodes":{"name":["best_model","best_run","churn_data","churn_file","churn_recipe","run_relu","run_sigmoid","run_softmax","define_model","prepare_recipe","split_data","test_accuracy","test_model","train_best_model","train_model"],"type":["stem","stem","stem","stem","stem","stem","stem","stem","function","function","function","function","function","function","function"],"status":["outdated","outdated","uptodate","uptodate","uptodate","uptodate","uptodate","outdated","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate"],"seconds":[4.01,0.002,0.138,0.001,0.252,6.591,4.78,null,null,null,null,null,null,null,null],"bytes":[40176,195,160022,984545,639206,194,195,null,null,null,null,null,null,null,null],"children":[null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],"id":["best_model","best_run","churn_data","churn_file","churn_recipe","run_relu","run_sigmoid","run_softmax","define_model","prepare_recipe","split_data","test_accuracy","test_model","train_best_model","train_model"],"label":["best_model","best_run","churn_data","churn_file","churn_recipe","run_relu","run_sigmoid","run_softmax","define_model","prepare_recipe","split_data","test_accuracy","test_model","train_best_model","train_model"],"font.size":[20,20,20,20,20,20,20,20,20,20,20,20,20,20,20],"level":[6,5,2,1,3,4,4,4,1,1,1,1,3,3,2],"color":["#3B9AB2","#3B9AB2","#0B775E","#0B775E","#0B775E","#0B775E","#0B775E","#3B9AB2","#0B775E","#0B775E","#0B775E","#0B775E","#0B775E","#0B775E","#0B775E"],"shape":["dot","dot","dot","dot","dot","dot","dot","dot","triangle","triangle","triangle","triangle","triangle","triangle","triangle"]},"edges":{"from":["define_model","train_model","train_model","test_accuracy","churn_data","churn_recipe","test_model","churn_data","churn_recipe","test_model","churn_data","prepare_recipe","churn_data","churn_recipe","test_model","run_relu","run_sigmoid","run_softmax","churn_file","split_data","best_run","churn_recipe","train_best_model"],"to":["train_model","test_model","train_best_model","test_model","run_relu","run_relu","run_relu","run_softmax","run_softmax","run_softmax","churn_recipe","churn_recipe","run_sigmoid","run_sigmoid","run_sigmoid","best_run","best_run","best_run","churn_data","churn_data","best_model","best_model","best_model"],"arrows":["to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to"]},"nodesToDataframe":true,"edgesToDataframe":true,"options":{"width":"100%","height":"100%","nodes":{"shape":"dot","physics":false},"manipulation":{"enabled":false},"edges":{"smooth":{"type":"cubicBezier","forceDirection":"horizontal"}},"layout":{"hierarchical":{"enabled":true,"direction":"LR"}}},"groups":null,"width":null,"height":null,"idselection":{"enabled":false,"style":"width: 150px; height: 26px","useLabels":true,"main":"Select by id"},"byselection":{"enabled":false,"style":"width: 150px; height: 26px","multiple":false,"hideColor":"rgba(200,200,200,0.5)","highlight":false},"main":{"text":"","style":"font-family:Georgia, Times New Roman, Times, serif;font-weight:bold;font-size:20px;text-align:center;"},"submain":null,"footer":null,"background":"rgba(0, 0, 0, 0)","highlight":{"enabled":false,"hoverNearest":false,"degree":1,"algorithm":"all","hideColor":"rgba(200,200,200,0.5)","labelOnly":true},"collapse":{"enabled":true,"fit":false,"resetHighlight":true,"clusterOptions":null,"keepCoord":true,"labelSuffix":"(cluster)"},"legend":{"width":0.2,"useGroups":false,"position":"left","ncol":1,"stepX":100,"stepY":100,"zoom":true,"nodes":{"label":["Outdated","Up to date","Stem","Function"],"color":["#3B9AB2","#0B775E","#899DA4","#899DA4"],"shape":["dot","dot","dot","triangle"],"font.size":[20,20,20,20]},"nodesToDataframe":true}},"evals":[],"jsHooks":[]}</script>
+
+---
+
+## New best model?
+
+- Only if the new run beats the old runs, which would invalidate target `best_run`.
+- Otherwise, `drake` does not bother to retrain the best model.
+
+
+```r
+tar_make()
+#&gt; ● run target run_softmax
+#&gt; ● run target best_run
+```
+
+
+```
+#&gt; [32m✓[39m skip target churn_file
+#&gt; [32m✓[39m skip target churn_data
+#&gt; [32m✓[39m skip target churn_recipe
+#&gt; [32m✓[39m skip target run_relu
+#&gt; [34m●[39m run target run_softmax
+#&gt; ── [1mAttaching packages[22m ────────────────────────────────────── tidyverse 1.3.0 ──
+#&gt; [32m✓[39m [34mggplot2[39m 3.3.2     [32m✓[39m [34mpurrr  [39m 0.3.4
+#&gt; [32m✓[39m [34mtibble [39m 3.0.3     [32m✓[39m [34mdplyr  [39m 1.0.0
+#&gt; [32m✓[39m [34mtidyr  [39m 1.1.0     [32m✓[39m [34mstringr[39m 1.4.0
+#&gt; [32m✓[39m [34mreadr  [39m 1.3.1     [32m✓[39m [34mforcats[39m 0.5.0
+#&gt; ── [1mConflicts[22m ───────────────────────────────────────── tidyverse_conflicts() ──
+#&gt; [31mx[39m [34mdplyr[39m::[32mfilter()[39m masks [34mstats[39m::filter()
+#&gt; [31mx[39m [34mdplyr[39m::[32mlag()[39m    masks [34mstats[39m::lag()
+#&gt; 
+#&gt; Attaching package: ‘recipes’
+#&gt; 
+#&gt; The following object is masked from ‘package:stringr’:
+#&gt; 
+#&gt;     fixed
+#&gt; 
+#&gt; The following object is masked from ‘package:stats’:
+#&gt; 
+#&gt;     step
+#&gt; 
+#&gt; For binary classification, the first factor level is assumed to be the event.
+#&gt; Use the argument `event_level = "second"` to alter this as needed.
+#&gt; 
+#&gt; Attaching package: ‘yardstick’
+#&gt; 
+#&gt; The following object is masked from ‘package:readr’:
+#&gt; 
+#&gt;     spec
+#&gt; 
+#&gt; The following object is masked from ‘package:keras’:
+#&gt; 
+#&gt;     get_weights
+#&gt; 
+#&gt; 2020-07-30 17:28:40.595003: I tensorflow/core/platform/cpu_feature_guard.cc:141] Your CPU supports instructions that this TensorFlow binary was not compiled to use: AVX2 FMA
+#&gt; [32m✓[39m skip target run_sigmoid
+#&gt; [34m●[39m run target best_run
+#&gt; [32m✓[39m skip target best_model
+#&gt; 
+#&gt; WARNING: The TensorFlow contrib module will not be included in TensorFlow 2.0.
+#&gt; For more information, please see:
+#&gt;   * https://github.com/tensorflow/community/blob/master/rfcs/20180907-contrib-sunset.md
+#&gt;   * https://github.com/tensorflow/addons
+#&gt; If you depend on functionality not listed there, please file an issue.
+#&gt; 
+#&gt; /Users/c240390/anaconda3/envs/r-tensorflow/lib/python3.7/site-packages/tensorflow/python/framework/dtypes.py:526: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+#&gt;   _np_qint8 = np.dtype([("qint8", np.int8, 1)])
+#&gt; /Users/c240390/anaconda3/envs/r-tensorflow/lib/python3.7/site-packages/tensorflow/python/framework/dtypes.py:527: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+#&gt;   _np_quint8 = np.dtype([("quint8", np.uint8, 1)])
+#&gt; /Users/c240390/anaconda3/envs/r-tensorflow/lib/python3.7/site-packages/tensorflow/python/framework/dtypes.py:528: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+#&gt;   _np_qint16 = np.dtype([("qint16", np.int16, 1)])
+#&gt; /Users/c240390/anaconda3/envs/r-tensorflow/lib/python3.7/site-packages/tensorflow/python/framework/dtypes.py:529: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+#&gt;   _np_quint16 = np.dtype([("quint16", np.uint16, 1)])
+#&gt; /Users/c240390/anaconda3/envs/r-tensorflow/lib/python3.7/site-packages/tensorflow/python/framework/dtypes.py:530: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+#&gt;   _np_qint32 = np.dtype([("qint32", np.int32, 1)])
+#&gt; /Users/c240390/anaconda3/envs/r-tensorflow/lib/python3.7/site-packages/tensorflow/python/framework/dtypes.py:535: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+#&gt;   np_resource = np.dtype([("resource", np.ubyte, 1)])
+#&gt; /Users/c240390/anaconda3/envs/r-tensorflow/lib/python3.7/importlib/_bootstrap.py:219: RuntimeWarning: compiletime version 3.6 of module 'tensorflow.python.framework.fast_tensor_util' does not match runtime version 3.7
+#&gt;   return f(*args, **kwds)
+```
+
+---
+
+## What if we need to change a function?
+
+
+```r
+define_model &lt;- function(churn_recipe, units1, units2, act1, act2, act3) {
+  input_shape &lt;- ncol(
+    juice(churn_recipe, all_predictors(), composition = "matrix")
+  )
+  keras_model_sequential() %&gt;%
+    layer_dense(
+      units = units1,
+      kernel_initializer = "uniform",
+      activation = act1,
+      input_shape = input_shape
+    ) %&gt;%
+*   layer_dropout(rate = 0.2) %&gt;% # previously 0.1
+    layer_dense(
+      units = units2,
+      kernel_initializer = "uniform",
+      activation = act2
+    ) %&gt;%
+    layer_dropout(rate = 0.1) %&gt;%
+    layer_dense(
+      units = 1,
+      kernel_initializer = "uniform",
+      activation = act3
+    )
+}
+```
+
+---
+
+## targets knows what to do.
+
+
+```r
+tar_visnetwork(reporter = "silent")
+```
+
+<div id="htmlwidget-145148985d9eb2ab77e6" style="width:80%;height:80%;" class="visNetwork html-widget"></div>
+<script type="application/json" data-for="htmlwidget-145148985d9eb2ab77e6">{"x":{"nodes":{"name":["best_model","best_run","churn_data","churn_file","churn_recipe","run_relu","run_sigmoid","run_softmax",".Random.seed","add_things","define_model","la","ld","or","ot","packages","prepare_recipe","q0","split_data","td","test_accuracy","test_model","train_best_model","train_model","ur","ut"],"type":["stem","stem","stem","stem","stem","stem","stem","stem","object","function","function","function","function","function","function","object","function","function","function","function","function","function","function","function","function","function"],"status":["uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","outdated","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate"],"seconds":[4.01,0.004,0.138,0.001,0.252,6.591,4.78,7.149,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],"bytes":[40176,195,160022,984545,639206,194,195,202,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],"children":[null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],"id":["best_model","best_run","churn_data","churn_file","churn_recipe","run_relu","run_sigmoid","run_softmax",".Random.seed","add_things","define_model","la","ld","or","ot","packages","prepare_recipe","q0","split_data","td","test_accuracy","test_model","train_best_model","train_model","ur","ut"],"label":["best_model","best_run","churn_data","churn_file","churn_recipe","run_relu","run_sigmoid","run_softmax",".Random.seed","add_things","define_model","la","ld","or","ot","packages","prepare_recipe","q0","split_data","td","test_accuracy","test_model","train_best_model","train_model","ur","ut"],"font.size":[20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20],"level":[6,5,2,1,3,4,4,4,0,0,1,0,0,2,2,0,1,0,1,0,1,3,3,2,1,1],"color":["#0B775E","#0B775E","#0B775E","#0B775E","#0B775E","#0B775E","#0B775E","#0B775E","#3B9AB2","#0B775E","#0B775E","#0B775E","#0B775E","#0B775E","#0B775E","#0B775E","#0B775E","#0B775E","#0B775E","#0B775E","#0B775E","#0B775E","#0B775E","#0B775E","#0B775E","#0B775E"],"shape":["dot","dot","dot","dot","dot","dot","dot","dot","triangleDown","triangle","triangle","triangle","triangle","triangle","triangle","triangleDown","triangle","triangle","triangle","triangle","triangle","triangle","triangle","triangle","triangle","triangle"]},"edges":{"from":["define_model","train_model","train_model","ur","ut","test_accuracy","churn_data","churn_recipe","test_model","churn_data","churn_recipe","test_model","churn_data","prepare_recipe","churn_data","churn_recipe","test_model","run_relu","run_sigmoid","run_softmax","churn_file","split_data","best_run","churn_recipe","train_best_model"],"to":["train_model","test_model","train_best_model","or","ot","test_model","run_relu","run_relu","run_relu","run_softmax","run_softmax","run_softmax","churn_recipe","churn_recipe","run_sigmoid","run_sigmoid","run_sigmoid","best_run","best_run","best_run","churn_data","churn_data","best_model","best_model","best_model"],"arrows":["to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to"]},"nodesToDataframe":true,"edgesToDataframe":true,"options":{"width":"100%","height":"100%","nodes":{"shape":"dot","physics":false},"manipulation":{"enabled":false},"edges":{"smooth":{"type":"cubicBezier","forceDirection":"horizontal"}},"layout":{"hierarchical":{"enabled":true,"direction":"LR"}}},"groups":null,"width":null,"height":null,"idselection":{"enabled":false,"style":"width: 150px; height: 26px","useLabels":true,"main":"Select by id"},"byselection":{"enabled":false,"style":"width: 150px; height: 26px","multiple":false,"hideColor":"rgba(200,200,200,0.5)","highlight":false},"main":{"text":"","style":"font-family:Georgia, Times New Roman, Times, serif;font-weight:bold;font-size:20px;text-align:center;"},"submain":null,"footer":null,"background":"rgba(0, 0, 0, 0)","highlight":{"enabled":false,"hoverNearest":false,"degree":1,"algorithm":"all","hideColor":"rgba(200,200,200,0.5)","labelOnly":true},"collapse":{"enabled":true,"fit":false,"resetHighlight":true,"clusterOptions":null,"keepCoord":true,"labelSuffix":"(cluster)"},"legend":{"width":0.2,"useGroups":false,"position":"left","ncol":1,"stepX":100,"stepY":100,"zoom":true,"nodes":{"label":["Up to date","Outdated","Stem","Object","Function"],"color":["#0B775E","#3B9AB2","#899DA4","#899DA4","#899DA4"],"shape":["dot","dot","dot","triangleDown","triangle"],"font.size":[20,20,20,20,20]},"nodesToDataframe":true}},"evals":[],"jsHooks":[]}</script>
+
+---
+
+## targets knows what to do.
+
+
+```r
+tar_make()
+```
+
+
+```
+#&gt; ✓ skip target churn_file
+#&gt; ✓ skip target churn_data
+#&gt; ✓ skip target churn_recipe
+#&gt; ✓ skip target run_relu
+#&gt; ✓ skip target run_softmax
+#&gt; ✓ skip target run_sigmoid
+#&gt; ✓ skip target best_run
+#&gt; ✓ skip target best_model
+#&gt; ✓ Already up to date.
+```
+---
+
+## Similar story if the data file changes.
+
+
+
+```r
+tar_make()
+#&gt; ● run target churn_data
+#&gt; ● run target churn_recipe
+#&gt; ● run target run_relu
+#&gt; ● run target run_sigmoid
+#&gt; ● run target run_softmax
+#&gt; ● run target best_run
+#&gt; ● run target best_model
+```
+
+---
+
+## Evidence of reproducibility
+
+
+```r
+tar_make(plan)
+#&gt; ✓ skip target churn_file
+#&gt; ✓ skip target churn_data
+#&gt; ✓ skip target churn_recipe
+#&gt; ✓ skip target run_relu
+#&gt; ✓ skip target run_sigmoid
+#&gt; ✓ Already up to date.
+```
+
+---
+
+## Evidence of reproducibility
+
+
+```r
+tar_visnetwork(reporter = "silent")
+```
+
+<div id="htmlwidget-b6210ab7efdda1346980" style="width:80%;height:80%;" class="visNetwork html-widget"></div>
+<script type="application/json" data-for="htmlwidget-b6210ab7efdda1346980">{"x":{"nodes":{"name":["best_model","best_run","churn_data","churn_file","churn_recipe","run_relu","run_sigmoid","run_softmax",".Random.seed","add_things","define_model","la","ld","or","ot","packages","prepare_recipe","q0","split_data","td","test_accuracy","test_model","train_best_model","train_model","ur","ut"],"type":["stem","stem","stem","stem","stem","stem","stem","stem","object","function","function","function","function","function","function","object","function","function","function","function","function","function","function","function","function","function"],"status":["uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate"],"seconds":[4.01,0.004,0.138,0.001,0.252,6.591,4.78,7.149,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],"bytes":[40176,195,160022,984545,639206,194,195,202,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],"children":[null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],"id":["best_model","best_run","churn_data","churn_file","churn_recipe","run_relu","run_sigmoid","run_softmax",".Random.seed","add_things","define_model","la","ld","or","ot","packages","prepare_recipe","q0","split_data","td","test_accuracy","test_model","train_best_model","train_model","ur","ut"],"label":["best_model","best_run","churn_data","churn_file","churn_recipe","run_relu","run_sigmoid","run_softmax",".Random.seed","add_things","define_model","la","ld","or","ot","packages","prepare_recipe","q0","split_data","td","test_accuracy","test_model","train_best_model","train_model","ur","ut"],"font.size":[20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20],"level":[6,5,2,1,3,4,4,4,0,0,1,0,0,2,2,0,1,0,1,0,1,3,3,2,1,1],"color":["#0B775E","#0B775E","#0B775E","#0B775E","#0B775E","#0B775E","#0B775E","#0B775E","#0B775E","#0B775E","#0B775E","#0B775E","#0B775E","#0B775E","#0B775E","#0B775E","#0B775E","#0B775E","#0B775E","#0B775E","#0B775E","#0B775E","#0B775E","#0B775E","#0B775E","#0B775E"],"shape":["dot","dot","dot","dot","dot","dot","dot","dot","triangleDown","triangle","triangle","triangle","triangle","triangle","triangle","triangleDown","triangle","triangle","triangle","triangle","triangle","triangle","triangle","triangle","triangle","triangle"]},"edges":{"from":["define_model","train_model","train_model","ur","ut","test_accuracy","churn_data","churn_recipe","test_model","churn_data","churn_recipe","test_model","churn_data","prepare_recipe","churn_data","churn_recipe","test_model","run_relu","run_sigmoid","run_softmax","churn_file","split_data","best_run","churn_recipe","train_best_model"],"to":["train_model","test_model","train_best_model","or","ot","test_model","run_relu","run_relu","run_relu","run_softmax","run_softmax","run_softmax","churn_recipe","churn_recipe","run_sigmoid","run_sigmoid","run_sigmoid","best_run","best_run","best_run","churn_data","churn_data","best_model","best_model","best_model"],"arrows":["to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to"]},"nodesToDataframe":true,"edgesToDataframe":true,"options":{"width":"100%","height":"100%","nodes":{"shape":"dot","physics":false},"manipulation":{"enabled":false},"edges":{"smooth":{"type":"cubicBezier","forceDirection":"horizontal"}},"layout":{"hierarchical":{"enabled":true,"direction":"LR"}}},"groups":null,"width":null,"height":null,"idselection":{"enabled":false,"style":"width: 150px; height: 26px","useLabels":true,"main":"Select by id"},"byselection":{"enabled":false,"style":"width: 150px; height: 26px","multiple":false,"hideColor":"rgba(200,200,200,0.5)","highlight":false},"main":{"text":"","style":"font-family:Georgia, Times New Roman, Times, serif;font-weight:bold;font-size:20px;text-align:center;"},"submain":null,"footer":null,"background":"rgba(0, 0, 0, 0)","highlight":{"enabled":false,"hoverNearest":false,"degree":1,"algorithm":"all","hideColor":"rgba(200,200,200,0.5)","labelOnly":true},"collapse":{"enabled":true,"fit":false,"resetHighlight":true,"clusterOptions":null,"keepCoord":true,"labelSuffix":"(cluster)"},"legend":{"width":0.2,"useGroups":false,"position":"left","ncol":1,"stepX":100,"stepY":100,"zoom":true,"nodes":{"label":["Up to date","Stem","Object","Function"],"color":["#0B775E","#899DA4","#899DA4","#899DA4"],"shape":["dot","dot","triangleDown","triangle"],"font.size":[20,20,20,20]},"nodesToDataframe":true}},"evals":[],"jsHooks":[]}</script>
+
+---
+
+## Resources
+
+* Get [`targets`](https://github.com/wlandau/targets):
+
+
+```r
+install.packages("remotes")
+remotes::install_github("wlandau/targets")
+```
+
+* Code: &lt;https://github.com/wlandau/targets-keras&gt;
+* RStudio Cloud workspace: &lt;https://rstudio.cloud/project/1430828/&gt;
+* These slides: &lt;https://wlandau.github.io/targets-tutorial&gt;
+* Tutorial materials: &lt;https://github.com/wlandau/targets-tutorial&gt;
+
+---
+
+## Links
+
+- Development repository: &lt;https://github.com/wlandau/targets&gt;
+- Full user manual: &lt;https://wlandau.github.io/targets-manual/&gt;
+- Reference website: &lt;https://wlandau.github.io/targets/&gt;
+
+## Thanks
+
+&lt;br&gt;
+&lt;br&gt;
+&lt;table style = "border: none"&gt;
+&lt;tr&gt;
+&lt;td style = "padding-right: 125px"&gt;
+&lt;ul style&gt;
+&lt;img src = "./images/edgar.jpg" style="border: none; box-shadow: none; height: 150px"&gt;
+&lt;li&gt;&lt;a href = "https://github.com/edgararuiz"&gt;Edgar Ruiz&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href = "https://github.com/sol-eng/tensorflow-w-r/blob/master/workflow/tensorflow-drake.Rmd"&gt;example code&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/td&gt;
+&lt;td&gt;
+&lt;ul&gt;
+&lt;img src = "./images/matt.jpg" style="border: none; box-shadow: none; height: 150px"&gt;
+&lt;li&gt;&lt;a href = "https://github.com/mdancho84"&gt;Matt Dancho&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href = "https://blogs.rstudio.com/tensorflow/posts/2018-01-11-keras-customer-churn/"&gt;blog post&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+
+---
+
+## The tutorial
+
+1. Sign up for a free account at &lt;https://rstudio.cloud&gt;.
+2. Log into &lt;https://rstudio.cloud/project/...&gt;.
+3. Work through the R notebooks in order.
+
+Topic | Notebook
+---|---
+Custom functions | [`1-functions.Rmd`](https://github.com/wlandau/targets-tutorial/blob/master/1-functions.Rmd)
+`targets` pipelines | [`2-pipelines.Rmd`](https://github.com/wlandau/targets-tutorial/blob/master/2-pipelines.Rmd)
+Changing workflows | [`3-changes.Rmd`](https://github.com/wlandau/targets-tutorial/blob/master/3-changes.Rmd)
+Static branching | [`4-files.Rmd`](https://github.com/wlandau/targets-tutorial/blob/master/4-files.Rmd)
+Dynamic branching | [`5-branching.Rmd`](https://github.com/wlandau/targets-tutorial/blob/master/5-branching.Rmd)
+Files and R Markdown | [`6-metaprogramming.Rmd`](https://github.com/wlandau/targets-tutorial/blob/master/6-metaprogramming.Rmd)
+
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightLines": true
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
