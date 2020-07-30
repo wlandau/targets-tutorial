@@ -446,7 +446,7 @@ tar_read(run_relu)
 #&gt; # A tibble: 1 x 6
 #&gt;   accuracy units1 units2 act1  act2  act3   
 #&gt;      &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;  
-#&gt; 1    0.797     16     16 relu  relu  sigmoid
+#&gt; 1    0.796     16     16 relu  relu  sigmoid
 
 tar_read(run_sigmoid)
 #&gt; # A tibble: 1 x 6
@@ -697,6 +697,9 @@ tar_make(plan)
 #&gt; ✓ skip target churn_recipe
 #&gt; ✓ skip target run_relu
 #&gt; ✓ skip target run_sigmoid
+#&gt; ✓ skip target run_softmax
+#&gt; ✓ skip target best_run
+#&gt; ✓ skip target best_model
 #&gt; ✓ Already up to date.
 ```
 
@@ -732,9 +735,9 @@ remotes::install_github("wlandau/targets")
 * RStudio Cloud workspace: &lt;https://rstudio.cloud/project/1430828/&gt;
 * These slides: &lt;https://wlandau.github.io/targets-tutorial&gt;
 * Tutorial materials: &lt;https://github.com/wlandau/targets-tutorial&gt;
-- Development repository: &lt;https://github.com/wlandau/targets&gt;
-- Full user manual: &lt;https://wlandau.github.io/targets-manual/&gt;
-- Reference website: &lt;https://wlandau.github.io/targets/&gt;
+* Development repository: &lt;https://github.com/wlandau/targets&gt;
+* Full user manual: &lt;https://wlandau.github.io/targets-manual/&gt;
+* Reference website: &lt;https://wlandau.github.io/targets/&gt;
 
 ---
 
