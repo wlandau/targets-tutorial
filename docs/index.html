@@ -7,10 +7,6 @@
     <script src="index_files/header-attrs/header-attrs.js"></script>
     <link href="index_files/remark-css/default.css" rel="stylesheet" />
     <link href="index_files/remark-css/default-fonts.css" rel="stylesheet" />
-    <script src="index_files/htmlwidgets/htmlwidgets.js"></script>
-    <link href="index_files/vis/vis.css" rel="stylesheet" />
-    <script src="index_files/vis/vis.min.js"></script>
-    <script src="index_files/visNetwork-binding/visNetwork.js"></script>
   </head>
   <body>
     <textarea id="source">
@@ -90,10 +86,11 @@ background-size: contain;
 3. Multiple sub-tasks.
 4. Frequent changes to code and data.
 
-&lt;img src = "./images/sisyphus.svg" align="left" style="border: none; box-shadow: none; height: 375px; text-align: center;"&gt;
+&lt;img src = "./images/sisyphus.svg" align="left" style="border: none; box-shadow: none; height: 325px; text-align: center;"&gt;
+&lt;br&gt;
 &lt;br&gt;
 
-* &lt;https://openclipart.org/detail/275842/sisyphus-overcoming-silhouette&gt;
+&lt;div style="font-size: 0.5em;"&gt;&lt;a href="https://openclipart.org/detail/275842/sisyphus-overcoming-silhouette"&gt;https://openclipart.org/detail/275842/sisyphus-overcoming-silhouette&lt;/a&gt;&lt;/div&gt;
 
 ---
 
@@ -176,15 +173,11 @@ background-size: contain;
 - [IBM Watson Telco Customer Churn dataset](https://www.ibm.com/communities/analytics/watson-analytics-blog/predictive-insights-in-the-telco-customer-churn-data-set/).
 - Workflow principles generalize to the other fields, such as the life sciences.
 
-&lt;img src = "./images/combine.png" style="border: none; box-shadow: none; height: 200px"&gt;
-
-&lt;div style="font-size: 0.5em;"&gt;&lt;a href="https://openclipart.org/detail/90739/newplus"&gt;https://openclipart.org/detail/90739/newplus&lt;/a&gt;, &lt;a href="https://github.com/rstudio/keras"&gt;https://github.com/rstudio/keras&lt;/a&gt;&lt;/div&gt;
-
 ---
 
 background-image: ./images/not.png
 
-## &lt;img src="./images/no.png" width="40" height="40"&gt; Say goodbye to numbered imperative scripts!
+## &lt;img src="./images/no.png" width="40" height="40"&gt; Move away from numbered imperative scripts.
 
 
 ```r
@@ -201,7 +194,7 @@ data/
 
 ---
 
-## &lt;img src="./images/yes.png" width="60" height="40"&gt; drake wants you to write **functions**.
+## &lt;img src="./images/yes.png" width="60" height="40"&gt; Embrace **functions**.
 
 &gt;    - Everything that exists is an object.
 &gt;    - Everything that happens is a function call.
@@ -223,7 +216,7 @@ add_things(c(3, 4), c(5, 6))
 
 ---
 
-## Functions in a targets workflow
+## Functions for customer churn
 
 
 ```r
@@ -250,7 +243,7 @@ prepare_recipe &lt;- function(churn_data) {
 
 ---
 
-## Functions in a drake workflow
+## Functions for customer churn
 
 
 ```r
@@ -279,7 +272,7 @@ train_best_model &lt;- function(best_run, churn_recipe) {
 
 ## Typical project structure
 
-* There are *many* variations on this theme.
+* There are many variations on this theme.
 
 
 ```r
@@ -293,7 +286,7 @@ data/
 
 ---
 
-## Build up your workflow in a pipeline of targets.
+## Build up your workflow as a pipeline of targets.
 
 
 ```r
@@ -331,11 +324,12 @@ tar_manifest(fields = c("name", "command"))
 
 
 ```r
-tar_visnetwork(reporter = "silent")
+tar_visnetwork()
 ```
 
-<div id="htmlwidget-8945c6bb40bc1e8c9325" style="width:80%;height:80%;" class="visNetwork html-widget"></div>
-<script type="application/json" data-for="htmlwidget-8945c6bb40bc1e8c9325">{"x":{"nodes":{"name":["churn_data","churn_file","churn_recipe","define_model","prepare_recipe","split_data","test_accuracy","test_model","train_best_model","train_model"],"type":["stem","stem","stem","function","function","function","function","function","function","function"],"status":["outdated","outdated","outdated","outdated","outdated","outdated","outdated","outdated","outdated","outdated"],"seconds":[null,null,null,null,null,null,null,null,null,null],"bytes":[null,null,null,null,null,null,null,null,null,null],"children":[null,null,null,null,null,null,null,null,null,null],"id":["churn_data","churn_file","churn_recipe","define_model","prepare_recipe","split_data","test_accuracy","test_model","train_best_model","train_model"],"label":["churn_data","churn_file","churn_recipe","define_model","prepare_recipe","split_data","test_accuracy","test_model","train_best_model","train_model"],"font.size":[20,20,20,20,20,20,20,20,20,20],"level":[2,1,3,1,1,1,1,3,3,2],"color":["#3B9AB2","#3B9AB2","#3B9AB2","#3B9AB2","#3B9AB2","#3B9AB2","#3B9AB2","#3B9AB2","#3B9AB2","#3B9AB2"],"shape":["dot","dot","dot","triangle","triangle","triangle","triangle","triangle","triangle","triangle"]},"edges":{"from":["define_model","train_model","train_model","test_accuracy","churn_data","prepare_recipe","churn_file","split_data"],"to":["train_model","test_model","train_best_model","test_model","churn_recipe","churn_recipe","churn_data","churn_data"],"arrows":["to","to","to","to","to","to","to","to"]},"nodesToDataframe":true,"edgesToDataframe":true,"options":{"width":"100%","height":"100%","nodes":{"shape":"dot","physics":false},"manipulation":{"enabled":false},"edges":{"smooth":{"type":"cubicBezier","forceDirection":"horizontal"}},"layout":{"hierarchical":{"enabled":true,"direction":"LR"}}},"groups":null,"width":null,"height":null,"idselection":{"enabled":false,"style":"width: 150px; height: 26px","useLabels":true,"main":"Select by id"},"byselection":{"enabled":false,"style":"width: 150px; height: 26px","multiple":false,"hideColor":"rgba(200,200,200,0.5)","highlight":false},"main":{"text":"","style":"font-family:Georgia, Times New Roman, Times, serif;font-weight:bold;font-size:20px;text-align:center;"},"submain":null,"footer":null,"background":"rgba(0, 0, 0, 0)","highlight":{"enabled":false,"hoverNearest":false,"degree":1,"algorithm":"all","hideColor":"rgba(200,200,200,0.5)","labelOnly":true},"collapse":{"enabled":true,"fit":false,"resetHighlight":true,"clusterOptions":null,"keepCoord":true,"labelSuffix":"(cluster)"},"legend":{"width":0.2,"useGroups":false,"position":"left","ncol":1,"stepX":100,"stepY":100,"zoom":true,"nodes":{"label":["Outdated","Stem","Function"],"color":["#3B9AB2","#899DA4","#899DA4"],"shape":["dot","dot","triangle"],"font.size":[20,20,20]},"nodesToDataframe":true}},"evals":[],"jsHooks":[]}</script>
+&lt;center&gt;
+&lt;img src="images/graph1.png", height = "450px" align="middle" style="border: none; box-shadow: none; text-align: center;"&gt;
+&lt;/center&gt;
 
 ---
 
@@ -371,18 +365,18 @@ ncol(juice(churn_recipe))
 
 ---
 
-## Build up the plan *gradually*.
+## Build up the pipeline *gradually*.
 
 .large[
 1. Add a couple targets.
-2. Build targets with `make(plan)`.
-3. Inspect targets with `tar_load()` and `tar_read()`.
-4. *Repeat often*. Not as time-consuming as you might think!
+2. Run the pipeline with `tar_make()`.
+3. Inspect the new targets with `tar_load()` and `tar_read()`.
+4. Repeat often. Not very time-consuming because `tar_make()` skips up-to-date targets.
 ]
 
 ---
 
-## Add some model runs.
+## Add some models.
 
 
 ```r
@@ -407,7 +401,11 @@ tar_pipeline(
 
 
 ```r
-tar_outdated(reporter = "silent")
+tar_outdated()
+```
+
+
+```
 #&gt; [1] "run_relu"    "run_sigmoid"
 ```
 
@@ -417,11 +415,11 @@ tar_outdated(reporter = "silent")
 
 
 ```r
-tar_visnetwork(reporter = "silent")
+tar_visnetwork()
 ```
-
-<div id="htmlwidget-d9c83776441c5091499d" style="width:80%;height:80%;" class="visNetwork html-widget"></div>
-<script type="application/json" data-for="htmlwidget-d9c83776441c5091499d">{"x":{"nodes":{"name":["churn_data","churn_file","churn_recipe","run_relu","run_sigmoid","define_model","prepare_recipe","split_data","test_accuracy","test_model","train_best_model","train_model"],"type":["stem","stem","stem","stem","stem","function","function","function","function","function","function","function"],"status":["uptodate","uptodate","uptodate","outdated","outdated","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate"],"seconds":[0.138,0.001,0.252,null,null,null,null,null,null,null,null,null],"bytes":[160022,984545,639206,null,null,null,null,null,null,null,null,null],"children":[null,null,null,null,null,null,null,null,null,null,null,null],"id":["churn_data","churn_file","churn_recipe","run_relu","run_sigmoid","define_model","prepare_recipe","split_data","test_accuracy","test_model","train_best_model","train_model"],"label":["churn_data","churn_file","churn_recipe","run_relu","run_sigmoid","define_model","prepare_recipe","split_data","test_accuracy","test_model","train_best_model","train_model"],"font.size":[20,20,20,20,20,20,20,20,20,20,20,20],"level":[2,1,3,4,4,1,1,1,1,3,3,2],"color":["#0B775E","#0B775E","#0B775E","#3B9AB2","#3B9AB2","#0B775E","#0B775E","#0B775E","#0B775E","#0B775E","#0B775E","#0B775E"],"shape":["dot","dot","dot","dot","dot","triangle","triangle","triangle","triangle","triangle","triangle","triangle"]},"edges":{"from":["define_model","train_model","train_model","test_accuracy","churn_data","churn_recipe","test_model","churn_data","prepare_recipe","churn_data","churn_recipe","test_model","churn_file","split_data"],"to":["train_model","test_model","train_best_model","test_model","run_relu","run_relu","run_relu","churn_recipe","churn_recipe","run_sigmoid","run_sigmoid","run_sigmoid","churn_data","churn_data"],"arrows":["to","to","to","to","to","to","to","to","to","to","to","to","to","to"]},"nodesToDataframe":true,"edgesToDataframe":true,"options":{"width":"100%","height":"100%","nodes":{"shape":"dot","physics":false},"manipulation":{"enabled":false},"edges":{"smooth":{"type":"cubicBezier","forceDirection":"horizontal"}},"layout":{"hierarchical":{"enabled":true,"direction":"LR"}}},"groups":null,"width":null,"height":null,"idselection":{"enabled":false,"style":"width: 150px; height: 26px","useLabels":true,"main":"Select by id"},"byselection":{"enabled":false,"style":"width: 150px; height: 26px","multiple":false,"hideColor":"rgba(200,200,200,0.5)","highlight":false},"main":{"text":"","style":"font-family:Georgia, Times New Roman, Times, serif;font-weight:bold;font-size:20px;text-align:center;"},"submain":null,"footer":null,"background":"rgba(0, 0, 0, 0)","highlight":{"enabled":false,"hoverNearest":false,"degree":1,"algorithm":"all","hideColor":"rgba(200,200,200,0.5)","labelOnly":true},"collapse":{"enabled":true,"fit":false,"resetHighlight":true,"clusterOptions":null,"keepCoord":true,"labelSuffix":"(cluster)"},"legend":{"width":0.2,"useGroups":false,"position":"left","ncol":1,"stepX":100,"stepY":100,"zoom":true,"nodes":{"label":["Up to date","Outdated","Stem","Function"],"color":["#0B775E","#3B9AB2","#899DA4","#899DA4"],"shape":["dot","dot","dot","triangle"],"font.size":[20,20,20,20]},"nodesToDataframe":true}},"evals":[],"jsHooks":[]}</script>
+&lt;center&gt;
+&lt;img src="images/graph2.png", height = "450px" align="middle" style="border: none; box-shadow: none; text-align: center;"&gt;
+&lt;/center&gt;
 
 ---
 
@@ -451,13 +449,13 @@ tar_read(run_relu)
 #&gt; # A tibble: 1 x 6
 #&gt;   accuracy units1 units2 act1  act2  act3   
 #&gt;      &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;  
-#&gt; 1    0.799     16     16 relu  relu  sigmoid
+#&gt; 1    0.796     16     16 relu  relu  sigmoid
 
 tar_read(run_sigmoid)
 #&gt; # A tibble: 1 x 6
 #&gt;   accuracy units1 units2 act1    act2  act3   
 #&gt;      &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;  
-#&gt; 1    0.800     16     16 sigmoid relu  sigmoid
+#&gt; 1    0.801     16     16 sigmoid relu  sigmoid
 ```
 
 ---
@@ -471,9 +469,7 @@ library(targets)
 source("R/functions.R")
 tar_options(packages = c("keras", "tidyverse", "rsample", "recipes", "yardstick"))
 tar_pipeline(
-  tar_target(churn_file, "data/customer_churn.csv", format = "file"),
-  tar_target(churn_data, split_data(churn_file)),
-  tar_target(churn_recipe, prepare_recipe(churn_data)),
+  ...,
   tar_target(run_relu, test_model(act1 = "relu", churn_data, churn_recipe)),
   tar_target(run_sigmoid, test_model(act1 = "sigmoid", churn_data, churn_recipe)),
 * tar_target(
@@ -482,7 +478,7 @@ tar_pipeline(
 *     top_n(1, accuracy) %&gt;%
 *     head(1)
 * ),
-  tar_target(
+* tar_target(
 *   best_model,
 *   train_best_model(best_run, churn_recipe),
 *   format = "keras"
@@ -550,9 +546,7 @@ library(targets)
 source("R/functions.R")
 tar_options(packages = c("keras", "tidyverse", "rsample", "recipes", "yardstick"))
 tar_pipeline(
-  tar_target(churn_file, "data/customer_churn.csv", format = "file"),
-  tar_target(churn_data, split_data(churn_file)),
-  tar_target(churn_recipe, prepare_recipe(churn_data)),
+  ...,
   tar_target(run_relu, test_model(act1 = "relu", churn_data, churn_recipe)),
   tar_target(run_sigmoid, test_model(act1 = "sigmoid", churn_data, churn_recipe)),
 * tar_target(run_softmax, test_model(act1 = "softmax", churn_data, churn_recipe)),
@@ -578,7 +572,11 @@ tar_pipeline(
 
 
 ```r
-tar_outdated(reporter = "silent")
+tar_outdated()
+```
+
+
+```
 #&gt; [1] "run_softmax" "best_run"    "best_model"
 ```
 
@@ -588,11 +586,12 @@ tar_outdated(reporter = "silent")
 
 
 ```r
-tar_visnetwork(reporter = "silent")
+tar_visnetwork()
 ```
 
-<div id="htmlwidget-2ea65e4225db890d2a90" style="width:80%;height:80%;" class="visNetwork html-widget"></div>
-<script type="application/json" data-for="htmlwidget-2ea65e4225db890d2a90">{"x":{"nodes":{"name":["best_model","best_run","churn_data","churn_file","churn_recipe","run_relu","run_sigmoid","run_softmax","define_model","prepare_recipe","split_data","test_accuracy","test_model","train_best_model","train_model"],"type":["stem","stem","stem","stem","stem","stem","stem","stem","function","function","function","function","function","function","function"],"status":["outdated","outdated","uptodate","uptodate","uptodate","uptodate","uptodate","outdated","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate"],"seconds":[4.01,0.002,0.138,0.001,0.252,6.591,4.78,null,null,null,null,null,null,null,null],"bytes":[40176,195,160022,984545,639206,194,195,null,null,null,null,null,null,null,null],"children":[null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],"id":["best_model","best_run","churn_data","churn_file","churn_recipe","run_relu","run_sigmoid","run_softmax","define_model","prepare_recipe","split_data","test_accuracy","test_model","train_best_model","train_model"],"label":["best_model","best_run","churn_data","churn_file","churn_recipe","run_relu","run_sigmoid","run_softmax","define_model","prepare_recipe","split_data","test_accuracy","test_model","train_best_model","train_model"],"font.size":[20,20,20,20,20,20,20,20,20,20,20,20,20,20,20],"level":[6,5,2,1,3,4,4,4,1,1,1,1,3,3,2],"color":["#3B9AB2","#3B9AB2","#0B775E","#0B775E","#0B775E","#0B775E","#0B775E","#3B9AB2","#0B775E","#0B775E","#0B775E","#0B775E","#0B775E","#0B775E","#0B775E"],"shape":["dot","dot","dot","dot","dot","dot","dot","dot","triangle","triangle","triangle","triangle","triangle","triangle","triangle"]},"edges":{"from":["define_model","train_model","train_model","test_accuracy","churn_data","churn_recipe","test_model","churn_data","churn_recipe","test_model","churn_data","prepare_recipe","churn_data","churn_recipe","test_model","run_relu","run_sigmoid","run_softmax","churn_file","split_data","best_run","churn_recipe","train_best_model"],"to":["train_model","test_model","train_best_model","test_model","run_relu","run_relu","run_relu","run_softmax","run_softmax","run_softmax","churn_recipe","churn_recipe","run_sigmoid","run_sigmoid","run_sigmoid","best_run","best_run","best_run","churn_data","churn_data","best_model","best_model","best_model"],"arrows":["to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to"]},"nodesToDataframe":true,"edgesToDataframe":true,"options":{"width":"100%","height":"100%","nodes":{"shape":"dot","physics":false},"manipulation":{"enabled":false},"edges":{"smooth":{"type":"cubicBezier","forceDirection":"horizontal"}},"layout":{"hierarchical":{"enabled":true,"direction":"LR"}}},"groups":null,"width":null,"height":null,"idselection":{"enabled":false,"style":"width: 150px; height: 26px","useLabels":true,"main":"Select by id"},"byselection":{"enabled":false,"style":"width: 150px; height: 26px","multiple":false,"hideColor":"rgba(200,200,200,0.5)","highlight":false},"main":{"text":"","style":"font-family:Georgia, Times New Roman, Times, serif;font-weight:bold;font-size:20px;text-align:center;"},"submain":null,"footer":null,"background":"rgba(0, 0, 0, 0)","highlight":{"enabled":false,"hoverNearest":false,"degree":1,"algorithm":"all","hideColor":"rgba(200,200,200,0.5)","labelOnly":true},"collapse":{"enabled":true,"fit":false,"resetHighlight":true,"clusterOptions":null,"keepCoord":true,"labelSuffix":"(cluster)"},"legend":{"width":0.2,"useGroups":false,"position":"left","ncol":1,"stepX":100,"stepY":100,"zoom":true,"nodes":{"label":["Outdated","Up to date","Stem","Function"],"color":["#3B9AB2","#0B775E","#899DA4","#899DA4"],"shape":["dot","dot","dot","triangle"],"font.size":[20,20,20,20]},"nodesToDataframe":true}},"evals":[],"jsHooks":[]}</script>
+&lt;center&gt;
+&lt;img src="images/graph3.png", height = "450px" align="middle" style="border: none; box-shadow: none; text-align: center;"&gt;
+&lt;/center&gt;
 
 ---
 
@@ -604,75 +603,16 @@ tar_visnetwork(reporter = "silent")
 
 ```r
 tar_make()
+#&gt; ✓ skip target churn_file
+#&gt; ✓ skip target churn_data
+#&gt; ✓ skip target churn_recipe
+#&gt; ✓ skip target run_relu
+#&gt; ✓ skip target run_sigmoid
 #&gt; ● run target run_softmax
 #&gt; ● run target best_run
 ```
 
 
-```
-#&gt; [32m✓[39m skip target churn_file
-#&gt; [32m✓[39m skip target churn_data
-#&gt; [32m✓[39m skip target churn_recipe
-#&gt; [32m✓[39m skip target run_relu
-#&gt; [34m●[39m run target run_softmax
-#&gt; ── [1mAttaching packages[22m ────────────────────────────────────── tidyverse 1.3.0 ──
-#&gt; [32m✓[39m [34mggplot2[39m 3.3.2     [32m✓[39m [34mpurrr  [39m 0.3.4
-#&gt; [32m✓[39m [34mtibble [39m 3.0.3     [32m✓[39m [34mdplyr  [39m 1.0.0
-#&gt; [32m✓[39m [34mtidyr  [39m 1.1.0     [32m✓[39m [34mstringr[39m 1.4.0
-#&gt; [32m✓[39m [34mreadr  [39m 1.3.1     [32m✓[39m [34mforcats[39m 0.5.0
-#&gt; ── [1mConflicts[22m ───────────────────────────────────────── tidyverse_conflicts() ──
-#&gt; [31mx[39m [34mdplyr[39m::[32mfilter()[39m masks [34mstats[39m::filter()
-#&gt; [31mx[39m [34mdplyr[39m::[32mlag()[39m    masks [34mstats[39m::lag()
-#&gt; 
-#&gt; Attaching package: ‘recipes’
-#&gt; 
-#&gt; The following object is masked from ‘package:stringr’:
-#&gt; 
-#&gt;     fixed
-#&gt; 
-#&gt; The following object is masked from ‘package:stats’:
-#&gt; 
-#&gt;     step
-#&gt; 
-#&gt; For binary classification, the first factor level is assumed to be the event.
-#&gt; Use the argument `event_level = "second"` to alter this as needed.
-#&gt; 
-#&gt; Attaching package: ‘yardstick’
-#&gt; 
-#&gt; The following object is masked from ‘package:readr’:
-#&gt; 
-#&gt;     spec
-#&gt; 
-#&gt; The following object is masked from ‘package:keras’:
-#&gt; 
-#&gt;     get_weights
-#&gt; 
-#&gt; 2020-07-30 17:28:40.595003: I tensorflow/core/platform/cpu_feature_guard.cc:141] Your CPU supports instructions that this TensorFlow binary was not compiled to use: AVX2 FMA
-#&gt; [32m✓[39m skip target run_sigmoid
-#&gt; [34m●[39m run target best_run
-#&gt; [32m✓[39m skip target best_model
-#&gt; 
-#&gt; WARNING: The TensorFlow contrib module will not be included in TensorFlow 2.0.
-#&gt; For more information, please see:
-#&gt;   * https://github.com/tensorflow/community/blob/master/rfcs/20180907-contrib-sunset.md
-#&gt;   * https://github.com/tensorflow/addons
-#&gt; If you depend on functionality not listed there, please file an issue.
-#&gt; 
-#&gt; /Users/c240390/anaconda3/envs/r-tensorflow/lib/python3.7/site-packages/tensorflow/python/framework/dtypes.py:526: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
-#&gt;   _np_qint8 = np.dtype([("qint8", np.int8, 1)])
-#&gt; /Users/c240390/anaconda3/envs/r-tensorflow/lib/python3.7/site-packages/tensorflow/python/framework/dtypes.py:527: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
-#&gt;   _np_quint8 = np.dtype([("quint8", np.uint8, 1)])
-#&gt; /Users/c240390/anaconda3/envs/r-tensorflow/lib/python3.7/site-packages/tensorflow/python/framework/dtypes.py:528: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
-#&gt;   _np_qint16 = np.dtype([("qint16", np.int16, 1)])
-#&gt; /Users/c240390/anaconda3/envs/r-tensorflow/lib/python3.7/site-packages/tensorflow/python/framework/dtypes.py:529: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
-#&gt;   _np_quint16 = np.dtype([("quint16", np.uint16, 1)])
-#&gt; /Users/c240390/anaconda3/envs/r-tensorflow/lib/python3.7/site-packages/tensorflow/python/framework/dtypes.py:530: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
-#&gt;   _np_qint32 = np.dtype([("qint32", np.int32, 1)])
-#&gt; /Users/c240390/anaconda3/envs/r-tensorflow/lib/python3.7/site-packages/tensorflow/python/framework/dtypes.py:535: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
-#&gt;   np_resource = np.dtype([("resource", np.ubyte, 1)])
-#&gt; /Users/c240390/anaconda3/envs/r-tensorflow/lib/python3.7/importlib/_bootstrap.py:219: RuntimeWarning: compiletime version 3.6 of module 'tensorflow.python.framework.fast_tensor_util' does not match runtime version 3.7
-#&gt;   return f(*args, **kwds)
-```
 
 ---
 
@@ -698,47 +638,38 @@ define_model &lt;- function(churn_recipe, units1, units2, act1, act2, act3) {
       activation = act2
     ) %&gt;%
     layer_dropout(rate = 0.1) %&gt;%
-    layer_dense(
-      units = 1,
-      kernel_initializer = "uniform",
-      activation = act3
-    )
-}
+    ...
 ```
 
 ---
 
-## targets knows what to do.
+## Show invalidated functions and targets.
 
 
 ```r
-tar_visnetwork(reporter = "silent")
+tar_visnetwork()
 ```
 
-<div id="htmlwidget-145148985d9eb2ab77e6" style="width:80%;height:80%;" class="visNetwork html-widget"></div>
-<script type="application/json" data-for="htmlwidget-145148985d9eb2ab77e6">{"x":{"nodes":{"name":["best_model","best_run","churn_data","churn_file","churn_recipe","run_relu","run_sigmoid","run_softmax",".Random.seed","add_things","define_model","la","ld","or","ot","packages","prepare_recipe","q0","split_data","td","test_accuracy","test_model","train_best_model","train_model","ur","ut"],"type":["stem","stem","stem","stem","stem","stem","stem","stem","object","function","function","function","function","function","function","object","function","function","function","function","function","function","function","function","function","function"],"status":["uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","outdated","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate"],"seconds":[4.01,0.004,0.138,0.001,0.252,6.591,4.78,7.149,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],"bytes":[40176,195,160022,984545,639206,194,195,202,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],"children":[null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],"id":["best_model","best_run","churn_data","churn_file","churn_recipe","run_relu","run_sigmoid","run_softmax",".Random.seed","add_things","define_model","la","ld","or","ot","packages","prepare_recipe","q0","split_data","td","test_accuracy","test_model","train_best_model","train_model","ur","ut"],"label":["best_model","best_run","churn_data","churn_file","churn_recipe","run_relu","run_sigmoid","run_softmax",".Random.seed","add_things","define_model","la","ld","or","ot","packages","prepare_recipe","q0","split_data","td","test_accuracy","test_model","train_best_model","train_model","ur","ut"],"font.size":[20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20],"level":[6,5,2,1,3,4,4,4,0,0,1,0,0,2,2,0,1,0,1,0,1,3,3,2,1,1],"color":["#0B775E","#0B775E","#0B775E","#0B775E","#0B775E","#0B775E","#0B775E","#0B775E","#3B9AB2","#0B775E","#0B775E","#0B775E","#0B775E","#0B775E","#0B775E","#0B775E","#0B775E","#0B775E","#0B775E","#0B775E","#0B775E","#0B775E","#0B775E","#0B775E","#0B775E","#0B775E"],"shape":["dot","dot","dot","dot","dot","dot","dot","dot","triangleDown","triangle","triangle","triangle","triangle","triangle","triangle","triangleDown","triangle","triangle","triangle","triangle","triangle","triangle","triangle","triangle","triangle","triangle"]},"edges":{"from":["define_model","train_model","train_model","ur","ut","test_accuracy","churn_data","churn_recipe","test_model","churn_data","churn_recipe","test_model","churn_data","prepare_recipe","churn_data","churn_recipe","test_model","run_relu","run_sigmoid","run_softmax","churn_file","split_data","best_run","churn_recipe","train_best_model"],"to":["train_model","test_model","train_best_model","or","ot","test_model","run_relu","run_relu","run_relu","run_softmax","run_softmax","run_softmax","churn_recipe","churn_recipe","run_sigmoid","run_sigmoid","run_sigmoid","best_run","best_run","best_run","churn_data","churn_data","best_model","best_model","best_model"],"arrows":["to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to"]},"nodesToDataframe":true,"edgesToDataframe":true,"options":{"width":"100%","height":"100%","nodes":{"shape":"dot","physics":false},"manipulation":{"enabled":false},"edges":{"smooth":{"type":"cubicBezier","forceDirection":"horizontal"}},"layout":{"hierarchical":{"enabled":true,"direction":"LR"}}},"groups":null,"width":null,"height":null,"idselection":{"enabled":false,"style":"width: 150px; height: 26px","useLabels":true,"main":"Select by id"},"byselection":{"enabled":false,"style":"width: 150px; height: 26px","multiple":false,"hideColor":"rgba(200,200,200,0.5)","highlight":false},"main":{"text":"","style":"font-family:Georgia, Times New Roman, Times, serif;font-weight:bold;font-size:20px;text-align:center;"},"submain":null,"footer":null,"background":"rgba(0, 0, 0, 0)","highlight":{"enabled":false,"hoverNearest":false,"degree":1,"algorithm":"all","hideColor":"rgba(200,200,200,0.5)","labelOnly":true},"collapse":{"enabled":true,"fit":false,"resetHighlight":true,"clusterOptions":null,"keepCoord":true,"labelSuffix":"(cluster)"},"legend":{"width":0.2,"useGroups":false,"position":"left","ncol":1,"stepX":100,"stepY":100,"zoom":true,"nodes":{"label":["Up to date","Outdated","Stem","Object","Function"],"color":["#0B775E","#3B9AB2","#899DA4","#899DA4","#899DA4"],"shape":["dot","dot","dot","triangleDown","triangle"],"font.size":[20,20,20,20,20]},"nodesToDataframe":true}},"evals":[],"jsHooks":[]}</script>
+&lt;center&gt;
+&lt;img src="images/graph4.png", height = "450px" align="middle" style="border: none; box-shadow: none; text-align: center;"&gt;
+&lt;/center&gt;
 
 ---
 
-## targets knows what to do.
+## Rerun invalidated targets.
 
 
 ```r
 tar_make()
-```
-
-
-```
-#&gt; ✓ skip target churn_file
 #&gt; ✓ skip target churn_data
 #&gt; ✓ skip target churn_recipe
-#&gt; ✓ skip target run_relu
-#&gt; ✓ skip target run_softmax
-#&gt; ✓ skip target run_sigmoid
-#&gt; ✓ skip target best_run
-#&gt; ✓ skip target best_model
-#&gt; ✓ Already up to date.
+#&gt; ● run target run_relu
+#&gt; ● run target run_sigmoid
+#&gt; ● run target run_softmax
+#&gt; ● run target best_run
+#&gt; ● run target best_model
 ```
+
 ---
 
 ## Similar story if the data file changes.
@@ -777,11 +708,15 @@ tar_make(plan)
 
 
 ```r
-tar_visnetwork(reporter = "silent")
+tar_outdated()
+#&gt; character(0)
+
+tar_visnetwork()
 ```
 
-<div id="htmlwidget-b6210ab7efdda1346980" style="width:80%;height:80%;" class="visNetwork html-widget"></div>
-<script type="application/json" data-for="htmlwidget-b6210ab7efdda1346980">{"x":{"nodes":{"name":["best_model","best_run","churn_data","churn_file","churn_recipe","run_relu","run_sigmoid","run_softmax",".Random.seed","add_things","define_model","la","ld","or","ot","packages","prepare_recipe","q0","split_data","td","test_accuracy","test_model","train_best_model","train_model","ur","ut"],"type":["stem","stem","stem","stem","stem","stem","stem","stem","object","function","function","function","function","function","function","object","function","function","function","function","function","function","function","function","function","function"],"status":["uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate"],"seconds":[4.01,0.004,0.138,0.001,0.252,6.591,4.78,7.149,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],"bytes":[40176,195,160022,984545,639206,194,195,202,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],"children":[null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],"id":["best_model","best_run","churn_data","churn_file","churn_recipe","run_relu","run_sigmoid","run_softmax",".Random.seed","add_things","define_model","la","ld","or","ot","packages","prepare_recipe","q0","split_data","td","test_accuracy","test_model","train_best_model","train_model","ur","ut"],"label":["best_model","best_run","churn_data","churn_file","churn_recipe","run_relu","run_sigmoid","run_softmax",".Random.seed","add_things","define_model","la","ld","or","ot","packages","prepare_recipe","q0","split_data","td","test_accuracy","test_model","train_best_model","train_model","ur","ut"],"font.size":[20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20],"level":[6,5,2,1,3,4,4,4,0,0,1,0,0,2,2,0,1,0,1,0,1,3,3,2,1,1],"color":["#0B775E","#0B775E","#0B775E","#0B775E","#0B775E","#0B775E","#0B775E","#0B775E","#0B775E","#0B775E","#0B775E","#0B775E","#0B775E","#0B775E","#0B775E","#0B775E","#0B775E","#0B775E","#0B775E","#0B775E","#0B775E","#0B775E","#0B775E","#0B775E","#0B775E","#0B775E"],"shape":["dot","dot","dot","dot","dot","dot","dot","dot","triangleDown","triangle","triangle","triangle","triangle","triangle","triangle","triangleDown","triangle","triangle","triangle","triangle","triangle","triangle","triangle","triangle","triangle","triangle"]},"edges":{"from":["define_model","train_model","train_model","ur","ut","test_accuracy","churn_data","churn_recipe","test_model","churn_data","churn_recipe","test_model","churn_data","prepare_recipe","churn_data","churn_recipe","test_model","run_relu","run_sigmoid","run_softmax","churn_file","split_data","best_run","churn_recipe","train_best_model"],"to":["train_model","test_model","train_best_model","or","ot","test_model","run_relu","run_relu","run_relu","run_softmax","run_softmax","run_softmax","churn_recipe","churn_recipe","run_sigmoid","run_sigmoid","run_sigmoid","best_run","best_run","best_run","churn_data","churn_data","best_model","best_model","best_model"],"arrows":["to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to"]},"nodesToDataframe":true,"edgesToDataframe":true,"options":{"width":"100%","height":"100%","nodes":{"shape":"dot","physics":false},"manipulation":{"enabled":false},"edges":{"smooth":{"type":"cubicBezier","forceDirection":"horizontal"}},"layout":{"hierarchical":{"enabled":true,"direction":"LR"}}},"groups":null,"width":null,"height":null,"idselection":{"enabled":false,"style":"width: 150px; height: 26px","useLabels":true,"main":"Select by id"},"byselection":{"enabled":false,"style":"width: 150px; height: 26px","multiple":false,"hideColor":"rgba(200,200,200,0.5)","highlight":false},"main":{"text":"","style":"font-family:Georgia, Times New Roman, Times, serif;font-weight:bold;font-size:20px;text-align:center;"},"submain":null,"footer":null,"background":"rgba(0, 0, 0, 0)","highlight":{"enabled":false,"hoverNearest":false,"degree":1,"algorithm":"all","hideColor":"rgba(200,200,200,0.5)","labelOnly":true},"collapse":{"enabled":true,"fit":false,"resetHighlight":true,"clusterOptions":null,"keepCoord":true,"labelSuffix":"(cluster)"},"legend":{"width":0.2,"useGroups":false,"position":"left","ncol":1,"stepX":100,"stepY":100,"zoom":true,"nodes":{"label":["Up to date","Stem","Object","Function"],"color":["#0B775E","#899DA4","#899DA4","#899DA4"],"shape":["dot","dot","triangleDown","triangle"],"font.size":[20,20,20,20]},"nodesToDataframe":true}},"evals":[],"jsHooks":[]}</script>
+&lt;center&gt;
+&lt;img src="images/graph5.png", height = "400px" align="middle" style="border: none; box-shadow: none; text-align: center;"&gt;
+&lt;/center&gt;
 
 ---
 
@@ -799,14 +734,11 @@ remotes::install_github("wlandau/targets")
 * RStudio Cloud workspace: &lt;https://rstudio.cloud/project/1430828/&gt;
 * These slides: &lt;https://wlandau.github.io/targets-tutorial&gt;
 * Tutorial materials: &lt;https://github.com/wlandau/targets-tutorial&gt;
-
----
-
-## Links
-
 - Development repository: &lt;https://github.com/wlandau/targets&gt;
 - Full user manual: &lt;https://wlandau.github.io/targets-manual/&gt;
 - Reference website: &lt;https://wlandau.github.io/targets/&gt;
+
+---
 
 ## Thanks
 

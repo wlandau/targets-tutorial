@@ -109,10 +109,9 @@ tar_destroy()
 3. Multiple sub-tasks.
 4. Frequent changes to code and data.
 
-<img src = "./images/sisyphus.svg" align="left" style="border: none; box-shadow: none; height: 375px; text-align: center;">
+<img src = "./images/sisyphus.svg" align="left" style="border: none; box-shadow: none; height: 325px; text-align: center;">
 <br>
-
-* <https://openclipart.org/detail/275842/sisyphus-overcoming-silhouette>
+<a href="https://openclipart.org/detail/275842/sisyphus-overcoming-silhouette">https://openclipart.org/detail/275842/sisyphus-overcoming-silhouette</a>
 
 ---
 
@@ -177,14 +176,13 @@ tar_destroy()
 .large[
 * `drake` is still supported and maintained.
 * `targets` is the long-term successor to `drake`.
-* Advantages of `targets` over `drake`:
+* Advantages of `targets` over `drake`: <https://wlandau.github.io/targets/articles/need.html>
     * Better guardrails by design.
     * Lighter, friendlier data management.
     * Transparent introspection of global objects.
     * More powerful dynamic branching.
     * Improved parallel efficiency.
     * Easier metaprogramming, e.g. target archetypes: <https://wlandau.github.io/tarchetypes>.
-* Details: <https://wlandau.github.io/targets/articles/need.html>
 ]
 
 ---
@@ -195,15 +193,11 @@ tar_destroy()
 - [IBM Watson Telco Customer Churn dataset](https://www.ibm.com/communities/analytics/watson-analytics-blog/predictive-insights-in-the-telco-customer-churn-data-set/).
 - Workflow principles generalize to the other fields, such as the life sciences.
 
-<img src = "./images/combine.png" style="border: none; box-shadow: none; height: 200px">
-
-<div style="font-size: 0.5em;"><a href="https://openclipart.org/detail/90739/newplus">https://openclipart.org/detail/90739/newplus</a>, <a href="https://github.com/rstudio/keras">https://github.com/rstudio/keras</a></div>
-
 ---
 
 background-image: ./images/not.png
 
-## <img src="./images/no.png" width="40" height="40"> Say goodbye to numbered imperative scripts!
+## <img src="./images/no.png" width="40" height="40"> Move away from numbered imperative scripts.
 
 ```{r, eval = FALSE}
 run_everything.R
@@ -219,7 +213,7 @@ data/
 
 ---
 
-## <img src="./images/yes.png" width="60" height="40"> drake wants you to write **functions**.
+## <img src="./images/yes.png" width="60" height="40"> Embrace **functions**.
 
 >    - Everything that exists is an object.
 >    - Everything that happens is a function call.
@@ -238,7 +232,7 @@ add_things(c(3, 4), c(5, 6))
 
 ---
 
-## Functions in a targets workflow
+## Functions for customer churn
 
 ```{r, eval = FALSE}
 split_data <- function(churn_file) {
@@ -264,7 +258,7 @@ prepare_recipe <- function(churn_data) {
 
 ---
 
-## Functions in a drake workflow
+## Functions for customer churn
 
 ```{r, eval = FALSE}
 define_model <- function(churn_recipe, units1, units2, act1, act2, act3) {
@@ -292,7 +286,7 @@ train_best_model <- function(best_run, churn_recipe) {
 
 ## Typical project structure
 
-* There are *many* variations on this theme.
+* There are many variations on this theme.
 
 ```{r, eval = FALSE}
 _targets/  # Output data objects are automatically written here.
@@ -305,7 +299,7 @@ data/
 
 ---
 
-## Build up your workflow in a pipeline of targets.
+## Build up your workflow as a pipeline of targets.
 
 ```{r, eval = FALSE}
 # _targets.R
@@ -344,9 +338,13 @@ tar_manifest(fields = c("name", "command"))
 
 ## targets understands code and data dependencies.
 
-```{r}
-tar_visnetwork(reporter = "silent")
+```{r, eval = FALSE}
+tar_visnetwork()
 ```
+
+<center>
+<img src="images/graph1.png", height = "450px" align="middle" style="border: none; box-shadow: none; text-align: center;">
+</center>
 
 ---
 
@@ -375,18 +373,18 @@ ncol(juice(churn_recipe))
 
 ---
 
-## Build up the plan *gradually*.
+## Build up the pipeline *gradually*.
 
 .large[
 1. Add a couple targets.
-2. Build targets with `make(plan)`.
-3. Inspect targets with `tar_load()` and `tar_read()`.
-4. *Repeat often*. Not as time-consuming as you might think!
+2. Run the pipeline with `tar_make()`.
+3. Inspect the new targets with `tar_load()` and `tar_read()`.
+4. Repeat often. Not very time-consuming because `tar_make()` skips up-to-date targets.
 ]
 
 ---
 
-## Add some model runs.
+## Add some models.
 
 ```{r, eval = FALSE}
 # _targets.R
@@ -421,17 +419,24 @@ tar_pipeline(
 
 ## Previous work is still up to date.
 
-```{r, message = FALSE}
-tar_outdated(reporter = "silent")
+```{r, eval = FALSE}
+tar_outdated()
+```
+
+```{r, echo = FALSE}
+tar_outdated(reporter = "silent", callr_function = NULL)
 ```
 
 ---
 
 ## Previous work is still up to date.
 
-```{r}
-tar_visnetwork(reporter = "silent")
+```{r, eval = FALSE}
+tar_visnetwork()
 ```
+<center>
+<img src="images/graph2.png", height = "450px" align="middle" style="border: none; box-shadow: none; text-align: center;">
+</center>
 
 ---
 
@@ -441,7 +446,7 @@ tar_visnetwork(reporter = "silent")
 tar_make()
 ```
 
-```{r, echo = FALSE}
+```{r, echo = FALSE, output = FALSE}
 tar_make(callr_function = NULL)
 ```
 
@@ -587,17 +592,25 @@ tar_pipeline(
 
 ## What gets done stays done.
 
-```{r, message = FALSE}
-tar_outdated(reporter = "silent")
+```{r, eval = FALSE}
+tar_outdated()
+```
+
+```{r, echo = FALSE}
+tar_outdated(reporter = "silent", callr_function = NULL)
 ```
 
 ---
 
 ## What gets done stays done.
 
-```{r}
-tar_visnetwork(reporter = "silent")
+```{r, eval = FALSE}
+tar_visnetwork()
 ```
+
+<center>
+<img src="images/graph3.png", height = "450px" align="middle" style="border: none; box-shadow: none; text-align: center;">
+</center>
 
 ---
 
@@ -608,19 +621,24 @@ tar_visnetwork(reporter = "silent")
 
 ```{r, eval = FALSE}
 tar_make()
+#> ✓ skip target churn_file
+#> ✓ skip target churn_data
+#> ✓ skip target churn_recipe
+#> ✓ skip target run_relu
+#> ✓ skip target run_sigmoid
 #> ● run target run_softmax
 #> ● run target best_run
 ```
 
 ```{r, echo = FALSE, message = FALSE}
-tar_make(callr_function = NULL)
+tar_make(callr_function = NULL, reporter = "silent")
 ```
 
 ---
 
 ## What if we need to change a function?
 
-```{r}
+```{r, eval = FALSE}
 define_model <- function(churn_recipe, units1, units2, act1, act2, act3) {
   input_shape <- ncol(
     juice(churn_recipe, all_predictors(), composition = "matrix")
@@ -639,37 +657,36 @@ define_model <- function(churn_recipe, units1, units2, act1, act2, act3) {
       activation = act2
     ) %>%
     layer_dropout(rate = 0.1) %>%
-    layer_dense(
-      units = 1,
-      kernel_initializer = "uniform",
-      activation = act3
-    )
-}
+    ...
 ```
 
 ---
 
-## targets knows what to do.
+## Show invalidated functions and targets.
 
 ```{r, eval = FALSE}
-tar_visnetwork(reporter = "silent")
+tar_visnetwork()
 ```
 
-```{r, echo = FALSE}
-tar_visnetwork(reporter = "silent", callr_function = NULL)
-```
+<center>
+<img src="images/graph4.png", height = "450px" align="middle" style="border: none; box-shadow: none; text-align: center;">
+</center>
 
 ---
 
-## targets knows what to do.
+## Rerun invalidated targets.
 
 ```{r, eval = FALSE}
 tar_make()
+#> ✓ skip target churn_data
+#> ✓ skip target churn_recipe
+#> ● run target run_relu
+#> ● run target run_sigmoid
+#> ● run target run_softmax
+#> ● run target best_run
+#> ● run target best_model
 ```
 
-```{r, echo = FALSE}
-tar_make(callr_function = NULL)
-```
 ---
 
 ## Similar story if the data file changes.
@@ -705,12 +722,15 @@ tar_make(plan)
 ## Evidence of reproducibility
 
 ```{r, eval = FALSE}
-tar_visnetwork(reporter = "silent")
+tar_outdated()
+#> character(0)
+
+tar_visnetwork()
 ```
 
-```{r, echo = FALSE}
-tar_visnetwork(reporter = "silent", callr_function = NULL)
-```
+<center>
+<img src="images/graph5.png", height = "400px" align="middle" style="border: none; box-shadow: none; text-align: center;">
+</center>
 
 ---
 
@@ -727,14 +747,11 @@ remotes::install_github("wlandau/targets")
 * RStudio Cloud workspace: <https://rstudio.cloud/project/1430828/>
 * These slides: <https://wlandau.github.io/targets-tutorial>
 * Tutorial materials: <https://github.com/wlandau/targets-tutorial>
-
----
-
-## Links
-
 - Development repository: <https://github.com/wlandau/targets>
 - Full user manual: <https://wlandau.github.io/targets-manual/>
 - Reference website: <https://wlandau.github.io/targets/>
+
+---
 
 ## Thanks
 
@@ -778,4 +795,5 @@ Files and R Markdown | [`6-metaprogramming.Rmd`](https://github.com/wlandau/targ
 
 ```{r, include = FALSE}
 tar_destroy()
+unlink("_targets.R")
 ```
