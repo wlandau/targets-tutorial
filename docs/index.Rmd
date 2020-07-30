@@ -628,6 +628,7 @@ tar_make()
 #> ✓ skip target run_sigmoid
 #> ● run target run_softmax
 #> ● run target best_run
+#> ✓ skip target best_model
 ```
 
 ```{r, echo = FALSE, message = FALSE}
@@ -714,6 +715,9 @@ tar_make(plan)
 #> ✓ skip target churn_recipe
 #> ✓ skip target run_relu
 #> ✓ skip target run_sigmoid
+#> ✓ skip target run_softmax
+#> ✓ skip target best_run
+#> ✓ skip target best_model
 #> ✓ Already up to date.
 ```
 
@@ -747,9 +751,9 @@ remotes::install_github("wlandau/targets")
 * RStudio Cloud workspace: <https://rstudio.cloud/project/1430828/>
 * These slides: <https://wlandau.github.io/targets-tutorial>
 * Tutorial materials: <https://github.com/wlandau/targets-tutorial>
-- Development repository: <https://github.com/wlandau/targets>
-- Full user manual: <https://wlandau.github.io/targets-manual/>
-- Reference website: <https://wlandau.github.io/targets/>
+* Development repository: <https://github.com/wlandau/targets>
+* Full user manual: <https://wlandau.github.io/targets-manual/>
+* Reference website: <https://wlandau.github.io/targets/>
 
 ---
 

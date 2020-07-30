@@ -88,9 +88,7 @@ background-size: contain;
 
 &lt;img src = "./images/sisyphus.svg" align="left" style="border: none; box-shadow: none; height: 325px; text-align: center;"&gt;
 &lt;br&gt;
-&lt;br&gt;
-
-&lt;div style="font-size: 0.5em;"&gt;&lt;a href="https://openclipart.org/detail/275842/sisyphus-overcoming-silhouette"&gt;https://openclipart.org/detail/275842/sisyphus-overcoming-silhouette&lt;/a&gt;&lt;/div&gt;
+&lt;a href="https://openclipart.org/detail/275842/sisyphus-overcoming-silhouette"&gt;https://openclipart.org/detail/275842/sisyphus-overcoming-silhouette&lt;/a&gt;
 
 ---
 
@@ -155,14 +153,13 @@ background-size: contain;
 .large[
 * `drake` is still supported and maintained.
 * `targets` is the long-term successor to `drake`.
-* Advantages of `targets` over `drake`:
+* Advantages of `targets` over `drake`: &lt;https://wlandau.github.io/targets/articles/need.html&gt;
     * Better guardrails by design.
     * Lighter, friendlier data management.
     * Transparent introspection of global objects.
     * More powerful dynamic branching.
     * Improved parallel efficiency.
     * Easier metaprogramming, e.g. target archetypes: &lt;https://wlandau.github.io/tarchetypes&gt;.
-* Details: &lt;https://wlandau.github.io/targets/articles/need.html&gt;
 ]
 
 ---
@@ -449,13 +446,13 @@ tar_read(run_relu)
 #&gt; # A tibble: 1 x 6
 #&gt;   accuracy units1 units2 act1  act2  act3   
 #&gt;      &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;  
-#&gt; 1    0.796     16     16 relu  relu  sigmoid
+#&gt; 1    0.797     16     16 relu  relu  sigmoid
 
 tar_read(run_sigmoid)
 #&gt; # A tibble: 1 x 6
 #&gt;   accuracy units1 units2 act1    act2  act3   
 #&gt;      &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;  
-#&gt; 1    0.801     16     16 sigmoid relu  sigmoid
+#&gt; 1    0.800     16     16 sigmoid relu  sigmoid
 ```
 
 ---
@@ -610,6 +607,7 @@ tar_make()
 #&gt; ✓ skip target run_sigmoid
 #&gt; ● run target run_softmax
 #&gt; ● run target best_run
+#&gt; ✓ skip target best_model
 ```
 
 
