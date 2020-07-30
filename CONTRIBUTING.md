@@ -34,7 +34,9 @@ External code contributions are extremely helpful in the right circumstances. He
 
 Please also follow these additional guidelines.
 
-* Respect the architecture and reasoning of the package. Depending on the scope of your work, you may want to read the design documents (package vignettes).
+* Respect the architecture and reasoning of the project.
 * If possible, keep contributions small enough to easily review manually. It is okay to split up your work into multiple pull requests.
-* Format your code according to the [tidyverse style guide](https://style.tidyverse.org/) and check your formatting with the `lint_package()` function from the [`lintr`](https://github.com/jimhester/lintr) package.
+* Format your code according to the [tidyverse style guide](https://style.tidyverse.org/).
 * Describe your contribution in the project's [`NEWS.md`](https://github.com/wlandau/targets-tutorial/blob/master/NEWS.md) file. Be sure to mention relevent GitHub issue numbers and your GitHub name as done in existing news entries.
+* If your description is substantial, add yourself as an author or contributor in `AUTHORS.md`.
+
