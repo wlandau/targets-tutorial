@@ -3,20 +3,6 @@ title: "Custom functions for the customer churn workflow"
 output: html_document
 ---
 
-```{r, include = FALSE}
-options(
-  crayon.enabled = FALSE,
-  readr.show_progress = FALSE,
-  tidyverse.quiet = TRUE,
-  warnPartialMatchArgs = FALSE
-)
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>",
-  paged.print = FALSE
-)
-```
-
 # About
 
 In this notebook, we will explore Keras models that predict customer behavior, and we will express our implementation in 7 custom functions. These functions are the essential building blocks of the `targets` workflows to come.
