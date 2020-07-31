@@ -5,7 +5,7 @@ output: html_notebook
 
 # About
 
-To implement the customer churn prediction workflow, you will create a `drake` plan. A `drake` plan is a data frame with code. It has the *targets* you will build and the R *commands* to build those targets. Helpful references:
+To implement the customer churn prediction workflow, you will create a `targets` pipeline. A `drake` plan is a data frame with code. It has the *targets* you will build and the R *commands* to build those targets. Helpful references:
 
 - The chapter on `drake` plans: <https://books.ropensci.org/drake/plans.html>
 - The opening presentation of this workshop: <https://wlandau.github.io/learndrake>
