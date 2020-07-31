@@ -305,7 +305,7 @@ data/
 # _targets.R
 library(targets)
 source("R/functions.R")
-tar_options(packages = c("keras", "tidyverse", "rsample", "recipes", "yardstick"))
+tar_option_set(packages = c("keras", "tidyverse", "rsample", "recipes", "yardstick"))
 tar_pipeline(
   tar_target(churn_file, "data/customer_churn.csv", format = "file"),
   tar_target(churn_data, split_data(churn_file)),
@@ -317,7 +317,7 @@ tar_pipeline(
 tar_script({
 library(targets)
 source("R/functions.R")
-tar_options(packages = c("keras", "tidyverse", "rsample", "recipes", "yardstick"))
+tar_option_set(packages = c("keras", "tidyverse", "rsample", "recipes", "yardstick"))
 tar_pipeline(
   tar_target(churn_file, "data/customer_churn.csv", format = "file"),
   tar_target(churn_data, split_data(churn_file)),
@@ -343,7 +343,7 @@ tar_visnetwork()
 ```
 
 <center>
-<img src="images/graph1.png", height = "450px" align="middle" style="border: none; box-shadow: none; text-align: center;">
+<img src="images/graph1.png", height = "400px" align="middle" style="border: none; box-shadow: none; text-align: center;">
 </center>
 
 ---
@@ -390,7 +390,7 @@ ncol(juice(churn_recipe))
 # _targets.R
 library(targets)
 source("R/functions.R")
-tar_options(packages = c("keras", "tidyverse", "rsample", "recipes", "yardstick"))
+tar_option_set(packages = c("keras", "tidyverse", "rsample", "recipes", "yardstick"))
 tar_pipeline(
   tar_target(churn_file, "data/customer_churn.csv", format = "file"),
   tar_target(churn_data, split_data(churn_file)),
@@ -404,7 +404,7 @@ tar_pipeline(
 tar_script({
 library(targets)
 source("R/functions.R")
-tar_options(packages = c("keras", "tidyverse", "rsample", "recipes", "yardstick"))
+tar_option_set(packages = c("keras", "tidyverse", "rsample", "recipes", "yardstick"))
 tar_pipeline(
   tar_target(churn_file, "data/customer_churn.csv", format = "file"),
   tar_target(churn_data, split_data(churn_file)),
@@ -435,7 +435,7 @@ tar_outdated(reporter = "silent", callr_function = NULL)
 tar_visnetwork()
 ```
 <center>
-<img src="images/graph2.png", height = "450px" align="middle" style="border: none; box-shadow: none; text-align: center;">
+<img src="images/graph2.png", height = "400px" align="middle" style="border: none; box-shadow: none; text-align: center;">
 </center>
 
 ---
@@ -468,7 +468,7 @@ tar_read(run_sigmoid)
 # _targets.R
 library(targets)
 source("R/functions.R")
-tar_options(packages = c("keras", "tidyverse", "rsample", "recipes", "yardstick"))
+tar_option_set(packages = c("keras", "tidyverse", "rsample", "recipes", "yardstick"))
 tar_pipeline(
   ...,
   tar_target(run_relu, test_model(act1 = "relu", churn_data, churn_recipe)),
@@ -491,7 +491,7 @@ tar_pipeline(
 tar_script({
 library(targets)
 source("R/functions.R")
-tar_options(packages = c("keras", "tidyverse", "rsample", "recipes", "yardstick"))
+tar_option_set(packages = c("keras", "tidyverse", "rsample", "recipes", "yardstick"))
 tar_pipeline(
   tar_target(churn_file, "data/customer_churn.csv", format = "file"),
   tar_target(churn_data, split_data(churn_file)),
@@ -541,7 +541,7 @@ tar_read(best_model)
 # _targets.R
 library(targets)
 source("R/functions.R")
-tar_options(packages = c("keras", "tidyverse", "rsample", "recipes", "yardstick"))
+tar_option_set(packages = c("keras", "tidyverse", "rsample", "recipes", "yardstick"))
 tar_pipeline(
   ...,
   tar_target(run_relu, test_model(act1 = "relu", churn_data, churn_recipe)),
@@ -553,11 +553,7 @@ tar_pipeline(
       top_n(1, accuracy) %>%
       head(1)
   ),
-  tar_target(
-    best_model,
-    train_best_model(best_run, churn_recipe),
-    format = "keras"
-  )
+  ...
 )
 ```
 
@@ -565,7 +561,7 @@ tar_pipeline(
 tar_script({
 library(targets)
 source("R/functions.R")
-tar_options(packages = c("keras", "tidyverse", "rsample", "recipes", "yardstick"))
+tar_option_set(packages = c("keras", "tidyverse", "rsample", "recipes", "yardstick"))
 tar_pipeline(
   tar_target(churn_file, "data/customer_churn.csv", format = "file"),
   tar_target(churn_data, split_data(churn_file)),
@@ -609,7 +605,7 @@ tar_visnetwork()
 ```
 
 <center>
-<img src="images/graph3.png", height = "450px" align="middle" style="border: none; box-shadow: none; text-align: center;">
+<img src="images/graph3.png", height = "400px" align="middle" style="border: none; box-shadow: none; text-align: center;">
 </center>
 
 ---
@@ -670,7 +666,7 @@ tar_visnetwork()
 ```
 
 <center>
-<img src="images/graph4.png", height = "450px" align="middle" style="border: none; box-shadow: none; text-align: center;">
+<img src="images/graph4.png", height = "400px" align="middle" style="border: none; box-shadow: none; text-align: center;">
 </center>
 
 ---
@@ -735,7 +731,7 @@ tar_visnetwork()
 ```
 
 <center>
-<img src="images/graph5.png", height = "400px" align="middle" style="border: none; box-shadow: none; text-align: center;">
+<img src="images/graph5.png", height = "350px" align="middle" style="border: none; box-shadow: none; text-align: center;">
 </center>
 
 ---

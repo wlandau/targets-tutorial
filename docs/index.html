@@ -290,7 +290,7 @@ data/
 # _targets.R
 library(targets)
 source("R/functions.R")
-tar_options(packages = c("keras", "tidyverse", "rsample", "recipes", "yardstick"))
+tar_option_set(packages = c("keras", "tidyverse", "rsample", "recipes", "yardstick"))
 tar_pipeline(
   tar_target(churn_file, "data/customer_churn.csv", format = "file"),
   tar_target(churn_data, split_data(churn_file)),
@@ -325,7 +325,7 @@ tar_visnetwork()
 ```
 
 &lt;center&gt;
-&lt;img src="images/graph1.png", height = "450px" align="middle" style="border: none; box-shadow: none; text-align: center;"&gt;
+&lt;img src="images/graph1.png", height = "400px" align="middle" style="border: none; box-shadow: none; text-align: center;"&gt;
 &lt;/center&gt;
 
 ---
@@ -380,7 +380,7 @@ ncol(juice(churn_recipe))
 # _targets.R
 library(targets)
 source("R/functions.R")
-tar_options(packages = c("keras", "tidyverse", "rsample", "recipes", "yardstick"))
+tar_option_set(packages = c("keras", "tidyverse", "rsample", "recipes", "yardstick"))
 tar_pipeline(
   tar_target(churn_file, "data/customer_churn.csv", format = "file"),
   tar_target(churn_data, split_data(churn_file)),
@@ -415,7 +415,7 @@ tar_outdated()
 tar_visnetwork()
 ```
 &lt;center&gt;
-&lt;img src="images/graph2.png", height = "450px" align="middle" style="border: none; box-shadow: none; text-align: center;"&gt;
+&lt;img src="images/graph2.png", height = "400px" align="middle" style="border: none; box-shadow: none; text-align: center;"&gt;
 &lt;/center&gt;
 
 ---
@@ -446,13 +446,13 @@ tar_read(run_relu)
 #&gt; # A tibble: 1 x 6
 #&gt;   accuracy units1 units2 act1  act2  act3   
 #&gt;      &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;  
-#&gt; 1    0.796     16     16 relu  relu  sigmoid
+#&gt; 1    0.791     16     16 relu  relu  sigmoid
 
 tar_read(run_sigmoid)
 #&gt; # A tibble: 1 x 6
 #&gt;   accuracy units1 units2 act1    act2  act3   
 #&gt;      &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;  
-#&gt; 1    0.800     16     16 sigmoid relu  sigmoid
+#&gt; 1    0.801     16     16 sigmoid relu  sigmoid
 ```
 
 ---
@@ -464,7 +464,7 @@ tar_read(run_sigmoid)
 # _targets.R
 library(targets)
 source("R/functions.R")
-tar_options(packages = c("keras", "tidyverse", "rsample", "recipes", "yardstick"))
+tar_option_set(packages = c("keras", "tidyverse", "rsample", "recipes", "yardstick"))
 tar_pipeline(
   ...,
   tar_target(run_relu, test_model(act1 = "relu", churn_data, churn_recipe)),
@@ -541,7 +541,7 @@ tar_read(best_model)
 # _targets.R
 library(targets)
 source("R/functions.R")
-tar_options(packages = c("keras", "tidyverse", "rsample", "recipes", "yardstick"))
+tar_option_set(packages = c("keras", "tidyverse", "rsample", "recipes", "yardstick"))
 tar_pipeline(
   ...,
   tar_target(run_relu, test_model(act1 = "relu", churn_data, churn_recipe)),
@@ -553,11 +553,7 @@ tar_pipeline(
       top_n(1, accuracy) %&gt;%
       head(1)
   ),
-  tar_target(
-    best_model,
-    train_best_model(best_run, churn_recipe),
-    format = "keras"
-  )
+  ...
 )
 ```
 
@@ -587,7 +583,7 @@ tar_visnetwork()
 ```
 
 &lt;center&gt;
-&lt;img src="images/graph3.png", height = "450px" align="middle" style="border: none; box-shadow: none; text-align: center;"&gt;
+&lt;img src="images/graph3.png", height = "400px" align="middle" style="border: none; box-shadow: none; text-align: center;"&gt;
 &lt;/center&gt;
 
 ---
@@ -649,7 +645,7 @@ tar_visnetwork()
 ```
 
 &lt;center&gt;
-&lt;img src="images/graph4.png", height = "450px" align="middle" style="border: none; box-shadow: none; text-align: center;"&gt;
+&lt;img src="images/graph4.png", height = "400px" align="middle" style="border: none; box-shadow: none; text-align: center;"&gt;
 &lt;/center&gt;
 
 ---
@@ -718,7 +714,7 @@ tar_visnetwork()
 ```
 
 &lt;center&gt;
-&lt;img src="images/graph5.png", height = "400px" align="middle" style="border: none; box-shadow: none; text-align: center;"&gt;
+&lt;img src="images/graph5.png", height = "350px" align="middle" style="border: none; box-shadow: none; text-align: center;"&gt;
 &lt;/center&gt;
 
 ---
