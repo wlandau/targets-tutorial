@@ -1,4 +1,5 @@
 *~
+*.html
 *.out
 *.Rout
 .DS_Store
