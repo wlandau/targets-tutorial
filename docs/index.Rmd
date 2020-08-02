@@ -277,7 +277,7 @@ test_model <- function(churn_data, churn_recipe, units1, units2, act1, act2, act
   # ...
 }
 
-train_best_model <- function(best_run, churn_recipe) {
+retrain_run <- function(churn_run, churn_recipe) {
   # ...
 }
 ```
@@ -481,7 +481,7 @@ tar_pipeline(
   ), #<<
   tar_target( #<<
     best_model, #<<
-    train_best_model(best_run, churn_recipe), #<<
+    retrain_run(best_run, churn_recipe), #<<
     format = "keras" #<<
   ) #<<
 )
@@ -506,7 +506,7 @@ tar_pipeline(
   ),
   tar_target(
     best_model,
-    train_best_model(best_run, churn_recipe),
+    retrain_run(best_run, churn_recipe),
     format = "keras"
   )
 )
@@ -577,7 +577,7 @@ tar_pipeline(
   ),
   tar_target(
     best_model,
-    train_best_model(best_run, churn_recipe),
+    retrain_run(best_run, churn_recipe),
     format = "keras"
   )
 )

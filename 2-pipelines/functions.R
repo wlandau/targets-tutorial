@@ -146,12 +146,18 @@ train_model <- function(
 #' @description Predict customer churn on the training dataset.
 #' @export
 #' @return An trained Keras model object.
-#' @inheritParams define_model
+#' @param churn_data An `rsplit` object of customer churn training
+#'   and testing data.
+#' @param churn_recipe A `recipes` object with the preprocessing steps
+#'   and preprocessed testing data.
+#' @param churn_model A Keras model trained on the customer churn
+#'   training dataset.
 #' @examples
 #' library(keras)
 #' library(recipes)
 #' library(rsample)
 #' library(tidyverse)
+#' library(yardstick)
 #' churn_data <- split_data("data/churn.csv")
 #' churn_recipe <- prepare_recipe(churn_data)
 #' churn_model <- train_model(churn_recipe, 16, 16, "sigmoid", "relu", "relu")
@@ -187,6 +193,22 @@ test_accuracy <- function(churn_data, churn_recipe, churn_model) {
     pull(.estimate)
 }
 
+#' @title Train and test the customer churn Keras model.
+#' @description Train on the training dataset, then show the accuracy
+#'   on the testing dataset.
+#' @export
+#' @return A one-row data frame of the testing accuracy and
+#'   model hyperparameters.
+#' @inheritParams define_model
+#' @examples
+#' library(keras)
+#' library(recipes)
+#' library(rsample)
+#' library(tidyverse)
+#' library(yardstick)
+#' churn_data <- split_data("data/churn.csv")
+#' churn_recipe <- prepare_recipe(churn_data)
+#' test_model(churn_data, churn_recipe, 16, 16, "relu", "relu", "relu")
 test_model <- function(
   churn_data,
   churn_recipe,
@@ -196,8 +218,8 @@ test_model <- function(
   act2 = "relu",
   act3 = "sigmoid"
 ) {
-  model <- train_model(churn_recipe, units1, units2, act1, act2, act3)
-  accuracy <- test_accuracy(churn_data, churn_recipe, model)
+  churn_model <- train_model(churn_recipe, units1, units2, act1, act2, act3)
+  accuracy <- test_accuracy(churn_data, churn_recipe, churn_model)
   tibble(
     accuracy = accuracy,
     units1 = units1,
@@ -208,13 +230,30 @@ test_model <- function(
   )
 }
 
-train_best_model <- function(best_run, churn_recipe) {
+#' @title Retrain a Keras model using the results of a previous run.
+#' @description Returns the fitted model object.
+#' @export
+#' @return A trained Keras model object.
+#' @param churn_run A one-row data frame from [test_model()] with the
+#'   hyperparameters of a previous run.
+#' @param churn_recipe
+#' @examples
+#' library(keras)
+#' library(recipes)
+#' library(rsample)
+#' library(tidyverse)
+#' library(yardstick)
+#' churn_data <- split_data("data/churn.csv")
+#' churn_recipe <- prepare_recipe(churn_data)
+#' churn_run <- test_model(churn_data, churn_recipe, 16, 16, "relu")
+#' retrain_run(churn_run, churn_recipe)
+retrain_run <- function(churn_run, churn_recipe) {
   train_model(
     churn_recipe,
-    best_run$units1,
-    best_run$units2,
-    best_run$act1,
-    best_run$act2,
-    best_run$act3
+    churn_run$units1,
+    churn_run$units2,
+    churn_run$act1,
+    churn_run$act2,
+    churn_run$act3
   )
 }

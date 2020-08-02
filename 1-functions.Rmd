@@ -13,7 +13,7 @@ In this notebook, we will explore Keras models that predict customer behavior, a
 4. `train_model()`: define a Keras model with `define_model()`, fit it to the training data, and return the fitted model object.
 5. `test_accuracy()`: get the accuracy of a fitted Keras model on the testing set.
 6. `test_model()`: call `train_model()` and then `test_accuracy()`.
-7. `train_best_model()`: train the highest-accuracy model we have found so far.
+7. `retrain_run()`: train the highest-accuracy model we have found so far.
 
 # Customer churn
 
@@ -178,7 +178,7 @@ define_model <- function(churn_recipe, units1, units2, act1, act2, act3) {
   input_shape <- ncol(
     juice(churn_recipe, all_predictors(), composition = "matrix")
   )
-  keras_model_sequential() %>%
+  out <- keras_model_sequential() %>%
     layer_dense(
       units = units1,
       kernel_initializer = "uniform",
@@ -197,6 +197,7 @@ define_model <- function(churn_recipe, units1, units2, act1, act2, act3) {
       kernel_initializer = "uniform",
       activation = act3
     )
+  out
 }
 ```
 
@@ -260,7 +261,7 @@ print(model)
 This function takes model object from `train_model()` and computes the accuracy on the testing data.
 
 ```{r}
-test_accuracy <- function(churn_data, churn_recipe, model) {
+test_accuracy <- function(churn_data, churn_recipe, churn_model) {
   testing_data <- bake(churn_recipe, testing(churn_data))
   x_test_tbl <- testing_data %>%
     select(-Churn) %>%
@@ -268,12 +269,12 @@ test_accuracy <- function(churn_data, churn_recipe, model) {
   y_test_vec <- testing_data %>%
     select(Churn) %>%
     pull()
-  yhat_keras_class_vec <- model %>%
+  yhat_keras_class_vec <- churn_model %>%
     predict_classes(x_test_tbl) %>%
     as.factor() %>%
     fct_recode(yes = "1", no = "0")
   yhat_keras_prob_vec <-
-    model %>%
+    churn_model %>%
     predict_proba(x_test_tbl) %>%
     as.vector()
   test_truth <- y_test_vec %>%
@@ -335,24 +336,24 @@ run_sigmoid <- test_model(act1 = "sigmoid", churn_data, churn_recipe)
 run_relu
 ```
 
-# `train_best_model()`
+# `retrain_run()`
 
-Now, let's train the model with the highest accuracy.
+At the end of the workflow, we want the trained model object for the best run so far. For efficiency reasons, we have been discarding our trained model objects up until this point, so we need to retrain the model with the highest accuracy. Below, our `retrain_run()` function accepts a data frame from `test_model()` and returns a trained Keras model object.
 
 ```{r}
-train_best_model <- function(best_run, churn_recipe) {
+retrain_run <- function(churn_run, churn_recipe) {
   train_model(
     churn_recipe,
-    best_run$units1,
-    best_run$units2,
-    best_run$act1,
-    best_run$act2,
-    best_run$act3
+    churn_run$units1,
+    churn_run$units2,
+    churn_run$act1,
+    churn_run$act2,
+    churn_run$act3
   )
 }
 ```
 
-Try it out.
+Try it out. First, get the best model run so far.
 
 ```{r}
 best_run <- bind_rows(run_relu, run_sigmoid) %>%
@@ -362,6 +363,8 @@ best_run <- bind_rows(run_relu, run_sigmoid) %>%
 best_run
 ```
 
+Then, retrain the model from that run.
+
 ```{r}
-train_best_model(best_run, churn_recipe = churn_recipe)
+retrain_run(best_run, churn_recipe)
 ```

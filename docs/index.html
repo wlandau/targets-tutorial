@@ -260,7 +260,7 @@ test_model &lt;- function(churn_data, churn_recipe, units1, units2, act1, act2, 
   # ...
 }
 
-train_best_model &lt;- function(best_run, churn_recipe) {
+retrain_run &lt;- function(churn_run, churn_recipe) {
   # ...
 }
 ```
@@ -446,13 +446,13 @@ tar_read(run_relu)
 #&gt; # A tibble: 1 x 6
 #&gt;   accuracy units1 units2 act1  act2  act3   
 #&gt;      &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;  
-#&gt; 1    0.794     16     16 relu  relu  sigmoid
+#&gt; 1    0.799     16     16 relu  relu  sigmoid
 
 tar_read(run_sigmoid)
 #&gt; # A tibble: 1 x 6
 #&gt;   accuracy units1 units2 act1    act2  act3   
 #&gt;      &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;  
-#&gt; 1    0.799     16     16 sigmoid relu  sigmoid
+#&gt; 1    0.801     16     16 sigmoid relu  sigmoid
 ```
 
 ---
@@ -477,7 +477,7 @@ tar_pipeline(
 * ),
 * tar_target(
 *   best_model,
-*   train_best_model(best_run, churn_recipe),
+*   retrain_run(best_run, churn_recipe),
 *   format = "keras"
 * )
 )
@@ -767,7 +767,7 @@ remotes::install_github("wlandau/targets")
 ## The tutorial
 
 1. Sign up for a free account at &lt;https://rstudio.cloud&gt;.
-2. Log into &lt;https://rstudio.cloud/project/...&gt;.
+2. Log into &lt;https://rstudio.cloud/project/1500267&gt;.
 3. Work through the R notebooks in order.
 
 Topic | Notebook
