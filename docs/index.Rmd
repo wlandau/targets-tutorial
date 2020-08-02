@@ -269,7 +269,7 @@ train_model <- function(churn_recipe, units1, units2, act1, act2, act3) {
   # ...
 }
 
-test_accuracy <- function(churn_data, churn_recipe, model) {
+test_accuracy <- function(churn_data, churn_recipe, churn_model) {
   # ...
 }
 
@@ -783,7 +783,7 @@ remotes::install_github("wlandau/targets")
 ## The tutorial
 
 1. Sign up for a free account at <https://rstudio.cloud>.
-2. Log into <https://rstudio.cloud/project/...>.
+2. Log into <https://rstudio.cloud/project/1500267>.
 3. Work through the R notebooks in order.
 
 Topic | Notebook

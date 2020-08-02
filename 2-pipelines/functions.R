@@ -1,8 +1,36 @@
+# The functions for the customer churn workflow are below.
+# Lines starting with `#'` are `roxygen2` docstrings,
+# which document the purpose, inputs, outputs, and examples
+# of our custom functions. The examples are particularly helpful
+# to refamiliarize yourself with how the function works.
+# For more information on `roxygen2`, visit <https://roxygen2.r-lib.org/>.
+
+#' @title Read and split the data.
+#' @description Split customer churn data into training and testing datasets.
+#' @export
+#' @return An `rsplit` object with training and testing datasets.
+#' @param churn_file Character, file path to the customer churn data file.
+#' @examples
+#' library(rsample)
+#' library(tidyverse)
+#' split_data("data/churn.csv")
 split_data <- function(churn_file) {
   read_csv(churn_file, col_types = cols()) %>%
     initial_split(prop = 0.3) # from the rsample package
 }
 
+#' @title Create a preprocessing recipe.
+#' @description Create a `recipe` (<https://recipes.tidymodels.org/>)
+#'   and run it on the training dataset.
+#' @export
+#' @return A prepped `recipe` object.
+#' @param churn_data An `rsample` object with training and testing datasets.
+#' @examples
+#' library(recipes)
+#' library(rsample)
+#' library(tidyverse)
+#' churn_data <- split_data("data/churn.csv")
+#' prepare_recipe(churn_data)
 prepare_recipe <- function(churn_data) {
   churn_data %>%
     training() %>%
@@ -18,11 +46,34 @@ prepare_recipe <- function(churn_data) {
     prep()
 }
 
+#' @title Customer churn Keras model definition.
+#' @description Define a Keras model for customer churn.
+#' @export
+#' @return An uncompiled Keras model object.
+#' @param churn_recipe A prepped `recipe object` for the churn data.
+#' @param units1 Positive integer, number of neurons in the
+#'   first layer of the deep neural network.
+#' @param units2 Positive integer, number of neurons in the
+#'   second layer of the deep neural network.
+#' @param act1 Character, name of the activation function in the first
+#'   layer of the deep neural network.
+#' @param act2 Character, name of the activation function in the second
+#'   layer of the deep neural network.
+#' @param act3 Character, name of the activation function in the third
+#'   layer of the deep neural network.
+#' @examples
+#' library(keras)
+#' library(recipes)
+#' library(rsample)
+#' library(tidyverse)
+#' churn_data <- split_data("data/churn.csv")
+#' churn_recipe <- prepare_recipe(churn_data)
+#' define_model(churn_recipe, 16, 16, "sigmoid", "sigmoid", "relu")
 define_model <- function(churn_recipe, units1, units2, act1, act2, act3) {
   input_shape <- ncol(
     juice(churn_recipe, all_predictors(), composition = "matrix")
   )
-  keras_model_sequential() %>%
+  out <- keras_model_sequential() %>%
     layer_dense(
       units = units1,
       kernel_initializer = "uniform",
@@ -41,8 +92,22 @@ define_model <- function(churn_recipe, units1, units2, act1, act2, act3) {
       kernel_initializer = "uniform",
       activation = act3
     )
+  out
 }
 
+#' @title Train a Keras model for customer churn.
+#' @description Predict customer churn on the training dataset.
+#' @export
+#' @return An trained Keras model object.
+#' @inheritParams define_model
+#' @examples
+#' library(keras)
+#' library(recipes)
+#' library(rsample)
+#' library(tidyverse)
+#' churn_data <- split_data("data/churn.csv")
+#' churn_recipe <- prepare_recipe(churn_data)
+#' train_model(churn_recipe, 16, 16, "sigmoid", "sigmoid", "relu")
 train_model <- function(
   churn_recipe,
   units1 = 16,
@@ -77,7 +142,21 @@ train_model <- function(
   model
 }
 
-test_accuracy <- function(churn_data, churn_recipe, model) {
+#' @title Train a Keras model for customer churn.
+#' @description Predict customer churn on the training dataset.
+#' @export
+#' @return An trained Keras model object.
+#' @inheritParams define_model
+#' @examples
+#' library(keras)
+#' library(recipes)
+#' library(rsample)
+#' library(tidyverse)
+#' churn_data <- split_data("data/churn.csv")
+#' churn_recipe <- prepare_recipe(churn_data)
+#' churn_model <- train_model(churn_recipe, 16, 16, "sigmoid", "relu", "relu")
+#' test_accuracy(churn_data, churn_recipe, churn_model)
+test_accuracy <- function(churn_data, churn_recipe, churn_model) {
   testing_data <- bake(churn_recipe, testing(churn_data))
   x_test_tbl <- testing_data %>%
     select(-Churn) %>%
@@ -85,12 +164,12 @@ test_accuracy <- function(churn_data, churn_recipe, model) {
   y_test_vec <- testing_data %>%
     select(Churn) %>%
     pull()
-  yhat_keras_class_vec <- model %>%
+  yhat_keras_class_vec <- churn_model %>%
     predict_classes(x_test_tbl) %>%
     as.factor() %>%
     fct_recode(yes = "1", no = "0")
   yhat_keras_prob_vec <-
-    model %>%
+    churn_model %>%
     predict_proba(x_test_tbl) %>%
     as.vector()
   test_truth <- y_test_vec %>%

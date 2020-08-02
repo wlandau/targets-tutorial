@@ -68,7 +68,7 @@ split_data <- function(churn_file) {
 Try out the function.
 
 ```{r}
-churn_data <- split_data("churn.csv")
+churn_data <- split_data("data/churn.csv")
 ```
 
 The training set has 2113 customers (rows) and the testing set has 4930.

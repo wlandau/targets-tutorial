@@ -22,7 +22,7 @@ define_model <- function(churn_recipe, units1, units2, act1, act2, act3) {
   input_shape <- ncol(
     juice(churn_recipe, all_predictors(), composition = "matrix")
   )
-  keras_model_sequential() %>%
+  out <- keras_model_sequential() %>%
     layer_dense(
       units = units1,
       kernel_initializer = "uniform",
@@ -41,6 +41,7 @@ define_model <- function(churn_recipe, units1, units2, act1, act2, act3) {
       kernel_initializer = "uniform",
       activation = act3
     )
+  out
 }
 
 train_model <- function(
@@ -77,7 +78,7 @@ train_model <- function(
   model
 }
 
-test_accuracy <- function(churn_data, churn_recipe, model) {
+test_accuracy <- function(churn_data, churn_recipe, churn_model) {
   testing_data <- bake(churn_recipe, testing(churn_data))
   x_test_tbl <- testing_data %>%
     select(-Churn) %>%
@@ -85,12 +86,12 @@ test_accuracy <- function(churn_data, churn_recipe, model) {
   y_test_vec <- testing_data %>%
     select(Churn) %>%
     pull()
-  yhat_keras_class_vec <- model %>%
+  yhat_keras_class_vec <- churn_model %>%
     predict_classes(x_test_tbl) %>%
     as.factor() %>%
     fct_recode(yes = "1", no = "0")
   yhat_keras_prob_vec <-
-    model %>%
+    churn_model %>%
     predict_proba(x_test_tbl) %>%
     as.vector()
   test_truth <- y_test_vec %>%

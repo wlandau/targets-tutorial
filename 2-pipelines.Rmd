@@ -5,21 +5,11 @@ output: html_notebook
 
 # About
 
-To implement the customer churn prediction workflow, you will create a `targets` pipeline. A `drake` plan is a data frame with code. It has the *targets* you will build and the R *commands* to build those targets. Helpful references:
+To implement the customer churn prediction analysis, we will create a `targets` pipeline. A pipeline is a high-level collection of steps, or *targets*, that comprise the workflow. Each *target* has a *command*, which is just a piece of R code that returns a value. In practice, targets are usually data cleaning, model fitting, and results summary steps, and the commands are just the R function calls that do those tasks.
 
-- The chapter on `drake` plans: <https://books.ropensci.org/drake/plans.html>
-- The opening presentation of this workshop: <https://wlandau.github.io/learndrake>
+# Functions
 
-# Dependencies
-
-The commands in your `drake` plan will depend on the packages and functions introduced in `1-functions.Rmd`. Run code chunk below to load them now. (Click on the green arrow on the right.)
-
-```{r message = FALSE}
-source("R/packages.R")  # Load the packages.
-source("R/functions.R") # Define our custom functions.
-```
-
-Take a quick moment to look at `packages.R` and `functions.R`. Open them in RStudio and see how they are organized.
+The commands of your targets will depend on the functions introduced in `1-functions.Rmd`. For the exercises below, they are in `2-pipelines/functions.R`. Take a quick glance at `2-pipelines/functions.R` and refamiliarize yourself with the code base. 
 
 # Start the plan
 
