@@ -19,7 +19,8 @@ Metaprogramming | [`6-metaprogramming.Rmd`](https://github.com/wlandau/targets-t
 # Browser access
 
 1. Sign up for a free account at <https://rstudio.cloud>.
-2. Log into <https://rstudio.cloud/project/1500267>.
+1. Log into <https://rstudio.cloud/project/1500267> to access a free instance of RStudio Server in the cloud.
+1. Proceed through the notebooks in the syllabus.
 
 # Local access
 
@@ -28,3 +29,4 @@ Metaprogramming | [`6-metaprogramming.Rmd`](https://github.com/wlandau/targets-t
 1. [Download or clone](https://docs.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository) the code at <https://github.com/wlandau/targets-tutorial>.
 1. Open the tutorial as an [RStudio project](https://github.com/wlandau/targets-tutorial/blob/master/targets-tutorial.Rproj) in the [RStudio Desktop](https://rstudio.com/products/rstudio/download/#download).
 1. Run the [setup script](https://github.com/wlandau/targets-tutorial/blob/master/setup.R) to initialize the tutorial's local R and Python environments. This step should install dependencies locally at the project root and not globally for your system.
+1. Proceed through the notebooks in the syllabus.
