@@ -9,7 +9,7 @@ To implement the customer churn prediction analysis, we will create a `targets` 
 
 # Functions
 
-The commands of your targets will depend on the functions introduced in `1-functions.Rmd`. For the exercises below, they are in `2-pipelines/functions.R`. Take a quick glance at `2-pipelines/functions.R` and refamiliarize yourself with the code base. 
+The commands of your targets will depend on the functions from `1-functions.Rmd`. For the exercises below, they are in `2-pipelines/functions.R`. Take a quick glance at `2-pipelines/functions.R` and refamiliarize yourself with the code base. 
 
 # Start the plan
 
