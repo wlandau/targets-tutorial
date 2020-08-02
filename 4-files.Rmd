@@ -1,0 +1,10 @@
+---
+title: "Custom functions for the customer churn workflow"
+output: html_document
+---
+
+# About
+
+```{r}
+library(tarchetypes)
+```
