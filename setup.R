@@ -1,4 +1,3 @@
-# RStudio Cloud setup
 renv::restore()
 lines <- c(
   "TAR_SCRIPT_ASK=false",
