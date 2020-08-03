@@ -11,40 +11,82 @@ To implement the customer churn prediction analysis, we will create a `targets` 
 
 The commands of your targets will depend on the functions from `1-functions.Rmd`. For the exercises below, they are in `2-pipelines/functions.R`. Take a quick glance at `2-pipelines/functions.R` and refamiliarize yourself with the code base. 
 
-# Start the plan
+# Start the pipeline
 
-Your initial plan will
+The first version of the pipeline consists of three *targets*, or steps of computation. Our first targets do the following:
 
-1. Read the customer churn data from a CSV file, and
-2. Clean it up for the deep learning models.
+1. Reproducibly track the customer churn CSV data file.
+2. Read in the data from the CSV file.
+3. Preprocess the data for the deep learning models.
 
-Code for (1):
-
-```{r, eval = FALSE}
-# file_in() will tell drake to rebuild targets when the file changes.
-churn_data <- split_data(file_in("../data/customer_churn.csv"))
-```
-
-Code for (2):
+The steps above translate to the following R code.
 
 ```{r, eval = FALSE}
-churn_recipe <- prepare_recipe(churn_data)
+library(keras)
+library(recipes)
+library(rsample)
+library(tidyverse)
+library(yardstick)
+source("2-pipelines/functions.R")
+churn_file <- "data/churn.csv"             # Sketch of target 1.
+churn_data <- split_data(churn_file)       # Sketch of target 2.
+churn_recipe <- prepare_recipe(churn_data) # Sketch of target 3.
 ```
 
-Now, let's create a new `drake` plan with these two steps as *targets*:
+To formalize our three targets, we express the computation in a special configuration file called `_targets.R` at the project's root directory. The role of `_targets.R` is to
+
+1. Load any functions and global objects that the targets depend on.
+2. Set any options, including packages that the targets depend on.
+3. Declare the targets and pipeline using functions `tar_target()` and `tar_pipeline()`. The `_targets.R` script must always end with a pipeline object, preferably an explicit call to `tar_pipeline()`.
+
+The `tar_script()` function is a convenient way to write `_targets.R`.
 
 ```{r}
-plan <- drake_plan(
-  churn_data = split_data(file_in("../data/customer_churn.csv")),
-  churn_recipe = prepare_recipe(churn_data)
-)
+library(targets)
+tar_script({
+  source("2-pipelines/functions.R")
+  tar_option_set(packages = c("keras", "recipes", "rsample", "tidyverse", "yardstick"))
+  tar_pipeline(
+    tar_target(churn_file, "data/churn.csv", format = "file"),
+    tar_target(churn_data, split_data(churn_file)),
+    tar_target(churn_recipe, prepare_recipe(churn_data))
+  )
+})
 ```
 
-The plan is a data frame with the targets and commands.
+It is standard practice to make further modifications to `_targets.R` by hand, but for pedagogical simplicity, we will call `tar_script()` often. Let's inspect `_targets.R`.
 
-```{r, paged.print = FALSE}
-plan
+```{r}
+cat(readLines("_targets.R"), sep = "\n")
 ```
+
+User-side functions in `targets` rely heavily on the `_targets.R` file. Examples are  `tar_validate()`, `tar_manifest()`, `tar_glimpse()`, and `tar_visnetwork()`. Each of these functions spins up a background process that runs `_targets.R` and then inspects the pipeline in some way.
+
+```{r}
+tar_validate() # Looks for errors.
+```
+
+```{r}
+tar_manifest(fields = "command") # Data frame of target info.
+```
+
+```{r}
+tar_glimpse() # Interactive dependency graph.
+```
+
+`tar_glimpse()` is particularly helpful because it shows how the targets depend on one another. As the arrows show above, target `churn_recipe` depends on `churn_data`, and target `churn_data` depends on `churn_file`. The `targets` package detects these relationships automatically using static code analysis. `churn_data` depends on `churn_file` because the command for `churn_data` mentions the symbol `churn_file`. You can see these dependency relationships for yourself using `codetools::findGlobals()`.
+
+```{r}
+codetools::findGlobals(function() split_data(churn_file))
+```
+`tar_visnetwork()` also includes functions in the dependency graph, as well as color-coded status information.
+
+```{r}
+tar_visnetwork()
+```
+
+
+
 
 # Run the plan
 

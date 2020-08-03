@@ -9,4 +9,5 @@
 .Rhistory
 .Rproj.user/
 _targets/
+_targets.R
 README.html
