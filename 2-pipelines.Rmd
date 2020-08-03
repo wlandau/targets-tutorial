@@ -162,102 +162,91 @@ tar_script({
 })
 ```
 
-
-
-
-
-
-
-
-
-
+Visualize the graph to check the pipeline. `run_relu` and `run_sigmoid` should be new targets that depend on `churn_data`, `churn_recipe`, `test_model()`, and the custom functions called from `test_model()`.
 
 ```{r}
-plan <- drake_plan(
-  churn_data = split_data(file_in("../data/customer_churn.csv")),
-  churn_recipe = prepare_recipe(churn_data),
-  run_relu = ,  # YOUR TURN: write the command between the equals sign and comma.
-  run_sigmoid = # YOUR TURN: write the command here.
-)
+tar_visnetwork()
 ```
 
-Visualize the graph to check the plan. `run_relu` and `run_sigmoid` should be new targets that depend on `churn_data`, `churn_recipe`, `test_model()`, and the custom functions called from `test_model()`.
+`churn_file`, `churn_data` and `churn_recipe` are up to date from last time, and `run_relu` and `run_sigmoid` are new.
 
 ```{r}
-vis_drake_graph(plan)
+tar_outdated()
 ```
 
-`churn_data` and `churn_recipe` are up to date from last time, and `run_relu` and `run_sigmoid` are new.
+`tar_make()` automatically runs the new or outdated targets (in this case, the models) and skips the targets that are already up to date.
+
+```{r, output = FALSE}
+tar_make() # Ignore messages like "TensorFlow binary was not compiled to use..."
+```
+
+Those models took a long time to run, right? That is why `tar_make()` skips them if they are up to date.
 
 ```{r}
-outdated(plan)
+tar_make()
 ```
 
-So `make()` skips the data and just runs the models. Run `make()` below and ignore any TensorFlow messages that pop up.
+If you are not sure what will run, just call `tar_visnetwork()` or `tar_outdated()` first.
 
 ```{r}
-make(plan) # slow
+tar_outdated()
 ```
 
-Those models took a long time to run, right? That is why `make()` skips them if they are up to date.
+# Check the model targets
 
-```{r}
-outdated(plan)
-```
-
-```{r}
-make(plan) # fast
-```
-
-Now is a good time to check your model runs. Each should be a data frame with the accuracy and features of a model.
+`run_relu` and `run_sigmoid` should each be a data frame with the accuracy and hyperparameters.
 
 ```{r, paged.print = FALSE}
-readd(run_relu)
+tar_read(run_relu)
 ```
 
 ```{r, paged.print = FALSE}
-readd(run_sigmoid)
+tar_read(run_sigmoid)
 ```
 
 # Add another model
 
-Now, let's add a third model with a different activation function. Use the `act1 = "softmax"` this time.
+Your turn: add a third model with a different activation function. Use the `act1 = "softmax"` this time.
 
 ```{r}
-plan <- drake_plan(
-  churn_data = split_data(file_in("../data/customer_churn.csv")),
-  churn_recipe = prepare_recipe(churn_data),
-  run_relu = test_model(act1 = "relu", churn_data, churn_recipe),
-  run_sigmoid = test_model(act1 = "sigmoid", churn_data, churn_recipe),
-  run_softmax = # YOUR TURN: write a new call to test_model() with act1 = "softmax"
-)
+tar_script({
+  source("2-pipelines/functions.R")
+  tar_option_set(packages = c("keras", "recipes", "rsample", "tidyverse", "yardstick"))
+  tar_pipeline(
+    tar_target(churn_file, "data/churn.csv", format = "file"), 
+    tar_target(churn_data, split_data(churn_file)),
+    tar_target(churn_recipe,  prepare_recipe(churn_data)),
+    tar_target(run_relu, test_model(act1 = "relu", churn_data, churn_recipe)),
+    tar_target(run_sigmoid, test_model(act1 = "sigmoid", churn_data, churn_recipe)),
+    tar_target(run_softmax, "???") # Your turn: add a model target with `act1 = "softmax"`.
+  )
+})
 ```
 
-The previous two runs should be up to date. Only `run_softmax` should be outdated.
+Now, only `run_softmax` should be outdated.
 
 ```{r}
-outdated(plan)
+tar_outdated()
 ```
 
 ```{r}
-vis_drake_graph(plan)
+tar_visnetwork()
 ```
 
-Run the softmax model.
+Run the softmax model. `tar_make()` should skip everything else.
 
 ```{r}
-make(plan)
+tar_make()
 ```
-
-Did it come out right?
+Inspect the result.
 
 ```{r, paged.print = FALSE}
-readd(run_softmax)
+tar_read(run_softmax)
 ```
 
 # Pick the best model.
 
-Define a new `best_run` target with following command:
+The following R code chooses the model run with the highest accuracy.
 
 ```{r, eval = FALSE}
 # Do not run here.
@@ -266,164 +255,158 @@ bind_rows(run_relu, run_sigmoid, run_softmax) %>%
   head(1)
 ```
 
-Write the command in the plan below. Note: commands do not always need to be strict function calls. They can be arbitrary code chunks too, such as the one above.
+Your turn: write this step as a target below. Note: although commands should usually be concise function calls, but this is not a restrict requirement, as you will see below.
 
 ```{r}
-plan <- drake_plan(
-  churn_data = split_data(file_in("../data/customer_churn.csv")),
-  churn_recipe = prepare_recipe(churn_data),
-  run_relu = test_model(act1 = "relu", churn_data, churn_recipe),
-  run_sigmoid = test_model(act1 = "sigmoid", churn_data, churn_recipe),
-  run_softmax = test_model(act1 = "softmax", churn_data, churn_recipe),
-  best_run = # YOUR TURN: write the command to get the best model run.
+tar_script({
+  source("2-pipelines/functions.R")
+  tar_option_set(packages = c("keras", "recipes", "rsample", "tidyverse", "yardstick"))
+  tar_pipeline(
+    tar_target(churn_file, "data/churn.csv", format = "file"), 
+    tar_target(churn_data, split_data(churn_file)),
+    tar_target(churn_recipe,  prepare_recipe(churn_data)),
+    tar_target(run_relu, test_model(act1 = "relu", churn_data, churn_recipe)),
+    tar_target(run_sigmoid, test_model(act1 = "sigmoid", churn_data, churn_recipe)),
+    tar_target(run_softmax, test_model(act1 = "softmax", churn_data, churn_recipe)),
+    tar_target(
+      best_run,
+      "???" # Your turn: insert code to choose the model run with the highest accuracy.
+    )
+  )
+})
+```
+
+`best_run` should depend on `run_relu`, `run_sigmoid`, and `run_softmax`.
+
+```{r}
+tar_visnetwork()
+```
+
+The next `tar_make()` should run quickly and just build `best_run`.
+
+```{r}
+tar_make()
+```
+
+`best_run` should contain one row with the accuracy and hyperparameters of the best model.
+
+```{r}
+tar_read(best_run)
+```
+
+# Retrain the best model
+
+Finally, add a new target to retrain the best model with `retrain_run(best_run, churn_recipe)`. This time, we are returning a Keras model object, so we need to write `format = "keras"` in `tar_target()`.
+
+```{r}
+tar_script({
+  source("2-pipelines/functions.R")
+  tar_option_set(packages = c("keras", "recipes", "rsample", "tidyverse", "yardstick"))
+  tar_pipeline(
+    tar_target(churn_file, "data/churn.csv", format = "file"), 
+    tar_target(churn_data, split_data(churn_file)),
+    tar_target(churn_recipe,  prepare_recipe(churn_data)),
+    tar_target(run_relu, test_model(act1 = "relu", churn_data, churn_recipe)),
+    tar_target(run_sigmoid, test_model(act1 = "sigmoid", churn_data, churn_recipe)),
+    tar_target(run_softmax, test_model(act1 = "softmax", churn_data, churn_recipe)),
+    tar_target(
+      best_run,
+      bind_rows(run_relu, run_sigmoid, run_softmax) %>%
+        top_n(1, accuracy) %>%
+        head(1)
+    ),
+    tar_target(
+      best_model,
+      "???", # Your turn: call retrain_run() to retrain the best model.
+      format = "keras" # Needed to return the actual Keras model object.
+    )
+  )
+})
+```
+
+Check the dependency relationships.
+
+```{r}
+tar_visnetwork()
+```
+
+Train the model while skipping previous up-to-date targets.
+
+```{r}
+tar_make()
+```
+
+Inspect the model object.
+
+```{r}
+tar_read(best_model)
+```
+
+# Solution
+
+The full pipeline looks like this.
+
+```{r}
+tar_script({
+  source("2-pipelines/functions.R")
+  tar_option_set(packages = c("keras", "recipes", "rsample", "tidyverse", "yardstick"))
+  tar_pipeline(
+    tar_target(churn_file, "data/churn.csv", format = "file"), 
+    tar_target(churn_data, split_data(churn_file)),
+    tar_target(churn_recipe,  prepare_recipe(churn_data)),
+    tar_target(run_relu, test_model(act1 = "relu", churn_data, churn_recipe)),
+    tar_target(run_sigmoid, test_model(act1 = "sigmoid", churn_data, churn_recipe)),
+    tar_target(run_softmax, test_model(act1 = "softmax", churn_data, churn_recipe)),
+    tar_target(
+      best_run,
+      bind_rows(run_relu, run_sigmoid, run_softmax) %>%
+        top_n(1, accuracy) %>%
+        head(1)
+    ),
+    tar_target(
+      best_model,
+      retrain_run(best_run, churn_recipe),
+      format = "keras"
+    )
+  )
+})
+```
+
+Note: you could have manually edited `_targets.R` instead of going through `tar_script()`. In either case, your `_targets.R` file should now look something like this.
+
+```{r, eval = FALSE}
+# _targets.R
+source("2-pipelines/functions.R")
+tar_option_set(packages = c("keras", "recipes", "rsample", "tidyverse", "yardstick"))
+tar_pipeline(
+  tar_target(churn_file, "data/churn.csv", format = "file"), 
+  tar_target(churn_data, split_data(churn_file)),
+  tar_target(churn_recipe,  prepare_recipe(churn_data)),
+  tar_target(run_relu, test_model(act1 = "relu", churn_data, churn_recipe)),
+  tar_target(run_sigmoid, test_model(act1 = "sigmoid", churn_data, churn_recipe)),
+  tar_target(run_softmax, test_model(act1 = "softmax", churn_data, churn_recipe)),
+  tar_target(
+    best_run,
+    bind_rows(run_relu, run_sigmoid, run_softmax) %>%
+      top_n(1, accuracy) %>%
+      head(1)
+  ),
+  tar_target(
+    best_model,
+    retrain_run(best_run, churn_recipe),
+    format = "keras"
+  )
 )
 ```
-
-The next `make()` should just build `best_run` and be quick.
-
-```{r}
-make(plan)
-```
-
-`best_run` should contain one row with the accuracy and features of the best model.
-
-```{r}
-readd(best_run)
-```
-
-Now, let's train the best model and hold on to the trained model object. Below, we use `drake`'s `target()` function for extra customization because Keras models need the special `"keras"` storage format (<https://books.ropensci.org/drake/plans.html#special-data-formats-for-targets>). Below, write the command `train_best_model(best_run, churn_recipe)`.
-
-```{r}
-plan <- drake_plan(
-  churn_data = split_data(file_in("../data/customer_churn.csv")),
-  churn_recipe = prepare_recipe(churn_data),
-  run_relu = test_model(act1 = "relu", churn_data, churn_recipe),
-  run_sigmoid = test_model(act1 = "sigmoid", churn_data, churn_recipe),
-  run_softmax = test_model(act1 = "softmax", churn_data, churn_recipe),
-  best_run = bind_rows(run_relu, run_sigmoid, run_softmax) %>%
-    top_n(1, accuracy) %>%
-    head(1),
-  best_model = target( # We use target() to customize the target.
-    , # YOUR TURN: write train_best_model(best_run, churn_recipe) to the left of the comma.
-    format = "keras" # Tells drake to store the target as a Keras model.
-  )
-)
-```
-
-Train the model.
-
-```{r}
-make(plan)
-```
-
-The actual trained model is now in `drake`'s cache.
-
-```{r}
-readd(best_model)
-```
-
-# Changes
-
-What if a function changes?
-
-```{r}
-define_model <- function(churn_recipe, units1, units2, act1, act2, act3) {
-  input_shape <- ncol(
-    juice(churn_recipe, all_predictors(), composition = "matrix")
-  )
-  keras_model_sequential() %>%
-    layer_dense(
-      units = units1,
-      kernel_initializer = "uniform",
-      activation = act1,
-      input_shape = input_shape
-    ) %>%
-    layer_dropout(rate = 0.2) %>% # previously 0.1
-    layer_dense(
-      units = units2,
-      kernel_initializer = "uniform",
-      activation = act2
-    ) %>%
-    layer_dropout(rate = 0.1) %>%
-    layer_dense(
-      units = 1,
-      kernel_initializer = "uniform",
-      activation = act3
-    )
-}
-```
-
-`drake` automatically detects the change and rebuilds the affected targets.
-
-```{r}
-outdated(plan)
-```
-
-```{r}
-vis_drake_graph(plan)
-```
-
-```{r}
-make(plan)
-```
-
-What if we undo the change?
-
-```{r}
-define_model <- function(churn_recipe, units1, units2, act1, act2, act3) {
-  input_shape <- ncol(
-    juice(churn_recipe, all_predictors(), composition = "matrix")
-  )
-  keras_model_sequential() %>%
-    layer_dense(
-      units = units1,
-      kernel_initializer = "uniform",
-      activation = act1,
-      input_shape = input_shape
-    ) %>%
-    layer_dropout(rate = 0.1) %>% # Changed back to 0.1.
-    layer_dense(
-      units = units2,
-      kernel_initializer = "uniform",
-      activation = act2
-    ) %>%
-    layer_dropout(rate = 0.1) %>%
-    layer_dense(
-      units = 1,
-      kernel_initializer = "uniform",
-      activation = act3
-    )
-}
-```
-
-You can tell `drake` to recover old targets instead of building new ones from scratch.
-
-```{r}
-make(plan, recover = TRUE)
-```
-
-Same story if you change a `file_in()` dataset (or change it back).
-
-# Time savings and reproducibility
-
-All your targets should be up to date now.
-
-```{r}
-outdated(plan)
-```
-
-```{r}
-make(plan)
-```
-
-This is tangible evidence of reproducibility. It is tangible evidence that your output is in sync with the code and data you have right now. So if someone else were to run your code, they should get the same results as you. You can be confident without having to rerun everything from scratch. This is how `drake` saves time while increasing your ability to trust your research.
 
 # Recap
 
-Building up a plan is an gradual, iterative process:
+Building up a pipeline is an gradual, iterative process:
 
-1. Add or change some targets targets in the plan.
-2. Check the plan with `outdated(plan)` and `vis_drake_graph(plan)`.
-3. Run `make()` to build the new targets.
-4. Check the output with `loadd()` and `readd()`.
+1. Add or change some targets in the pipeline.
+2. Check the pipeline with `tar_outdated()` and `tar_visnetwork()`.
+3. Call `tar_make()` to run the new targets.
+4. Check the output with `tar_load()` and/or `tar_read()`.
 5. Repeat.
+
+In the next notebook, we will explore what happens when we make changes to the code and data.
