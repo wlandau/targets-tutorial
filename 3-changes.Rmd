@@ -7,22 +7,25 @@ output: html_notebook
 
 When we modify the code and data of an existing workflow, `targets` automatically detects the changes, and `tar_make()` only reruns the affected targets. This notebook showcases this behavior and shows how it can save you time.
 
-# Setup
+# Instructions
 
-Throughout this chapter, you will test your understanding with quiz questions. Supply your choices to the `answer_*()` functions when you come to them. Try not to peak in advance.
+Throughout this chapter, you will test your understanding with quiz questions. Supply your choices to the `answer_*()` functions when you come to them. Run the code chunk below to set up the quizzes, but try not to peak in advance.
 
 ```{r}
-source("3-changes/quiz.R")
+source("3-changes/utils.R")
+source("3-changes/answers.R")
 ```
 
-For pedagogical purposes, let's clear out the old `_targets/` data store.
+Let's clear out the old `_targets/` data store if it exists.
 
 ```{r}
 library(targets)
 tar_destroy() # Start fresh.
 ```
 
-Then, let's begin with a fresh pipeline.
+# Setup
+
+Let's begin with a fresh pipeline.
 
 ```{r}
 tar_script({
@@ -50,21 +53,32 @@ tar_script({
 })
 ```
 
-Run whole the pipeline with `tar_make()`
+What happened when you ran the code chunk above?
+
+A. No targets ran. the `tar_script()` function wrote the code inside the braces to a file called `_targets.R` in your working directory. In real projects, subsequent modifications to `_targets.R` are best done by hand and not through `tar_script()`.
+B. Same as A except some targets ran.
+C. Same as B except all targets ran.
+D. Nothing happened.
+
+```{r}
+answer_setup("E")
+```
+
+# First target
+
+Run whole the pipeline with `tar_make()`.
 
 ```{r}
 tar_make()
 ```
 
-## Question 1
-
 Which target ran first? Why?
 
-A. `churn_data`, because all the other targets depend on it.
-B. `churn_file`, because all the other targets depend on it.
+A. `churn_data`, because the rest of the targets depend on it.
+B. `churn_file`, because the rest of the targets depend on it.
 C. `churn_data`, because it appears first in `tar_pipeline()`.
 D. `churn_file`, because it appears first in `tar_pipeline()`.
 
 ```{r}
-answer_1("E") # Supply your own answer here.
+answer_first_target("E") # Supply your own answer here.
 ```

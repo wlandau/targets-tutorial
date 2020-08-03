@@ -1,18 +1,23 @@
-answer_1 <- function(x) {
+answer_setup <- function(x) {
   choices(
     x,
-    a = "Incorrect. churn_data does not run first, and churn_file does not depend on churn_data.",
-    b = "Correct!",
-    c = "Incorrect. churn_data does not run first, and the order you write targets in tar_pipeline() does not matter.",
-    d = "Incorrect. The order you write targets in tar_pipeline() does not matter.",
+    a = yes(),
+    b = no("No targets run when you *define* your pipeline."),
+    c = no("No targets run when you *define* your pipeline."),
+    d = no("The code to set up and define the pipeline was written to _targets.R"),
     invalid()
   )
 }
 
-choices <- function(x, ...) {
-  cat(switch(tolower(x), ...))
+answer_first_target <- function(x) {
+  choices(
+    x,
+    a = no("churn_data does not run first, and churn_file does not depend on churn_data."),
+    b = yes(),
+    c = no("churn_data does not run first, and the order you write targets in tar_pipeline() does not matter."),
+    d = no("The order you write targets in tar_pipeline() does not matter."),
+    invalid()
+  )
 }
 
-invalid <- function() {
-  "Please supply a single letter among the choices given."
-}
+
