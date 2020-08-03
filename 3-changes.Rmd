@@ -1,0 +1,70 @@
+---
+title: "Make changes to the workflow"
+output: html_notebook
+---
+
+# About
+
+When we modify the code and data of an existing workflow, `targets` automatically detects the changes, and `tar_make()` only reruns the affected targets. This notebook showcases this behavior and shows how it can save you time.
+
+# Setup
+
+Throughout this chapter, you will test your understanding with quiz questions. Supply your choices to the `answer_*()` functions when you come to them. Try not to peak in advance.
+
+```{r}
+source("3-changes/quiz.R")
+```
+
+For pedagogical purposes, let's clear out the old `_targets/` data store.
+
+```{r}
+library(targets)
+tar_destroy() # Start fresh.
+```
+
+Then, let's begin with a fresh pipeline.
+
+```{r}
+tar_script({
+  source("3-changes/functions.R")
+  tar_option_set(packages = c("keras", "recipes", "rsample", "tidyverse", "yardstick"))
+  tar_pipeline(
+    tar_target(churn_file, "data/churn.csv", format = "file"), 
+    tar_target(churn_data, split_data(churn_file)),
+    tar_target(churn_recipe,  prepare_recipe(churn_data)),
+    tar_target(run_relu, test_model(act1 = "relu", churn_data, churn_recipe)),
+    tar_target(run_sigmoid, test_model(act1 = "sigmoid", churn_data, churn_recipe)),
+    tar_target(run_softmax, test_model(act1 = "softmax", churn_data, churn_recipe)),
+    tar_target(
+      best_run,
+      bind_rows(run_relu, run_sigmoid, run_softmax) %>%
+        top_n(1, accuracy) %>%
+        head(1)
+    ),
+    tar_target(
+      best_model,
+      retrain_run(best_run, churn_recipe),
+      format = "keras"
+    )
+  )
+})
+```
+
+Run whole the pipeline with `tar_make()`
+
+```{r}
+tar_make()
+```
+
+## Question 1
+
+Which target ran first? Why?
+
+A. `churn_data`, because all the other targets depend on it.
+B. `churn_file`, because all the other targets depend on it.
+C. `churn_data`, because it appears first in `tar_pipeline()`.
+D. `churn_file`, because it appears first in `tar_pipeline()`.
+
+```{r}
+answer_1("E") # Supply your own answer here.
+```

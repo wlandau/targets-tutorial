@@ -7,6 +7,13 @@ output: html_notebook
 
 To implement the customer churn prediction analysis, we will create a `targets` pipeline. A pipeline is a high-level collection of steps, or *targets*, that comprise the workflow. Each *target* has a *command*, which is just a piece of R code that returns a value. In practice, targets are usually data cleaning, model fitting, and results summary steps, and the commands are just the R function calls that do those tasks.
 
+# Setup
+
+```{r}
+library(targets)
+tar_destroy() # Start fresh.
+```
+
 # Functions
 
 The commands of your targets will depend on the functions from `1-functions.Rmd`. For the exercises below, they are in `2-pipelines/functions.R`. Take a quick glance at `2-pipelines/functions.R` and refamiliarize yourself with the code base. 
