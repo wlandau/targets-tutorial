@@ -115,7 +115,7 @@ D. A recipe object.
 answer_inspect("E") # Supply your own answer here.
 ```
 
-# Repeated `tar_make()`
+# Rerun `tar_make()`
 
 Run `tar_make()` again.
 
@@ -123,7 +123,49 @@ Run `tar_make()` again.
 tar_make()
 ```
 
-What happened?
+What happened? Why?
 
+A. No target reran because the previous results are already in storage (`_targets/`).
+B. `tar_make()` reran the best model.
+C. All the targets reran.
+D. No target reran because all the targets are already up to date with their dependencies (the underlying code and data, including upstream targets).
 
+```{r}
+answer_rerun("E") # Supply your own answer here.
+```
 
+# Restart the session
+
+Restart your R session.
+
+```{r}
+rstudioapi::restartSession()
+source("3-changes/utils.R")
+source("3-changes/answers.R")
+```
+
+Then, run `tar_make()` again.
+
+```{r}
+library(targets)
+tar_make()
+```
+
+Which targets reran? Why?
+
+A. None. The targets are in storage (in `_targets/objects/`) and are still up to date with their dependencies.
+B. I get a confusing error message.
+C. All targets reran because I restarted the R session.
+D. All the models rerun.
+
+```{r}
+answer_restart("E") # Supply your own answer here.
+```
+
+# Change the data.
+
+# Change a command.
+
+# Change a function.
+
+# Make a trivial change.
