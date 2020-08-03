@@ -92,7 +92,7 @@ tar_visnetwork()
 
 # Run the pipeline.
 
-Everything we did so far was just setup. To actually run the pipeline, use the `tar_make()` function. `tar_make()` creates a fresh new reproducible R process that runs `_targets.R` and executes the correct targets in the correct order (from the dependency graph).
+Everything we did so far was just setup. To actually run the pipeline, use the `tar_make()` function. `tar_make()` creates a fresh new reproducible R process that runs `_targets.R` and executes the correct targets in the correct order (from the dependency graph, not the order in `tar_pipeline()`).
 
 ```{r}
 tar_make()
@@ -168,7 +168,7 @@ Visualize the graph to check the pipeline. `run_relu` and `run_sigmoid` should b
 tar_visnetwork()
 ```
 
-`churn_file`, `churn_data` and `churn_recipe` are up to date from last time, and `run_relu` and `run_sigmoid` are new.
+`churn_file`, `churn_data` and `churn_recipe` are up to date from last time, and `run_relu` and `run_sigmoid` are new and thus outdated.
 
 ```{r}
 tar_outdated()
