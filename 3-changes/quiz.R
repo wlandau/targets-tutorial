@@ -9,7 +9,7 @@ answer_setup <- function(x) {
   )
 }
 
-answer_first_target <- function(x) {
+answer_first <- function(x) {
   choices(
     x,
     a = no("churn_data does not run first, and churn_file does not depend on churn_data."),
@@ -20,4 +20,23 @@ answer_first_target <- function(x) {
   )
 }
 
+answer_last <- function(x) {
+  choices(
+    x,
+    a = yes(),
+    b = no("The order you write targets in tar_pipeline() does not matter."),
+    c = no("There is a downstream target that depends on best_run."),
+    invalid()
+  )
+}
 
+answer_inspect <- function(x) {
+  choices(
+    x,
+    a = no(),
+    b = yes(),
+    c = no(),
+    d = no(),
+    invalid()
+  )
+}

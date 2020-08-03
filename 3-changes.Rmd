@@ -80,5 +80,50 @@ C. `churn_data`, because it appears first in `tar_pipeline()`.
 D. `churn_file`, because it appears first in `tar_pipeline()`.
 
 ```{r}
-answer_first_target("E") # Supply your own answer here.
+answer_first("E") # Supply your own answer here.
 ```
+
+# Last target
+
+Which target ran last? Why?
+
+A. `best_model`, because it depends on the results of the other targets.
+B. `best_model`, because it is listed last in the pipeline.
+C. `best_run`, because it depends on the results of the other targets.
+
+```{r}
+answer_last("E") # Supply your own answer here.
+```
+
+# Inspection
+
+Load the `best_model` target from the `_targets/` data store using the `tar_load()` function. Print the object.
+
+```{r}
+tar_load(best_model)
+print(best_model)
+```
+
+What did you see?
+
+A. A function.
+B. A trained Keras model.
+C. A one-row data frame.
+D. A recipe object.
+
+```{r}
+answer_inspect("E") # Supply your own answer here.
+```
+
+# Repeated `tar_make()`
+
+Run `tar_make()` again.
+
+```{r}
+tar_make()
+```
+
+What happened?
+
+
+
