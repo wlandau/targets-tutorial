@@ -164,7 +164,7 @@ answer_restart("E") # Supply your own answer here.
 
 # Change the data.
 
-Remove the last row of the dataset.
+Remove the last row of the dataset file `data/churn.csv`.
 
 ```{r, message = FALSE}
 library(tidyverse)
