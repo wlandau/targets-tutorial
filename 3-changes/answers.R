@@ -74,3 +74,13 @@ answer_restart <- function(x) {
   )
 }
 
+answer_data <- function(x) {
+  choices(
+    x,
+    a = no("If you do not make changes, your project should have a decent shelf life."),
+    b = no("To watch a file for changes, you need a tar_target() with format = \"file\"."),
+    c = yes("We will learn more about external data files in the next chapter."),
+    d = no("You can tell targets to watch files too with tar_target() and format = \"file\"."),
+    invalid()
+  )
+}
