@@ -9,7 +9,7 @@ When we modify the code and data of an existing workflow, `targets` automaticall
 
 # Instructions
 
-Throughout this chapter, you will test your understanding with quiz questions. Supply your choices to the `answer_*()` functions when you come to them. Run the code chunk below to set up the quizzes, but try not to peak in advance.
+Throughout this chapter, you will test your understanding with quiz questions. Supply your choices to the `answer_*()` functions when you come to them. Run the code chunk below to set up the quizzes, but try not to peak in advance. It is okay to answer incorrectly at first.
 
 ```{r}
 source("3-changes/utils.R")
@@ -163,6 +163,33 @@ answer_restart("E") # Supply your own answer here.
 ```
 
 # Change the data.
+
+Remove the last row of the dataset file `data/churn.csv`.
+
+```{r, message = FALSE}
+library(tidyverse)
+"data/churn.csv" %>%
+  read_csv(col_types = cols()) %>%
+  head(n = nrow(.) - 1) %>%
+  write_csv("data/churn.csv")
+```
+
+Run the pipeline again.
+
+```{r}
+tar_make()
+```
+
+Which targets reran? Why?
+
+A. All of them. `targets` notices it has been a while since you ran the pipeline.
+B. All of them. The data file changed, and `targets` automatically knows `data/churn.csv` is a data file.
+C. All of them. The data file changed, and the pipeline automatically tracks `data/churn.csv`. The data file is tracked because `churn_file` is a `tar_target()` with `format = "file"` and the target's return value is `"data/churn.csv"`.
+D. None of them, because `data/churn.csv` is neither a target nor a function in the global environment.
+
+```{r}
+answer_data("E") # Supply your own answer here.
+```
 
 # Change a command.
 
