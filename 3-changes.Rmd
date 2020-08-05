@@ -12,7 +12,7 @@ When we modify the code and data of an existing workflow, `targets` automaticall
 Throughout this chapter, you will test your understanding with quiz questions. Supply your choices to the `answer_*()` functions when you come to them. Run the code chunk below to set up the quizzes, but try not to peak in advance. It is okay to answer incorrectly at first.
 
 ```{r}
-source("3-changes/utils.R")
+source("R/quiz.R")
 source("3-changes/answers.R")
 ```
 
@@ -119,7 +119,7 @@ Restart your R session.
 
 ```{r}
 rstudioapi::restartSession()
-source("3-changes/utils.R")
+source("R/quiz.R")
 source("3-changes/answers.R")
 ```
 
