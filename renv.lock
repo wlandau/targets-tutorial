@@ -739,10 +739,10 @@
     },
     "servr": {
       "Package": "servr",
-      "Version": "0.18",
+      "Version": "0.17",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "50d06ac0ec97386d9fd470d36f45bfe5"
+      "Hash": "a59f16bb4cb2280bebe6b7726103af66"
     },
     "stringi": {
       "Package": "stringi",
@@ -767,10 +767,10 @@
     },
     "sys": {
       "Package": "sys",
-      "Version": "3.3",
+      "Version": "3.4",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "507f3116a38d37ad330a038b3be07b66"
+      "Hash": "b227d13e29222b4574486cfcbde077fa"
     },
     "tarchetypes": {
       "Package": "tarchetypes",
@@ -793,8 +793,8 @@
       "RemoteUsername": "wlandau",
       "RemoteRepo": "targets",
       "RemoteRef": "master",
-      "RemoteSha": "7bd690330358314eaac7ad6354a22f05fb913b59",
-      "Hash": "a43dc3f151376db58339e5fc1f5d081b"
+      "RemoteSha": "bb7abc4fa7d365ef071ab160a0e28c1edc5f7400",
+      "Hash": "3c70b92b0af51ce4da4c7291607e53b5"
     },
     "tensorflow": {
       "Package": "tensorflow",
@@ -936,9 +936,5 @@
       "Repository": "CRAN",
       "Hash": "ee9b643aa8331c45d8d82eb3a137c9bc"
     }
-  },
-  "Python": {
-    "Version": "3.8.3",
-    "Type": "virtualenv"
   }
 }

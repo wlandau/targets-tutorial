@@ -1,1 +1,4 @@
 TAR_SCRIPT_ASK=false
+RETICULATE_CONDA=/home/landau/projects/targets-tutorial/miniconda/bin/conda
+RETICULATE_PYTHON=/home/landau/projects/targets-tutorial/miniconda/bin/python
+WORKON_HOME=/home/landau/projects/targets-tutorial/virtualenvs
