@@ -129,38 +129,26 @@ background-size: contain;
 ## What distinguishes `targets`?
 
 &lt;center&gt;
-&lt;img src = "./images/R.png" align="middle" style="border: none; box-shadow: none; text-align: center; height: 200px"&gt;
+&lt;img src = "./images/R.png" align="middle" style="border: none; box-shadow: none; text-align: center; height: 80px"&gt;
 &lt;/center&gt;
 
-.large[
-* Respects the way R works.
-* Better code, i.e. functions.
-* Time savings allow for an incremental development strategy:
-    1. Change a couple things.
-    2. Run the workflow.
-    3. Inspect results.
-    4. *Repeat often*.
-]
+* Fundamentally designed for R.
+* Supports a clean, modular, function-oriented programming style.
+* Abstracts files as R objects and automatically manages data.
+* Surpasses the permanent limitations of its predecessor, [`drake`](https://github.com/ropensci/drake): &lt;https://wlandau.github.io/targets/articles/need.html&gt;
 
 ---
 
 ## What about `drake`?
 
-&lt;center&gt;
-&lt;img src = "./images/drake.png" align="middle" style="border: none; box-shadow: none; text-align: center; height: 200px"&gt;
-&lt;/center&gt;
-
-.large[
-* `drake` is still supported and maintained.
-* `targets` is the long-term successor to `drake`.
-* Advantages of `targets` over `drake`: &lt;https://wlandau.github.io/targets/articles/need.html&gt;
-    * Better guardrails by design.
-    * Lighter, friendlier data management.
-    * Transparent introspection of global objects.
-    * More powerful dynamic branching.
-    * Improved parallel efficiency.
-    * Easier metaprogramming, e.g. target archetypes: &lt;https://wlandau.github.io/tarchetypes&gt;.
-]
+* `drake` is still an excellent choice for pipeline management, but it has permanent user-side limitations.
+* `targets` was created to overcome these limitations and create a smoother user experience.
+    1. Stronger guardrails by design.
+    1. A friendlier, lighter, more transparent data management system.
+    1. Show which *functions* are up to date.
+    1. More flexible dynamic branching, including compatibility with `dplyr::group_by()`.
+    1. Improved parallel efficiency.
+    1. Designed for custom user-side [metaprogramming](https://wlandau.github.io/targets-manual/branching.html#metaprogramming) and target archetypes: &lt;https://wlandau.github.io/tarchetypes/&gt;.
 
 ---
 
@@ -446,13 +434,13 @@ tar_read(run_relu)
 #&gt; # A tibble: 1 x 6
 #&gt;   accuracy units1 units2 act1  act2  act3   
 #&gt;      &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;  
-#&gt; 1    0.799     16     16 relu  relu  sigmoid
+#&gt; 1    0.795     16     16 relu  relu  sigmoid
 
 tar_read(run_sigmoid)
 #&gt; # A tibble: 1 x 6
 #&gt;   accuracy units1 units2 act1    act2  act3   
 #&gt;      &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;  
-#&gt; 1    0.801     16     16 sigmoid relu  sigmoid
+#&gt; 1    0.800     16     16 sigmoid relu  sigmoid
 ```
 
 ---
@@ -513,6 +501,7 @@ tar_make()
 ```r
 tar_read(best_model)
 #&gt; Model
+#&gt; Model: "sequential_2"
 #&gt; ________________________________________________________________________________
 #&gt; Layer (type)                        Output Shape                    Param #     
 #&gt; ================================================================================
