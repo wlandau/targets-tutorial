@@ -80,7 +80,7 @@ define_model <- function(churn_recipe, units1, units2, act1, act2, act3) {
       activation = act1,
       input_shape = input_shape
     ) %>%
-    layer_dropout(rate = 0.1) %>%
+    layer_dropout(rate = 0.2) %>%
     layer_dense(
       units = units2,
       kernel_initializer = "uniform",

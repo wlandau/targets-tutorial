@@ -1,10 +1,10 @@
 answer_setup <- function(x) {
   choices(
     x,
-    a = yes(),
-    b = no("No targets run when you *define* your pipeline."),
-    c = no("No targets run when you *define* your pipeline."),
-    d = no("The code to set up and define the pipeline was written to _targets.R"),
+    a = no("_targets.R has more than that."),
+    b = no("_targets.R has more than that."),
+    c = no("_targets.R has more than that."),
+    d = yes(),
     invalid()
   )
 }
@@ -26,17 +26,6 @@ answer_last <- function(x) {
     a = yes(),
     b = no("The order you write targets in tar_pipeline() does not matter."),
     c = no("There is a downstream target that depends on best_run."),
-    invalid()
-  )
-}
-
-answer_inspect <- function(x) {
-  choices(
-    x,
-    a = no(),
-    b = yes(),
-    c = no(),
-    d = no(),
     invalid()
   )
 }
@@ -84,3 +73,37 @@ answer_data <- function(x) {
     invalid()
   )
 }
+
+answer_command <- function(x) {
+  choices(
+    x,
+    a = no("tar_make() cannot predict that bind_rows() and rbind() will return the same value. It needs to run best_run to find out."),
+    b = no("tar_make() cannot predict that bind_rows() and rbind() will return the same value. It needs to run best_run to find out."),
+    c = no("tar_make() skips best_model. Yes, best_run did rerun, but it returned the same value. That means best_model is still up to date."),
+    d = yes(),
+    invalid()
+  )
+}
+
+answer_function <- function(x) {
+  choices(
+    x,
+    a = no("Some targets do call test_model() and retrain_model(), both of which depend on define_model() through train_model(). tar_make() does detect this."),
+    b = no("tar_make() still takes the change in dropout rate seriously."),
+    c = no("best_model calls retrain_run(), which does depend on define_model() through train_model()."),
+    d = yes(),
+    invalid()
+  )
+}
+
+answer_trivial <- function(x) {
+  choices(
+    x,
+    a = no("tar_make() ignores trivial changes like comments and white space: anything that does not show up in deparse(define_model)."),
+    b = yes(),
+    c = no("tar_make() does detect nontrivial changes to functions."),
+    d = no("Some targets do call test_model() and retrain_model(), both of which depend on define_model() through train_model(). tar_make() does detect this."),
+    invalid()
+  )
+}
+

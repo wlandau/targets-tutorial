@@ -10,6 +10,7 @@ install.packages(c(
   "visNetwork",
   "yardstick"
 ))
+remotes::install_github("rstudio/reticulate")
 remotes::install_github("wlandau/targets")
 remotes::install_github("wlandau/tarchetypes")
 root <- rprojroot::find_rstudio_root_file()
@@ -24,7 +25,7 @@ writeLines(lines, file.path(root, ".Renviron"))
 rstudioapi::restartSession()
 reticulate::virtualenv_create(
   "r-reticulate",
-  python = file.path(root, Sys.getenv("RETICULATE_PYTHON"))
+  python = Sys.getenv("RETICULATE_PYTHON")
 )
 keras::install_keras(
   method = "virtualenv",

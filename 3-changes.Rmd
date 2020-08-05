@@ -25,43 +25,21 @@ tar_destroy() # Start fresh.
 
 # Setup
 
-Begin with a fresh pipeline.
+Run the line below to begin with a new `_targets.R` file.
 
 ```{r}
-tar_script({
-  source("3-changes/functions.R")
-  tar_option_set(packages = c("keras", "recipes", "rsample", "tidyverse", "yardstick"))
-  tar_pipeline(
-    tar_target(churn_file, "data/churn.csv", format = "file"), 
-    tar_target(churn_data, split_data(churn_file)),
-    tar_target(churn_recipe,  prepare_recipe(churn_data)),
-    tar_target(run_relu, test_model(act1 = "relu", churn_data, churn_recipe)),
-    tar_target(run_sigmoid, test_model(act1 = "sigmoid", churn_data, churn_recipe)),
-    tar_target(run_softmax, test_model(act1 = "softmax", churn_data, churn_recipe)),
-    tar_target(
-      best_run,
-      bind_rows(run_relu, run_sigmoid, run_softmax) %>%
-        top_n(1, accuracy) %>%
-        head(1)
-    ),
-    tar_target(
-      best_model,
-      retrain_run(best_run, churn_recipe),
-      format = "keras"
-    )
-  )
-})
+tmp <- file.copy("3-changes/initial_targets.R", "_targets.R", overwrite = TRUE)
 ```
 
-What happened when you ran the code chunk above?
+Then, open `_targets.R` manually in the RStudio IDE. What do you see?
 
-A. No targets ran. the `tar_script()` function wrote the code inside the braces to a file called `_targets.R` in your working directory. In real projects, subsequent modifications to `_targets.R` are best done by hand and not through `tar_script()`.
-B. Same as A except some targets ran.
-C. Same as B except all targets ran.
-D. Nothing happened.
+A. A call to `source("3-changes/functions.R")` to load our custom functions.
+B. A call to `tar_option_set()` to declare the packages the targets need when they run.
+C. The full pipeline from `2-pipelines.Rmd` at the very bottom of the file.
+D. All the above.
 
 ```{r}
-answer_setup("E")
+answer_setup("D") # Supply your own answer here.
 ```
 
 # First target
@@ -193,6 +171,80 @@ answer_data("E") # Supply your own answer here.
 
 # Change a command.
 
+Open `_targets.R` for editing in the RStudio IDE. In the command of target `best_run`, change the function to `rbind()` to the preferred `bind_rows()` from `dplyr`. The target definition should look like this:
+
+```{r, eval = FALSE}
+tar_target(
+  best_run,
+  bind_rows(run_relu, run_sigmoid, run_softmax) %>%
+    top_n(1, accuracy) %>%
+    head(1)
+)
+```
+
+Then, rerun the pipeline.
+
+```{r}
+tar_make()
+```
+
+Which targets ran? Why?
+
+A. None. `bind_rows()` and `rbind()` return the same value.
+B. None. `targets` can predict that `bind_rows()` and `rbind()` will return the same value.
+C. `best_run` and `best_model`. The command of `best_run` changed, and `best_model` is directly downstream.
+D. `best_run` only. The command of `best_run` changed, but `best_run` returned the same value, so `best_model` is still up to date.
+
+```{r}
+answer_command("E")
+```
+
 # Change a function.
 
+Open `3-changes/functions.R` for editing in the RStudio IDE. In the body of `define_model()`, change the `rate` argument to 0.2 in the first call to `layer_dropout()`.
+
+```{r, eval = FALSE}
+layer_dropout(rate = 0.2) # previously 0.1
+```
+
+Then, rerun the pipeline.
+
+```{r}
+tar_make()
+```
+
+Which targets ran? Why?
+
+A. None. No target directly calls `define_model()`.
+B. None. The model definition did not change much.
+C. `run_relu`, `run_sigmoid`, `run_softmax`, `best_run`, and possibly `best_model`.  `best_model` might not run because it only depends on `best_model`.
+D. `run_relu`, `run_sigmoid`, `run_softmax`, `best_run`, and `best_model`.
+
+```{r}
+answer_function("E")
+```
+
 # Make a trivial change.
+
+Open `3-changes/functions.R` for editing in the RStudio IDE. Add a comment in the body of `define_model()` and change nothing else.
+
+```{r, eval = FALSE}
+define_model <- function(churn_recipe, units1, units2, act1, act2, act3) {
+  # This is an arbitrary comment.
+  input_shape <- ncol(
+    juice(churn_recipe, all_predictors(), composition = "matrix")
+  )
+  # Leave the rest of the function alone.
+}
+```
+
+Which targets ran? Why?
+
+A. `run_relu`, `run_sigmoid`, `run_softmax`, `best_run`, and `best_model`. The `define_model()` function changed, which affects all these targets.
+B. None. `tar_make()` ignores trivial changes like comments and white space: anything that does not show up in `deparse(define_model)`. 
+C. None. `tar_make()` ignores all changes to functions.
+D. None. No target directly calls `define_model()`.
+
+```{r}
+answer_trivial("E")
+```
