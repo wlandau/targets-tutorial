@@ -88,7 +88,7 @@ answer_command <- function(x) {
 answer_function <- function(x) {
   choices(
     x,
-    a = no("Some targets do call test_model() and retrain_model(), both of which depend on define_model() through train_model(). tar_make() does detect this."),
+    a = no("Some targets do call test_model() and retrain_model(), both of which depend on define_model() through train_model(). tar_make() detects this."),
     b = no("tar_make() still takes the change in dropout rate seriously."),
     c = no("best_model calls retrain_run(), which does depend on define_model() through train_model()."),
     d = yes(),
@@ -102,7 +102,7 @@ answer_trivial <- function(x) {
     a = no("tar_make() ignores trivial changes like comments and white space: anything that does not show up in deparse(define_model)."),
     b = yes(),
     c = no("tar_make() does detect nontrivial changes to functions."),
-    d = no("Some targets do call test_model() and retrain_model(), both of which depend on define_model() through train_model(). tar_make() does detect this."),
+    d = no("Some targets do call test_model() and retrain_model(), both of which depend on define_model() through train_model(). tar_make() detects this."),
     invalid()
   )
 }

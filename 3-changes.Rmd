@@ -68,6 +68,7 @@ Which target ran last? Why?
 A. `best_model`, because it depends on the results of the other targets.
 B. `best_model`, because it is listed last in the pipeline.
 C. `best_run`, because it depends on the results of the other targets.
+D. `best_run`, because it is listed last in the pipeline.
 
 ```{r}
 answer_last("E")
@@ -131,7 +132,7 @@ tar_make()
 
 Which targets reran? Why?
 
-A. None. The targets are in storage (in `_targets/objects/`) and are still up to date with their dependencies.
+A. None. The targets are in storage (`_targets/objects/`) and are still up to date with their dependencies.
 B. I get a confusing error message.
 C. All targets reran because I restarted the R session.
 D. All the models rerun.
@@ -162,7 +163,7 @@ Which targets reran? Why?
 
 A. All of them. `targets` notices it has been a while since you ran the pipeline.
 B. All of them. The data file changed, and `targets` automatically knows `data/churn.csv` is a data file.
-C. All of them. The data file changed, and the pipeline automatically tracks `data/churn.csv`. The data file is tracked because `churn_file` is a `tar_target()` with `format = "file"` and the target's return value is `"data/churn.csv"`.
+C. All of them. The data file changed, and the pipeline is configured to automatically track `data/churn.csv`. The pipeline tracks the data file because the `churn_file` target returns the value `"data/churn.csv"` and the call to `tar_target()` has `format = "file"`.
 D. None of them, because `data/churn.csv` is neither a target nor a function in the global environment.
 
 ```{r}
