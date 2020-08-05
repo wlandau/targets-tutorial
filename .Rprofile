@@ -1,4 +1,3 @@
-source("renv/activate.R")
 options(
   crayon.enabled = FALSE,
   readr.show_progress = FALSE,
