@@ -61,7 +61,7 @@ tar_script({
 })
 ```
 
-It is standard practice to make further modifications to `_targets.R` by hand, but for pedagogical simplicity, we will call `tar_script()` often. Let's inspect `_targets.R`.
+It is standard practice to make further modifications to `_targets.R` by hand, but for pedagogical simplicity in this chapter, we will use `tar_script()` instead. For now, let's just peek at `_targets.R` whenever we change it.
 
 ```{r}
 cat(readLines("_targets.R"), sep = "\n")
