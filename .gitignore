@@ -10,5 +10,6 @@
 .Rproj.user/
 _targets/
 _targets.R
+cor.png
 miniconda
 virtualenvs
