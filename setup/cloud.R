@@ -7,6 +7,7 @@ install.packages(c(
   "rprojroot",
   "rsample",
   "tidyverse",
+  "usethis",
   "visNetwork",
   "yardstick"
 ))
