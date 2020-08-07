@@ -137,3 +137,6 @@ D. `churn_cor` because `targets` always treats character strings as file names.
 ```{r}
 answer_delete("E")
 ```
+
+# Literate programming
+
