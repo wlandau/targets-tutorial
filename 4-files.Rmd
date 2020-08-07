@@ -75,5 +75,65 @@ answer_review("E")
 
 # Output files
 
-In `targets`, we configure output files the exact same way. The only difference between input and output files is that output files are created by the file target that watches them.
+In `targets`, we configure output files the exact same way. The only difference between input and output files is that output files are created when the target runs.
 
+As an example, open `_targets.R` and create a new file targets `churn_cor`, which saves a plot of the correlation of each covariate with customer churn in the preprocessed testing data. Functions `compute_cor()` and `plot_cor()` in `4-files/functions.R` do most of the work.
+
+```{r}
+edit_file("_targets.R", open = TRUE)
+```
+
+Enter the new target below into `tar_pipeline()` in `_targets.R`.
+
+```{r, eval = FALSE}
+tar_target(
+  churn_cor, {
+    out <- plot_cor(compute_cor(churn_recipe))
+    path <- "cor.png"
+    ggsave(plot = out, filename = path, width = 8, height = 8)
+    path # The return value must be the path to the file we write.
+  },
+  format = "file" # Tells targets to track the return value (path) as a file.
+)
+```
+
+Run the pipeline. Since all previous targets are up to date, only `churn_cor` should run.
+
+```{r}
+tar_make()
+```
+
+What is the return value of the new `churn_cor` target?
+
+```{r}
+tar_read(churn_cor)
+```
+
+A. `"cor.png"`, the file path to the correlation plot.
+B. A `ggplot` object with the correlation plot.
+C. A data frame of correlations.
+D. A function called `churn_cor()`.
+
+```{r}
+answer_return("E")
+```
+
+Take a look at the new output file `cor.png`. You should see a plot of each variable's correlation with customer churn.
+
+Now, delete the file and rerun the pipeline.
+
+```{r}
+tmp <- file.remove("cor.png")
+tar_make()
+```
+
+What happened? Why?
+
+A. All targets reran because we changed a file.
+B. No target reran because `targets` does not track the deleted file.
+C. Because `churn_cor` is a correctly configured file target, `tar_make()` noticed when `cor.png` changed and automatically reran in order to repair the file.
+D. `churn_cor` because `targets` always treats character strings as file names.
+
+```{r}
+answer_delete("E")
+```

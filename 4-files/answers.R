@@ -8,3 +8,25 @@ answer_review <- function(x) {
     invalid()
   )
 }
+
+answer_return <- function(x) {
+  choices(
+    x,
+    a = yes(),
+    b = no("targets with format = \"file\" must return file or directory paths."),
+    c = no("targets with format = \"file\" must return file or directory paths."),
+    d = no("targets with format = \"file\" must return file or directory paths."),
+    invalid()
+  )
+}
+
+answer_delete <- function(x) {
+  choices(
+    x,
+    a = no("Not all files are reproducibly tracked."),
+    b = no("tar_make() reproducibly tracks cor.png because it came from a correctly configured file target."),
+    c = yes(),
+    d = no("tar_make() does not assume character strings are file names."),
+    invalid()
+  )
+}
