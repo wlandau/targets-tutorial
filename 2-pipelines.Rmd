@@ -5,7 +5,7 @@ output: html_notebook
 
 # About
 
-To implement the customer churn prediction analysis, we will create a `targets` pipeline. A pipeline is a high-level collection of steps, or *targets*, that comprise the workflow. Each *target* has a *command*, which is just a piece of R code that returns a value. In practice, targets are usually data cleaning, model fitting, and results summary steps, and the commands are just the R function calls that do those tasks.
+To implement the customer churn prediction analysis, we will create a `targets` pipeline. A pipeline is a high-level collection of steps, or *targets*, that comprise the workflow. Each *target* has a *command*, which is just a piece of R code that returns a value. In practice, targets are usually data cleaning, model fitting, and results summary steps, and the commands are just the R function calls that do those tasks. Please read the instructions in the comments.
 
 # Setup
 
@@ -46,28 +46,19 @@ To formalize our three targets, we express the computation in a special configur
 2. Set any options, including packages that the targets depend on.
 3. Declare the targets and pipeline using functions `tar_target()` and `tar_pipeline()`. The `_targets.R` script must always end with a pipeline object, preferably an explicit call to `tar_pipeline()`.
 
-The `tar_script()` function is a convenient way to write `_targets.R`.
+Run the following code chunk to put the `_targets.R` file for this chapter in your working directory.
 
-```{r}
-library(targets)
-tar_script({
-  source("2-pipelines/functions.R")
-  tar_option_set(packages = c("keras", "recipes", "rsample", "tidyverse", "yardstick"))
-  tar_pipeline(
-    tar_target(churn_file, "data/churn.csv", format = "file"),
-    tar_target(churn_data, split_data(churn_file)),
-    tar_target(churn_recipe, prepare_recipe(churn_data))
-  )
-})
+```{r, echo = FALSE}
+file.copy("2-pipelines/initial_targets.R", "_targets.R", overwrite = TRUE)
 ```
 
-It is standard practice to make further modifications to `_targets.R` by hand, but for pedagogical simplicity in this chapter, we will use `tar_script()` instead. For now, let's just peek at `_targets.R` whenever we change it.
+Now, open `_targets.R` in the RStudio IDE for editing. You will manually make changes to `_targets.R` throughout the entire chapter.
 
 ```{r}
-cat(readLines("_targets.R"), sep = "\n")
+usethis::edit_file("_targets.R", open = TRUE)
 ```
 
-User-side functions in `targets` rely heavily on the `_targets.R` file. Examples are  `tar_validate()`, `tar_manifest()`, `tar_glimpse()`, and `tar_visnetwork()`. Each of these functions creates a fresh, clean, reproducible R process that runs `_targets.R` and then inspects the pipeline in some way. It is good practice to frequently run these functions to check your work.
+Functions `tar_make()`, `tar_validate()`, `tar_manifest()`, `tar_glimpse()`, and `tar_visnetwork()` all need `_targets.R`. `_targets.R` lets these functions invoke the pipeline from a new external R process in order to ensure reproducibility.
 
 ```{r}
 tar_validate() # Looks for errors.
@@ -152,21 +143,20 @@ run_relu <- test_model(act1 = "relu", churn_data, churn_recipe)       # Model 1
 run_sigmoid <- test_model(act1 = "sigmoid", churn_data, churn_recipe) # Model 2
 ```
 
-Your turn: add these new steps to the pipeline as formal targets.
+Your turn: open `_targets.R` for editing and type in the models as formal targets in the pipeline.
 
-```{r}
+```{r, eval = FALSE}
+# Should go in _targets.R:
 library(targets)
-tar_script({
-  source("2-pipelines/functions.R")
-  tar_option_set(packages = c("keras", "recipes", "rsample", "tidyverse", "yardstick"))
-  tar_pipeline(
-    tar_target(churn_file, "data/churn.csv", format = "file"),
-    tar_target(churn_data, split_data(churn_file)),
-    tar_target(churn_recipe, prepare_recipe(churn_data)),
-    tar_target("???", "???"), # Your turn: add model 1.
-    tar_target("???", "???")  # Your turn: add model 2.
-  )
-})
+source("2-pipelines/functions.R")
+tar_option_set(packages = c("keras", "recipes", "rsample", "tidyverse", "yardstick"))
+tar_pipeline(
+  tar_target(churn_file, "data/churn.csv", format = "file"),
+  tar_target(churn_data, split_data(churn_file)),
+  tar_target(churn_recipe, prepare_recipe(churn_data)),
+  tar_target("???", "???"), # Your turn: add model 1.
+  tar_target("???", "???")  # Your turn: add model 2.
+)
 ```
 
 Visualize the graph to check the pipeline. `run_relu` and `run_sigmoid` should be new targets that depend on `churn_data`, `churn_recipe`, `test_model()`, and the custom functions called from `test_model()`.
@@ -213,21 +203,21 @@ tar_read(run_sigmoid)
 
 # Add another model
 
-Your turn: add a third model with a different activation function. Use the `act1 = "softmax"` this time.
+Your turn: open `_targets.R` for editing and type in a third model with a different activation function. Use the `act1 = "softmax"` this time.
 
-```{r}
-tar_script({
-  source("2-pipelines/functions.R")
-  tar_option_set(packages = c("keras", "recipes", "rsample", "tidyverse", "yardstick"))
-  tar_pipeline(
-    tar_target(churn_file, "data/churn.csv", format = "file"), 
-    tar_target(churn_data, split_data(churn_file)),
-    tar_target(churn_recipe,  prepare_recipe(churn_data)),
-    tar_target(run_relu, test_model(act1 = "relu", churn_data, churn_recipe)),
-    tar_target(run_sigmoid, test_model(act1 = "sigmoid", churn_data, churn_recipe)),
-    tar_target(run_softmax, "???") # Your turn: add a model target with `act1 = "softmax"`.
-  )
-})
+```{r, eval = FALSE}
+# Should go in _targets.R:
+library(targets)
+source("2-pipelines/functions.R")
+tar_option_set(packages = c("keras", "recipes", "rsample", "tidyverse", "yardstick"))
+tar_pipeline(
+  tar_target(churn_file, "data/churn.csv", format = "file"), 
+  tar_target(churn_data, split_data(churn_file)),
+  tar_target(churn_recipe,  prepare_recipe(churn_data)),
+  tar_target(run_relu, test_model(act1 = "relu", churn_data, churn_recipe)),
+  tar_target(run_sigmoid, test_model(act1 = "sigmoid", churn_data, churn_recipe)),
+  tar_target(run_softmax, "???") # Your turn: add a model target with `act1 = "softmax"`.
+)
 ```
 
 Now, only `run_softmax` should be outdated.
@@ -262,25 +252,25 @@ bind_rows(run_relu, run_sigmoid, run_softmax) %>%
   head(1)
 ```
 
-Your turn: write this step as a target below. Note: although commands should usually be concise function calls, but this is not a restrict requirement, as you will see below.
+Your turn: open `_targets.R` and type the above into a new target. Note: although commands should usually be concise function calls, but this is not a restrict requirement, as you will see below.
 
-```{r}
-tar_script({
-  source("2-pipelines/functions.R")
-  tar_option_set(packages = c("keras", "recipes", "rsample", "tidyverse", "yardstick"))
-  tar_pipeline(
-    tar_target(churn_file, "data/churn.csv", format = "file"), 
-    tar_target(churn_data, split_data(churn_file)),
-    tar_target(churn_recipe,  prepare_recipe(churn_data)),
-    tar_target(run_relu, test_model(act1 = "relu", churn_data, churn_recipe)),
-    tar_target(run_sigmoid, test_model(act1 = "sigmoid", churn_data, churn_recipe)),
-    tar_target(run_softmax, test_model(act1 = "softmax", churn_data, churn_recipe)),
-    tar_target(
-      best_run,
-      "???" # Your turn: insert code to choose the model run with the highest accuracy.
-    )
+```{r, eval = FALSE}
+# Should go in _targets.R:
+library(targets)
+source("2-pipelines/functions.R")
+tar_option_set(packages = c("keras", "recipes", "rsample", "tidyverse", "yardstick"))
+tar_pipeline(
+  tar_target(churn_file, "data/churn.csv", format = "file"), 
+  tar_target(churn_data, split_data(churn_file)),
+  tar_target(churn_recipe,  prepare_recipe(churn_data)),
+  tar_target(run_relu, test_model(act1 = "relu", churn_data, churn_recipe)),
+  tar_target(run_sigmoid, test_model(act1 = "sigmoid", churn_data, churn_recipe)),
+  tar_target(run_softmax, test_model(act1 = "softmax", churn_data, churn_recipe)),
+  tar_target(
+    best_run,
+    "???" # Your turn: insert code to choose the model run with the highest accuracy.
   )
-})
+)
 ```
 
 `best_run` should depend on `run_relu`, `run_sigmoid`, and `run_softmax`.
@@ -303,32 +293,32 @@ tar_read(best_run)
 
 # Retrain the best model
 
-Finally, add a new target to retrain the best model with `retrain_run(best_run, churn_recipe)`. This time, we are returning a Keras model object, so we need to write `format = "keras"` in `tar_target()`.
+Finally, open `_targets.R` for editing and add a new target to retrain the best model with `retrain_run(best_run, churn_recipe)`. This time, we are returning a Keras model object, so we need to write `format = "keras"` in `tar_target()`.
 
-```{r}
-tar_script({
-  source("2-pipelines/functions.R")
-  tar_option_set(packages = c("keras", "recipes", "rsample", "tidyverse", "yardstick"))
-  tar_pipeline(
-    tar_target(churn_file, "data/churn.csv", format = "file"), 
-    tar_target(churn_data, split_data(churn_file)),
-    tar_target(churn_recipe,  prepare_recipe(churn_data)),
-    tar_target(run_relu, test_model(act1 = "relu", churn_data, churn_recipe)),
-    tar_target(run_sigmoid, test_model(act1 = "sigmoid", churn_data, churn_recipe)),
-    tar_target(run_softmax, test_model(act1 = "softmax", churn_data, churn_recipe)),
-    tar_target(
-      best_run,
-      bind_rows(run_relu, run_sigmoid, run_softmax) %>%
-        top_n(1, accuracy) %>%
-        head(1)
-    ),
-    tar_target(
-      best_model,
-      "???", # Your turn: call retrain_run() to retrain the best model.
-      format = "keras" # Needed to return the actual Keras model object.
-    )
+```{r, eval = FALSE}
+# Should go in _targets.R:
+library(targets)
+source("2-pipelines/functions.R")
+tar_option_set(packages = c("keras", "recipes", "rsample", "tidyverse", "yardstick"))
+tar_pipeline(
+  tar_target(churn_file, "data/churn.csv", format = "file"), 
+  tar_target(churn_data, split_data(churn_file)),
+  tar_target(churn_recipe,  prepare_recipe(churn_data)),
+  tar_target(run_relu, test_model(act1 = "relu", churn_data, churn_recipe)),
+  tar_target(run_sigmoid, test_model(act1 = "sigmoid", churn_data, churn_recipe)),
+  tar_target(run_softmax, test_model(act1 = "softmax", churn_data, churn_recipe)),
+  tar_target(
+    best_run,
+    bind_rows(run_relu, run_sigmoid, run_softmax) %>%
+      top_n(1, accuracy) %>%
+      head(1)
+  ),
+  tar_target(
+    best_model,
+    "???", # Your turn: call retrain_run() to retrain the best model.
+    format = "keras" # Needed to return the actual Keras model object.
   )
-})
+)
 ```
 
 Check the dependency relationships.
@@ -351,38 +341,12 @@ tar_read(best_model)
 
 # Solution
 
-The full pipeline looks like this.
+The full pipeline in `_targets.R` should look like this.
 
-```{r}
-tar_script({
-  source("2-pipelines/functions.R")
-  tar_option_set(packages = c("keras", "recipes", "rsample", "tidyverse", "yardstick"))
-  tar_pipeline(
-    tar_target(churn_file, "data/churn.csv", format = "file"), 
-    tar_target(churn_data, split_data(churn_file)),
-    tar_target(churn_recipe,  prepare_recipe(churn_data)),
-    tar_target(run_relu, test_model(act1 = "relu", churn_data, churn_recipe)),
-    tar_target(run_sigmoid, test_model(act1 = "sigmoid", churn_data, churn_recipe)),
-    tar_target(run_softmax, test_model(act1 = "softmax", churn_data, churn_recipe)),
-    tar_target(
-      best_run,
-      bind_rows(run_relu, run_sigmoid, run_softmax) %>%
-        top_n(1, accuracy) %>%
-        head(1)
-    ),
-    tar_target(
-      best_model,
-      retrain_run(best_run, churn_recipe),
-      format = "keras"
-    )
-  )
-})
-```
-
-Note: you could have manually edited `_targets.R` instead of going through `tar_script()`. In either case, your `_targets.R` file should now look something like this.
 
 ```{r, eval = FALSE}
-# _targets.R
+# Should be in _targets.R:
+library(targets)
 source("2-pipelines/functions.R")
 tar_option_set(packages = c("keras", "recipes", "rsample", "tidyverse", "yardstick"))
 tar_pipeline(
