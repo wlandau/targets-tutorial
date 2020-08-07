@@ -257,3 +257,91 @@ retrain_run <- function(churn_run, churn_recipe) {
     churn_run$act3
   )
 }
+
+#' @title Compute correlations in the customer churn training data.
+#' @description Calculates the Pearson correlation of each covariate
+#'   with customer churn. Uses the preprocessed training data from the recipe.
+#' @export
+#' @return A data frame with one row per covariate. Each row
+#'   has the covariate name and its correlation with customer churn.
+#' @param churn_recipe A preprocessing recipe from [prepare_recipe()].
+#' @examples
+#' library(corrr)
+#' library(keras)
+#' library(recipes)
+#' library(rsample)
+#' library(tidyverse)
+#' library(yardstick)
+#' churn_data <- split_data("data/churn.csv")
+#' churn_recipe <- prepare_recipe(churn_data)
+#' compute_cor(churn_recipe)
+compute_cor <- function(churn_recipe) {
+  churn_recipe %>%
+    juice() %>%
+    correlate(quiet = TRUE) %>%
+    focus(Churn) %>%
+    rename(feature = rowname) %>%
+    arrange(abs(Churn)) %>%
+    mutate(feature = as_factor(feature)) 
+}
+
+#' @title Visualize correlations in the customer churn training data.
+#' @description Shows a line plot of the correlation of each
+#'   variable with customer churn.
+#' @export
+#' @return A `ggplot` object with the correlation analysis
+#' @param churn_cor A data frame with the correlation of each
+#'   covariate with customer churn (from [compute_cor()]).
+#' @examples
+#' library(corrr)
+#' library(keras)
+#' library(recipes)
+#' library(rsample)
+#' library(tidyverse)
+#' library(yardstick)
+#' churn_data <- split_data("data/churn.csv")
+#' churn_recipe <- prepare_recipe(churn_data)
+#' churn_cor <- compute_cor(churn_recipe)
+#' plot_cor(churn_cor)
+plot_cor <- function(churn_cor) {
+  churn_cor %>%
+    ggplot(aes(x = Churn, y = fct_reorder(feature, Churn))) +
+    geom_point() +
+    geom_segment(
+      aes(xend = 0, yend = feature),
+      data = churn_cor %>% filter(Churn > 0)
+    ) +
+    geom_point(data = churn_cor %>% filter(Churn > 0)) +
+    geom_segment(
+      aes(xend = 0, yend = feature), 
+      color = "#2C3E50", 
+      data = churn_cor %>% filter(Churn < 0)
+    ) +
+    geom_point(
+      color = "2C3E50", 
+      data = churn_cor %>% filter(Churn < 0)
+    ) +
+    geom_vline(
+      xintercept = 0,
+      color = "#A6CEE3",
+      size = 1,
+      linetype = 2
+    ) +
+    geom_vline(
+      xintercept = -0.25,
+      color = "#A6CEE3",
+      size = 1,
+      linetype = 2
+    ) +
+    geom_vline(
+      xintercept = 0.25,
+      color = palette_light()[[5]],
+      size = 1,
+      linetype = 2
+    ) +
+    labs(
+      title = "Churn correlation analysis",
+      x = "Correlation with churn",
+      y = "Feature"
+    )
+}

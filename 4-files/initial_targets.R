@@ -1,6 +1,15 @@
 library(targets)
 source("4-files/functions.R")
-tar_option_set(packages = c("keras", "recipes", "rsample", "tidyverse", "yardstick"))
+tar_option_set(
+  packages = c(
+    "corrr",
+    "keras",
+    "recipes",
+    "rsample",
+    "tidyverse",
+    "yardstick"
+  )
+)
 tar_pipeline(
   tar_target(churn_file, "data/churn.csv", format = "file"), 
   tar_target(churn_data, split_data(churn_file)),

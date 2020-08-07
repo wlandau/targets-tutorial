@@ -1,4 +1,5 @@
 install.packages(c(
+  "corrr",
   "fst",
   "keras",
   "recipes",
