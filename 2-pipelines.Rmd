@@ -55,7 +55,8 @@ file.copy("2-pipelines/initial_targets.R", "_targets.R", overwrite = TRUE)
 Now, open `_targets.R` in the RStudio IDE for editing. You will manually make changes to `_targets.R` throughout the entire chapter.
 
 ```{r}
-usethis::edit_file("_targets.R", open = TRUE)
+library(usethis)
+edit_file("_targets.R", open = TRUE)
 ```
 
 Functions `tar_make()`, `tar_validate()`, `tar_manifest()`, `tar_glimpse()`, and `tar_visnetwork()` all need `_targets.R`. `_targets.R` lets these functions invoke the pipeline from a new external R process in order to ensure reproducibility.
@@ -77,7 +78,8 @@ tar_glimpse() # Interactive dependency graph.
 `tar_glimpse()` is particularly helpful because it shows how the targets depend on one another. As the arrows indicate, target `churn_recipe` depends on `churn_data`, and target `churn_data` depends on `churn_file`. The `targets` package detects these relationships automatically using static code analysis. `churn_data` depends on `churn_file` because the command for `churn_data` mentions the symbol `churn_file`. You can see these dependency relationships for yourself using `codetools::findGlobals()`.
 
 ```{r}
-codetools::findGlobals(function() split_data(churn_file))
+library(codetools)
+findGlobals(function() split_data(churn_file))
 ```
 
 That means the order you write your targets does not matter. Even if you rearrange the calls to `tar_target()` inside `tar_pipeline()`, you will still get the same workflow.
@@ -143,7 +145,13 @@ run_relu <- test_model(act1 = "relu", churn_data, churn_recipe)       # Model 1
 run_sigmoid <- test_model(act1 = "sigmoid", churn_data, churn_recipe) # Model 2
 ```
 
-Your turn: open `_targets.R` for editing and type in the models as formal targets in the pipeline.
+Your turn: open `_targets.R` for editing.
+
+```{r}
+edit_file("_targets.R", open = TRUE)
+```
+
+Then, type in the models as formal targets in the pipeline.
 
 ```{r, eval = FALSE}
 # Should go in _targets.R:
@@ -204,6 +212,10 @@ tar_read(run_sigmoid)
 # Add another model
 
 Your turn: open `_targets.R` for editing and type in a third model with a different activation function. Use the `act1 = "softmax"` this time.
+
+```{r}
+edit_file("_targets.R", open = TRUE)
+```
 
 ```{r, eval = FALSE}
 # Should go in _targets.R:
