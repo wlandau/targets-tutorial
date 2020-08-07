@@ -13,9 +13,9 @@ answer_return <- function(x) {
   choices(
     x,
     a = yes(),
-    b = no("targets with format = \"file\" must return file or directory paths."),
-    c = no("targets with format = \"file\" must return file or directory paths."),
-    d = no("targets with format = \"file\" must return file or directory paths."),
+    b = no("targets with format = \"file\" must return paths to files or directories."),
+    c = no("targets with format = \"file\" must return paths to files or directories."),
+    d = no("targets with format = \"file\" must return paths to files or directories."),
     invalid()
   )
 }
