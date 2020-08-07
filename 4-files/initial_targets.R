@@ -1,5 +1,5 @@
 library(targets)
-source("2-pipelines/functions.R")
+source("4-files/functions.R")
 tar_option_set(packages = c("keras", "recipes", "rsample", "tidyverse", "yardstick"))
 tar_pipeline(
   tar_target(churn_file, "data/churn.csv", format = "file"), 

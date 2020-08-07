@@ -9,6 +9,13 @@ output: html_document
 
 # Setup
 
+Run `tar_destroy()` to remove the targets from the previous chapter.
+
+```{r}
+library(targets)
+tar_destroy()
+```
+
 Load this chapter's quiz questions. Try not to peek in advance.
 
 ```{r}
@@ -22,13 +29,6 @@ Run the following command to write the required `_targets.R` script to the your 
 file.copy("4-files/initial_targets.R", "_targets.R", overwrite = TRUE)
 ```
 
-Run `tar_destroy()` to remove the targets from the previous chapter.
-
-```{r}
-library(targets)
-tar_destroy()
-```
-
 Open `_targets.R` for editing
 
 ```{r}
@@ -36,7 +36,7 @@ library(usethis)
 edit_file("_targets.R", open = TRUE)
 ```
 
-# Review
+# Review: input data files
 
 As we saw in `3-changes.Rmd`, `targets` can watch files like `data/churn.csv` for changes. Let's review how this works. First, run the full pipeline from start to finish.
 
@@ -62,13 +62,18 @@ When we call `tar_make()` again, all targets should rerun because they all depen
 tar_make()
 ```
 
-How do we configure `churn_file` and everything downstream to rerun when `data/churn.csv` changes?
+How do we configure `churn_file` and downstream targets to rerun when `data/churn.csv` changes?
 
 A. The target's return value needs to be a character vector of file and directory paths. These paths get resolved at runtime, so we do not need to know them before we call `tar_make()`. 
 B. In `tar_target()`, set the `format` argument equal to `"file"`. That way, `tar_make()` knows the return value of `churn_file` is a bunch of file paths that need to be watched.
-C. Targets directly downstream need to mention the symbol `churn_file` (as opposed to the literal path `"data/churn.csv"`) so `tar_make()` can discover the correct dependnecy relationships among targets. Always check with `tar_visnetwork()` to verify that your targets are connected propoerly in the dependency graph.
+C. Targets directly downstream need to mention the symbol `churn_file` (as opposed to the literal path `"data/churn.csv"`) so `tar_make()` can discover the correct dependency relationships among targets. Always check with `tar_visnetwork()` to verify that your targets are connected properly in the dependency graph.
 D. All the above.
 
 ```{r}
 answer_review("E")
 ```
+
+# Output files
+
+In `targets`, we configure output files the exact same way. The only difference between input and output files is that output files are created by the file target that watches them.
+
