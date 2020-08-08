@@ -9,6 +9,13 @@ For pipelines with hundreds or thousands of targets, it is impractical to write 
 
 # Setup
 
+Start with a fresh data store.
+
+```{r}
+library(targets)
+tar_destroy()
+```
+
 Copy the starting `_targets.R` file into the working directory.
 
 ```{r}
@@ -48,9 +55,30 @@ Run the pipeline. Each model run is a dynamically created branch of the `run` ta
 tar_make()
 ```
 
-Depending on what you change, some branches may run while others are skipped. 
+Depending on what you change, some branches may run while others are skipped. As an example, add the softmax activation function in `_targets.R`. Sketch:
 
-<<<<add the softmax model and watch the other branches skip>>>>>
+```{r, eval = FALSE}
+tar_target(activations, c("relu", "sigmoid", "softmax"))
+```
+
+Now, run the pipeline.
+
+```{r}
+tar_make()
+```
+
+Which targets reran? Why?
+
+A. Just the new run with the softmax activation function. The rest of the targets were already up to date, so `tar_make()` skipped them.
+B. Just the new run with the sigmoid activation function. The rest of the targets were already up to date, so `tar_make()` skipped them.
+C. The new run with the softmax activation function, the `best_run` target if the model accuracy might changed, and  `best_model` if `best_run` changed. `tar_make()` skipped the other model runs because they were already up to date.
+D. All the model runs and everything downstream because the `activations` target changed.
+
+```{r}
+answer5_map_runs("E")
+```
+
+
 
 <<<<dynamically branch over branches>>>>
 
