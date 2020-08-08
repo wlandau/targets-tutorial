@@ -152,24 +152,54 @@ Literare programming is the practice of writing code and explanatory prose in th
 
 The R Markdown report in `4-files/results.Rmd` uses `tar_read()` and `tar_load()` to load targets we previously built, and it has prose to explain the meaning of each target so others can better understand our research.
 
-Copy `4-files/results.Rmd` to the working directory and open the file for editing.
+Copy `4-files/results.Rmd` to the working directory and open the file for editing. Locate the calls to `tar_read()` and `tar_load()` in the active code chunks.
 
 ```{r}
 tmp <- file.copy("4-files/results.Rmd", "results.Rmd", overwrite = TRUE)
 edit_file("results.Rmd", open = TRUE)
 ```
 
-Which target(s) does `4-files/results.Rmd` depend on? Why?
+## R Markdown on its own
 
-A. None. `4-files/results.Rmd` is not a target or a pipeline.
+Because we ran the pipeline before, our targets live in the `_targets/` data store. Switch back to `results.Rmd` in the RStudio IDE  and click the `knit` button to generate the output file `results.html`. Then, view `results.html` in the IDE or a web browser.
+
+## R Markdown within a target
+
+For the sake of convenience and reproducibility, we can render this report inside a target in the pipeline. That way, `targets` will automatically regenerate `results.html` whenever its dependencies change. The `tar_render()` function from the `tarchetpyes` package is the correct way to include an R Markdown report with dependencies. It automatically creates a target that reproducibly tracks the R Markdown source file, the rendered output file, and the target dependencies.
+
+Open `_targets.R` for editing.
+
+```{r}
+edit_file("_targets.R", open = TRUE)
+```
+
+Write `library(tarchetypes)` at the very top, and write `tar_render(report_step, "results.Rmd")` as a target in the pipeline. Sketch:
+
+```{r, eval = FALSE}
+library(tarchetypes)
+# Existing setup code goes here.
+tar_pipeline(
+  # Existing calls to tar_target() stay here.
+  tar_render(report_step, "results.Rmd")
+)
+```
+
+To check your work, take a look at the dependency graph.
+
+```{r}
+tar_visnetwork()
+```
+
+What are the dependencies of the `report_step` target?
+
+Which target(s) does `results.Rmd` depend on? Why?
+
+A. None. `results.Rmd` is not a target or a pipeline.
 B. `run_relu` becuase the report calls `tar_read(run_relu)` in an active code chunk.
 C. `run_sigmoid` because the report calls `tar_load(run_sigmoid)` in an active code chunk.
 D. `run_relu` and `run_sigmoid` because the report calls `tar_read(run_relu)` and `tar_load(run_sigmoid)` in active code chunks.
 
 ```{r}
-answer_rmd_deps("E")
+answer_deps1("E")
 ```
-
-Because we ran 
-
 

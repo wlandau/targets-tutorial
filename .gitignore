@@ -13,4 +13,6 @@ _targets.R
 cor.csv
 cor.png
 miniconda
+results.html
+results.Rmd
 virtualenvs

@@ -31,7 +31,7 @@ answer_delete <- function(x) {
   )
 }
 
-answer_rmd_deps <- function(x) {
+answer_deps1 <- function(x) {
   choices(
     x,
     a = no("R Markdown reports can have target dependencies too."),
