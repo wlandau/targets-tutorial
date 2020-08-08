@@ -1,0 +1,26 @@
+---
+title: "Machine learning results"
+ouput: html_document
+---
+
+The goal of this R Markdown report is to display and explain the results of our machine learning models. Visit <https://blogs.rstudio.com/ai/posts/2018-01-11-keras-customer-churn/> for background and context.
+
+# Model accuracy.
+
+Here is the accuracy from our model with the relu activation function in the first layer.
+
+```{r}
+library(targets)
+tar_read(run_relu)
+```
+
+Here is the accuracy from our model with the sigmoid activation function in the first layer.
+
+```{r}
+tar_load(run_sigmoid)
+run_sigmoid
+```
+
+# Best model
+
+Your turn: write an R code chunk that prints the `best_model` target.

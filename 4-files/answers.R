@@ -30,3 +30,14 @@ answer_delete <- function(x) {
     invalid()
   )
 }
+
+answer_rmd_deps <- function(x) {
+  choices(
+    x,
+    a = no("R Markdown reports can have target dependencies too."),
+    b = no("The report depends on multiple targets"),
+    c = no("The report depends on multiple targets"),
+    d = yes(),
+    invalid()
+  )
+}

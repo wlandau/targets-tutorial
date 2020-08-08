@@ -144,7 +144,32 @@ D. `churn_cor` because `targets` always treats character strings as file names.
 answer_delete("E")
 ```
 
-Whenever a single target like `churn_cor` tracks multiple files or directories, `tar_make()` treats all those files as a single unit. The whole target invalidates when one of the files changes, and downstream targets must accept all the files together. This issue will come up in the next chapter on branching.
+Whenever a single target like `churn_cor` tracks multiple files or directories, `tar_make()` treats all those files as a single unit. The whole target invalidates when one of the files changes, and downstream targets must accept all the files together. When we come to the chapter on branching, we will use the special `tar_files()` function from the `tarchetypes` package to branch over the available files.
 
 # Literate programming
+ 
+Literare programming is the practice of writing code and explanatory prose in the same source file, such as this R Markdown document. We have already been using literate programming / R Markdown on top of `targets`. In this section, we will explore literate programming as a piece of a `targets`-powered workflow.
+
+The R Markdown report in `4-files/results.Rmd` uses `tar_read()` and `tar_load()` to load targets we previously built, and it has prose to explain the meaning of each target so others can better understand our research.
+
+Copy `4-files/results.Rmd` to the working directory and open the file for editing.
+
+```{r}
+tmp <- file.copy("4-files/results.Rmd", "results.Rmd", overwrite = TRUE)
+edit_file("results.Rmd", open = TRUE)
+```
+
+Which target(s) does `4-files/results.Rmd` depend on? Why?
+
+A. None. `4-files/results.Rmd` is not a target or a pipeline.
+B. `run_relu` becuase the report calls `tar_read(run_relu)` in an active code chunk.
+C. `run_sigmoid` because the report calls `tar_load(run_sigmoid)` in an active code chunk.
+D. `run_relu` and `run_sigmoid` because the report calls `tar_read(run_relu)` and `tar_load(run_sigmoid)` in active code chunks.
+
+```{r}
+answer_rmd_deps("E")
+```
+
+Because we ran 
+
 
