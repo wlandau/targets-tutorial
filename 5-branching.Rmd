@@ -5,4 +5,61 @@ output: html_document
 
 # About
 
+For pipelines with hundreds or thousands of targets, it is impractical to write out every single target by hand in `_targets.R`. That's why the `targets` package supports branching, which is a way to write shorthand for large collections of similar targets.
 
+# Setup
+
+Copy the starting `_targets.R` file into the working directory.
+
+```{r}
+tmp <- file.copy("5-branching/initial_targets.R", "_targets.R", overwrite = TRUE)
+```
+
+Also load the quiz questions. Try not to peek in advance.
+
+```{r}
+source("R/quiz.R")
+source("5-branching/answers.R")
+```
+
+# Branching with map()
+
+Our `_targets.R` file has a new version of our pipeline with branching. Open for editing.
+
+```{r}
+library(usethis)
+edit_file("_targets.R", open = TRUE)
+```
+
+What is different about this new pipeline?
+
+A. It has a new `activations` target that returns the names of all the activation functions we want to try.
+B. All our previous `run_*` targets are combined into a new target called `run`.
+C. All of A, B, and D.
+D. The `run` target sets `pattern = map(activations)` to declare a separate model run for every element of the return value of the `activations` target.
+
+```{r}
+answer5_different("E")
+```
+
+Run the pipeline. Each model run is a dynamically created branch of the `run` target.
+
+```{r}
+tar_make()
+```
+
+Depending on what you change, some branches may run while others are skipped. 
+
+<<<<add the softmax model and watch the other branches skip>>>>>
+
+<<<<dynamically branch over branches>>>>
+
+# Branching with cross()
+
+# Vector iteration
+
+# List iteration
+
+# Group iteration
+
+# Branching over files
