@@ -174,9 +174,48 @@ Take a look at the new pipeline.
 edit_file("_targets.R", open = TRUE)
 ```
 
+Sometimes, we may not want to aggregate all the branches into a vector or data frame. Try `iteration = "list"` in `tar_target()` for the `run` target. Then, run the pipeline.
 
-<<<pick back up here>>>
+```{r}
+tar_make()
+```
 
+Take a look at the results now.
+
+```{r}
+tar_read(run)
+```
+
+What do you see?
+
+A. A data frame of fitted model results.
+B. A list of one-row data frames of model results.
+C. A data frame of lists of model results.
+D. A list of trained Keras models.
+
+```{r}
+answer5_alt_iteration("E")
+```
+
+# Vector iteration
+
+Now, hopefully you see the magic behind the default `iteration = "vector"`. With vector iteration, `tar_read()` and targets downstream of `run` need only mention the symbol `run`, and all the branches will automatically come together in a friendlier data structure (for most use cases).
+
+Switch back to `iteration = "vector"` and rerun the pipeline.
+```{r}
+tar_make()
+```
+
+Yes, I know we had to fit all 9 models all over again, and that took a lot of runtime. How do we save time if we need to switch back and forth frequently?
+
+A. Split the `run` target into a model-fitting target that returns a Keras model and summarization step that computes the data frame with accuracy and hyperparameters.
+B. Combine all the `run` branches into a single target that fits all the models together.
+C. If your downstream code does not care how the model runs get aggregated, set `cue = tar_cue(iteration = FALSE)` in `tar_target()` so that the change in iteration method does not invalidate all the branches.
+D. Choices A and C.
+
+```{r}
+answer5_fickle("E")
+```
 
 # Group iteration
 

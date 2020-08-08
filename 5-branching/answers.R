@@ -41,3 +41,27 @@ answer5_cross <- function(x) {
     invalid()
   )
 }
+
+answer5_alt_iteration <- function(x) {
+  choices(
+    x,
+    a = no("Please set iteration = \"list\" in tar_target() for `run` and rerun the pipeline."),
+    b = yes(),
+    c = no("Please set iteration = \"list\" in tar_target() for `run` and rerun the pipeline."),
+    d = no("Please set iteration = \"list\" in tar_target() for `run` and rerun the pipeline."),
+    invalid()
+  )
+}
+
+answer5_fickle <- function(x) {
+  choices(
+    x,
+    a = no("Yes, this choice saves time because it skips models when the iteration method of the summaries changes. However, it is not the only correct answer."),
+    b = no("In this situation, combining targets together would make your work more brittle (the monolithic target would invalidate often and rerun everything inside.)."),
+    c = no("It is a good answer, but not the only one."),
+    d = yes(),
+    invalid()
+  )
+}
+
+
