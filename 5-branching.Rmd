@@ -49,7 +49,9 @@ D. The `run` target sets `pattern = map(activations)` to declare a separate mode
 answer5_different("E")
 ```
 
-Run the pipeline. Each model run is a dynamically created branch of the `run` target.
+In the current pipeline, each model run is a dynamically-created branch of the `run` target with a different element of `activations`. In general, grouping variables like `activations` can be vector targets, list targets, data frame targets, or patterns (like `run`), but they must always be targets.
+
+Run the pipeline.
 
 ```{r}
 tar_make()
@@ -78,11 +80,9 @@ D. All the model runs and everything downstream because the `activations` target
 answer5_map_runs("E")
 ```
 
-
-
-<<<<dynamically branch over branches>>>>
-
 # Branching with cross()
+
+
 
 # Vector iteration
 
