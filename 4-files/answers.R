@@ -52,3 +52,36 @@ answer_deps2 <- function(x) {
     invalid()
   )
 }
+
+answer_html <- function(x) {
+  choices(
+    x,
+    a = no("tar_make() does not necessarily respond to changes in every single project file."),
+    b = yes(),
+    c = no("report.Rmd should not have changed."),
+    d = no("tar_render() defines a target that reproducibly tracks the R Markdown source, the rendered output files, and the target dependencies."),
+    invalid()
+  )
+}
+
+answer_rmd <- function(x) {
+  choices(
+    x,
+    a = yes(),
+    b = no("Targets with R Markdown reports only rerun when the right dependencies change."),
+    c = no("Not everything in the pipeline depends on report.Rmd."),
+    d = no("tar_render() defines a target that reproducibly tracks the R Markdown source, the rendered output files, and the target dependencies."),
+    invalid()
+  )
+}
+
+answer_rmd_data <- function(x) {
+  choices(
+    x,
+    a = no("report_step depends on data/churn.csv indirectly through upstream targets that changed."),
+    b = no("report_step depends on data/churn.csv indirectly through upstream targets that changed."),
+    c = yes(),
+    d = no("Changes to data files do not necessarily invalidate everything. It all depends on what the dependency graph ends up looking like."),
+    invalid()
+  )
+}

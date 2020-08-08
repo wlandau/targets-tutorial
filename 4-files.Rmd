@@ -258,10 +258,14 @@ unlink("results.html")
 
 What happened? Why?
 
-A. 
-B. 
-C. 
-D. 
+A. All targets reran because the file system change.
+B. The `report_step` target reran because `tar_render()` reproducibly tracks the output files of `rmarkdown::render()` and helps `tar_make()` respond to changes in `results.html`.
+C. The `report_step` target reran because `results.Rmd` changed.
+D. No targets reran because output files from R Markdown reports are not reproducibly tracked.
+
+```{r}
+answer_html("E")
+```
 
 ## Change the R Markdown source
 
@@ -280,10 +284,14 @@ tar_make()
 
 What happened? Why?
 
-A. 
-B. 
-C. 
-D. 
+A. Only `report_step` reran becasue the R Markdown source file changed and all the other targets stayed up to date.
+B. Only `report_step` reran because R Markdown reports always rerun.
+C. All targets reran because `results.Rmd` is a dependency of the whole pipeline.
+D. No targets reran because the pipeline does not track changes to the R Markdown source.
+
+```{r}
+answer_rmd("E")
+```
 
 ## Change a dependency target
 
@@ -297,7 +305,11 @@ Now, rerun the pipeline.
 
 Did `report_step` rerun? Why?
 
-A. 
-B. 
-C. 
-D. 
+A. No, because `data/churn.csv` is not a dependency of `report_step`.
+B. No, because the `report.Rmd` does not read `data/churn.csv`.
+C. Yes. The R Markdown report is downstream of a target that depends on `data/churn.csv`, and the change in the data file caused a chain reaction that invalidated `report_step`.
+D. Yes. If a single target imports a data file, all targets in the pipeline rerun.
+
+```{r}
+answer_rmd_data("E")
+```
