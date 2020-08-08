@@ -159,10 +159,27 @@ That call to `tar_make()` took a long time because we have so many models now. B
 tar_make() # Runs much faster now!
 ```
 
-# Vector iteration
-
 # List iteration
+
+For this section, let's use just the first part of our crossed pipeline from earlier. Copy it over to `_targets.R`
+
+```{r}
+tmp <- file.copy("5-branching/iteration_targets.R", "_targets.R", overwrite = TRUE)
+```
+
+Take a look at the new pipeline.
+
+
+```{r}
+edit_file("_targets.R", open = TRUE)
+```
+
+
+<<<pick back up here>>>
+
 
 # Group iteration
 
 # Branching over files
+
+
