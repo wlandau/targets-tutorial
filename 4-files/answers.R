@@ -1,4 +1,4 @@
-answer_review <- function(x) {
+answer4_review <- function(x) {
   choices(
     x,
     a = no("That is not enough. We also need to set format = \"file\" in tar_target() to tell tar_make() to watch files identified in the return value."),
@@ -9,7 +9,7 @@ answer_review <- function(x) {
   )
 }
 
-answer_return <- function(x) {
+answer4_return <- function(x) {
   choices(
     x,
     a = yes(),
@@ -20,7 +20,7 @@ answer_return <- function(x) {
   )
 }
 
-answer_delete <- function(x) {
+answer4_delete <- function(x) {
   choices(
     x,
     a = no("Not all files are reproducibly tracked."),
@@ -31,7 +31,7 @@ answer_delete <- function(x) {
   )
 }
 
-answer_deps1 <- function(x) {
+answer4_deps1 <- function(x) {
   choices(
     x,
     a = no("R Markdown reports can have target dependencies too."),
@@ -42,7 +42,7 @@ answer_deps1 <- function(x) {
   )
 }
 
-answer_deps2 <- function(x) {
+answer4_deps2 <- function(x) {
   choices(
     x,
     a = no("The report still has dependencies."),
@@ -53,7 +53,7 @@ answer_deps2 <- function(x) {
   )
 }
 
-answer_html <- function(x) {
+answer4_html <- function(x) {
   choices(
     x,
     a = no("tar_make() does not necessarily respond to changes in every single project file."),
@@ -64,7 +64,7 @@ answer_html <- function(x) {
   )
 }
 
-answer_rmd <- function(x) {
+answer4_rmd <- function(x) {
   choices(
     x,
     a = yes(),
@@ -75,7 +75,7 @@ answer_rmd <- function(x) {
   )
 }
 
-answer_rmd_data <- function(x) {
+answer4_rmd_data <- function(x) {
   choices(
     x,
     a = no("report_step depends on data/churn.csv indirectly through upstream targets that changed."),

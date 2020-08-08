@@ -9,7 +9,7 @@ When we modify the code and data of an existing workflow, `targets` automaticall
 
 # Instructions
 
-Throughout this chapter, you will test your understanding with quiz questions. Supply your choices to the `answer_*()` functions when you come to them. Run the code chunk below to set up the quizzes, but try not to peak in advance. It is okay to answer incorrectly at first.
+Throughout this chapter, you will test your understanding with quiz questions. Supply your choices to the `answer3_*()` functions when you come to them. Run the code chunk below to set up the quizzes, but try not to peak in advance. It is okay to answer incorrectly at first.
 
 ```{r}
 source("R/quiz.R")
@@ -39,7 +39,7 @@ C. The full pipeline from `2-pipelines.Rmd` at the very bottom of the file.
 D. All the above.
 
 ```{r}
-answer_setup("E") # Supply your own answer here.
+answer3_setup("E") # Supply your own answer here.
 ```
 
 # First target
@@ -58,7 +58,7 @@ C. `churn_data`, because it appears first in `tar_pipeline()`.
 D. `churn_file`, because it appears first in `tar_pipeline()`.
 
 ```{r}
-answer_first("E")
+answer3_first("E")
 ```
 
 # Last target
@@ -71,7 +71,7 @@ C. `best_run`, because it depends on the results of the other targets.
 D. `best_run`, because it is listed last in the pipeline.
 
 ```{r}
-answer_last("E")
+answer3_last("E")
 ```
 
 # Inspection
@@ -91,7 +91,7 @@ C. A one-row data frame.
 D. A recipe object.
 
 ```{r}
-answer_inspect("E")
+answer3_inspect("E")
 ```
 
 # Rerun `tar_make()`
@@ -110,7 +110,7 @@ C. All the targets reran.
 D. No target reran because all the targets are already up to date with their dependencies (the underlying code and data, including upstream targets).
 
 ```{r}
-answer_rerun("E")
+answer3_rerun("E")
 ```
 
 # Restart the session
@@ -138,7 +138,7 @@ C. All targets reran because I restarted the R session.
 D. All the models rerun.
 
 ```{r}
-answer_restart("E")
+answer3_restart("E")
 ```
 
 # Change the data.
@@ -167,7 +167,7 @@ C. All of them. The data file changed, and the pipeline is configured to automat
 D. None of them, because `data/churn.csv` is neither a target nor a function in the global environment.
 
 ```{r}
-answer_data("E")
+answer3_data("E")
 ```
 
 # Change a command.
@@ -197,7 +197,7 @@ C. `best_run` and `best_model`. The command of `best_run` changed, and `best_mod
 D. `best_run` only. The command of `best_run` changed, but `best_run` returned the same value, so `best_model` is still up to date.
 
 ```{r}
-answer_command("E")
+answer3_command("E")
 ```
 
 # Change a function.
@@ -222,7 +222,7 @@ C. `run_relu`, `run_sigmoid`, `run_softmax`, `best_run`, and possibly `best_mode
 D. `run_relu`, `run_sigmoid`, `run_softmax`, `best_run`, and `best_model`.
 
 ```{r}
-answer_function("E")
+answer3_function("E")
 ```
 
 # Make a trivial change.
@@ -247,5 +247,5 @@ C. None. `tar_make()` ignores all changes to functions.
 D. None. No target directly calls `define_model()`.
 
 ```{r}
-answer_trivial("E")
+answer3_trivial("E")
 ```

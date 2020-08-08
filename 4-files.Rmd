@@ -70,7 +70,7 @@ C. Targets directly downstream need to mention the symbol `churn_file` (as oppos
 D. All the above.
 
 ```{r}
-answer_review("E")
+answer4_review("E")
 ```
 
 # Output files
@@ -117,7 +117,7 @@ C. A data frame of correlations.
 D. A function called `churn_cor()`.
 
 ```{r}
-answer_return("E")
+answer4_return("E")
 ```
 
 Take a look at the new output file `cor.png`. You should see a plot of each variable's correlation with customer churn. Also glance at `cor.csv`, the output dataset with the correlations.
@@ -141,7 +141,7 @@ C. Because `churn_cor` is a correctly configured file target, `tar_make()` notic
 D. `churn_cor` because `targets` always treats character strings as file names.
 
 ```{r}
-answer_delete("E")
+answer4_delete("E")
 ```
 
 Whenever a single target like `churn_cor` tracks multiple files or directories, `tar_make()` treats all those files as a single unit. The whole target invalidates when one of the files changes, and downstream targets must accept all the files together. When we come to the chapter on branching, we will use the special `tar_files()` function from the `tarchetypes` package to branch over the available files.
@@ -206,7 +206,7 @@ C. `run_sigmoid` because the report calls `tar_load(run_sigmoid)` in an active c
 D. `run_relu` and `run_sigmoid` because the report calls `tar_read(run_relu)` and `tar_load(run_sigmoid)` in active code chunks.
 
 ```{r}
-answer_deps1("E")
+answer4_deps1("E")
 ```
 
 ## Add a dependency
@@ -225,7 +225,7 @@ C. `report_step` now depends on `best_model` in addition to `run_relu` and `run_
 D. `report_step` is only connected to `best_model` now because you just added it as a dependency.
 
 ```{r}
-answer_deps2("E")
+answer4_deps2("E")
 ```
 
 ## Run the report
@@ -264,7 +264,7 @@ C. The `report_step` target reran because `results.Rmd` changed.
 D. No targets reran because output files from R Markdown reports are not reproducibly tracked.
 
 ```{r}
-answer_html("E")
+answer4_html("E")
 ```
 
 ## Change the R Markdown source
@@ -290,7 +290,7 @@ C. All targets reran because `results.Rmd` is a dependency of the whole pipeline
 D. No targets reran because the pipeline does not track changes to the R Markdown source.
 
 ```{r}
-answer_rmd("E")
+answer4_rmd("E")
 ```
 
 ## Change a dependency target
@@ -311,5 +311,5 @@ C. Yes. The R Markdown report is downstream of a target that depends on `data/ch
 D. Yes. If a single target imports a data file, all targets in the pipeline rerun.
 
 ```{r}
-answer_rmd_data("E")
+answer4_rmd_data("E")
 ```

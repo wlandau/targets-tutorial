@@ -1,4 +1,4 @@
-answer_setup <- function(x) {
+answer3_setup <- function(x) {
   choices(
     x,
     a = no("_targets.R has more than that."),
@@ -9,7 +9,7 @@ answer_setup <- function(x) {
   )
 }
 
-answer_first <- function(x) {
+answer3_first <- function(x) {
   choices(
     x,
     a = no("churn_data does not run first, and churn_file does not depend on churn_data."),
@@ -20,7 +20,7 @@ answer_first <- function(x) {
   )
 }
 
-answer_last <- function(x) {
+answer3_last <- function(x) {
   choices(
     x,
     a = yes(),
@@ -30,7 +30,7 @@ answer_last <- function(x) {
   )
 }
 
-answer_inspect <- function(x) {
+answer3_inspect <- function(x) {
   choices(
     x,
     a = no(),
@@ -41,7 +41,7 @@ answer_inspect <- function(x) {
   )
 }
 
-answer_rerun <- function(x) {
+answer3_rerun <- function(x) {
   choices(
     x,
     a = no("tar_make() will rerun if their dependencies changed, even if earlier results are already in storage."),
@@ -52,7 +52,7 @@ answer_rerun <- function(x) {
   )
 }
 
-answer_restart <- function(x) {
+answer3_restart <- function(x) {
   choices(
     x,
     a = yes(),
@@ -63,7 +63,7 @@ answer_restart <- function(x) {
   )
 }
 
-answer_data <- function(x) {
+answer3_data <- function(x) {
   choices(
     x,
     a = no("If you do not make changes, your project should have a decent shelf life."),
@@ -74,7 +74,7 @@ answer_data <- function(x) {
   )
 }
 
-answer_command <- function(x) {
+answer3_command <- function(x) {
   choices(
     x,
     a = no("tar_make() cannot predict that bind_rows() and rbind() will return the same value. It needs to run best_run to find out."),
@@ -85,7 +85,7 @@ answer_command <- function(x) {
   )
 }
 
-answer_function <- function(x) {
+answer3_function <- function(x) {
   choices(
     x,
     a = no("Some targets do call test_model() and retrain_model(), both of which depend on define_model() through train_model(). tar_make() detects this."),
@@ -96,7 +96,7 @@ answer_function <- function(x) {
   )
 }
 
-answer_trivial <- function(x) {
+answer3_trivial <- function(x) {
   choices(
     x,
     a = no("tar_make() ignores trivial changes like comments and white space: anything that does not show up in deparse(define_model)."),
