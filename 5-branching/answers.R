@@ -19,3 +19,25 @@ answer5_map_runs <- function(x) {
     invalid()
   )
 }
+
+answer5_map2 <- function(x) {
+  choices(
+    x,
+    a = no("The models have different values of units1"),
+    b = yes(),
+    c = no("We only have 3 model runs."),
+    d = no("We only have 3 model runs."),
+    invalid()
+  )
+}
+
+answer5_cross <- function(x) {
+  choices(
+    x,
+    a = no("We have 9 models now."),
+    b = no("We have 9 models now."),
+    c = no("The models have varying values of units1."),
+    d = yes(),
+    invalid()
+  )
+}

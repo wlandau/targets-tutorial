@@ -57,7 +57,26 @@ Run the pipeline.
 tar_make()
 ```
 
-Depending on what you change, some branches may run while others are skipped. As an example, add the softmax activation function in `_targets.R`. Sketch:
+### Return values
+
+To read the return values of branches, you can use `tar_read()` and `tar_load()` as usual. 
+
+```{r}
+tar_read(run)
+```
+
+Above, we see a data frame with two rows, one from each branch. By default, `targets` uses `vctrs::vec_c()` to aggregate the results from branches. `vctrs` is smart enough to detect that the branches are really data frames, and it automatically binds the rows into a single data frame..
+
+You can select individual branches to read with the `branches` argument.
+
+```{r}
+tar_read(run, branches = 2)
+```
+
+### Changes
+
+
+As you develop the workflow, depending on what you change, some branches may run while others are skipped. As an example, add the softmax activation function in `_targets.R`. Sketch:
 
 ```{r, eval = FALSE}
 tar_target(activations, c("relu", "sigmoid", "softmax"))
@@ -80,9 +99,65 @@ D. All the model runs and everything downstream because the `activations` target
 answer5_map_runs("E")
 ```
 
+`map()` can branch over more than one grouping variable. To see this, let's give each model run a different number of neurons in the first layer. Make the following changes to `_targets.R`:
+
+1. Define a new target called `units` which returns `c(16, 32, 64)`.
+2. For the `run` target, change `map(activations)` to `map(activations, units1)`.
+3. Change the command of `run` to `test_model(act1 = activations, units1 = untis, churn_data, churn_recipe)`
+
+Now, run the pipeline again.
+
+```{r}
+tar_make()
+```
+
+Read the results of the model runs.
+
+```{r}
+tar_read(run)
+```
+
+Which model runs do you see in the output?
+
+A. 3 model runs, 1 for each of the relu, sigmoid, and softmax activation functions in the first layer of the neural net. Each model run has the same value for `units1`.
+B. 3 model runs, 1 for each of the relu, sigmoid, and softmax activation functions in the first layer of the neural net. In the first layer, the relu model has 16 neurons, the sigmoid model has 32 neurons, and the softmax model has 64 runs.
+C. 9 model runs, 3 for each of the relu, sigmoid, and softmax activation functions in the first layer of the neural net. Each model run has the same value for `units1`.
+D. 9 model runs, one for each combination of activation function and units in the first layer.
+
+```{r}
+answer5_map2("E")
+```
+
 # Branching with cross()
 
+`cross()` is like `map()`, but it defines a new branch for each combination of grouping variables. In the `run` target in `_targets.R`, change `pattern = map(activations, units)` to `pattern = cross(activations, units)`. Then, run the pipeline again.
 
+```{r}
+tar_make()
+```
+
+View the results.
+
+```{r}
+tar_read(run)
+```
+
+Which model runs do we have now?
+
+A. 3 model runs, 1 for each of the relu, sigmoid, and softmax activation functions in the first layer of the neural net. Each model run has the same value for `units1`.
+B. 3 model runs, 1 for each of the relu, sigmoid, and softmax activation functions in the first layer of the neural net. In the first layer, the relu model has 16 neurons, the sigmoid model has 32 neurons, and the softmax model has 64 runs.
+C. 9 model runs, 3 for each of the relu, sigmoid, and softmax activation functions in the first layer of the neural net. Each model run has the same value for `units1`.
+D. 9 model runs, one for each combination of activation function and units in the first layer.
+
+```{r}
+answer5_cross("E")
+```
+
+That call to `tar_make()` took a long time because we have so many models now. But whenever our targets are already up to date, we can skip all that time!
+
+```{r}
+tar_make() # Runs much faster now!
+```
 
 # Vector iteration
 
