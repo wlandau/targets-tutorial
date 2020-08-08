@@ -1,5 +1,5 @@
 ---
-title: "Custom functions for the customer churn workflow"
+title: "External data files and literate programming"
 output: html_document
 ---
 

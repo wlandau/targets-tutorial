@@ -1,11 +1,11 @@
 ---
-title: "Make changes to the workflow"
+title: "Runtime savings amid rapid change"
 output: html_notebook
 ---
 
 # About
 
-When we modify the code and data of an existing workflow, `targets` automatically detects the changes, and `tar_make()` only reruns the affected targets. This notebook showcases this behavior and shows how it can save you time.
+In this chapter, we will explore the primary motivation behind the `targets` package e. When we modify the code and data of an existing workflow, `targets` automatically detects the changes, and `tar_make()` only reruns the affected targets, skipping all targets that are already up to date. This behavior is the best feature of `targets`, and it saves tons of time when a project is still under development and rapidly changing.
 
 # Instructions
 
