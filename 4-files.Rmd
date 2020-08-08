@@ -161,11 +161,17 @@ edit_file("results.Rmd", open = TRUE)
 
 ## R Markdown on its own
 
-Because we ran the pipeline before, our targets live in the `_targets/` data store. Switch back to `results.Rmd` in the RStudio IDE  and click the `knit` button to generate the output file `results.html`. Then, view `results.html` in the IDE or a web browser.
+Because we ran the pipeline before, our targets live in the `_targets/` data store. Switch back to `results.Rmd` in the RStudio IDE  and click the `knit` button to generate the output file `results.html`. Then, view `results.html` in the IDE or a web browser. Alternatively, you can render and view the report with the following code.
 
-## R Markdown within a target
+```{r}
+library(rmarkdown)
+render("results.Rmd")
+browseURL("results.html")
+```
 
-For the sake of convenience and reproducibility, we can render this report inside a target in the pipeline. That way, `targets` will automatically regenerate `results.html` whenever its dependencies change. The `tar_render()` function from the `tarchetpyes` package is the correct way to include an R Markdown report with dependencies. It automatically creates a target that reproducibly tracks the R Markdown source file, the rendered output file, and the target dependencies.
+## R Markdown inside a target
+
+For the sake of convenience and reproducibility, we can render this report inside a target in the pipeline. That way, `targets` will automatically regenerate `results.html` whenever its dependencies change. The `tar_render()` function from the `tarchetpyes` package is the correct way to include an R Markdown report with dependencies. It automatically creates a target that reproducibly tracks the R Markdown source file, the rendered output file, and the target dependencies mentioned with `tar_load()` and `tar_read()`.
 
 Open `_targets.R` for editing.
 
@@ -203,3 +209,95 @@ D. `run_relu` and `run_sigmoid` because the report calls `tar_read(run_relu)` an
 answer_deps1("E")
 ```
 
+## Add a dependency
+
+At the bottom of the `report.Rmd`, add an active code chunk to print out the best model (`tar_read(best_model)`). Then, look at the graph again.
+
+```{r}
+tar_visnetwork().
+```
+
+What changed? Why?
+
+A. `report_step` is disconnected from the other nodes in the graph because we edited the report.
+B. The graph did not change because we did not run the report yet.
+C. `report_step` now depends on `best_model` in addition to `run_relu` and `run_sigmoid`. All three are mentioned in active code chunks with `tar_load()` and `tar_read()`.
+D. `report_step` is only connected to `best_model` now because you just added it as a dependency.
+
+```{r}
+answer_deps2("E")
+```
+
+## Run the report
+
+Run the whole pipeline. The newly added `report_step` target should run. 
+
+```{r}
+tar_make()
+```
+
+Verify that all targets are up to date now.
+
+```{r}
+tar_make() # See also tar_outdated()
+```
+
+View `results.html`. You should see a print-out of the best model at the bottom.
+
+```{r}
+browseURL("results.html")
+```
+
+## Remove the output file
+
+Remove the output HTML file.
+
+```{r}
+unlink("results.html")
+```
+
+What happened? Why?
+
+A. 
+B. 
+C. 
+D. 
+
+## Change the R Markdown source
+
+Add some prose anywhere in the body of `results.Rmd`.
+
+```{r}
+edit_file("results.Rmd", open = TRUE)
+# Edit the file to add comments to explain the results.
+```
+
+Now, rerun the pipeline.
+
+```{r}
+tar_make()
+```
+
+What happened? Why?
+
+A. 
+B. 
+C. 
+D. 
+
+## Change a dependency target
+
+Open the file `data/churn.csv` and remove the last row in the dataset.
+
+```{r}
+edit_file("data/churn.csv", open = TRUE)
+```
+
+Now, rerun the pipeline.
+
+Did `report_step` rerun? Why?
+
+A. 
+B. 
+C. 
+D. 

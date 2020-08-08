@@ -41,3 +41,14 @@ answer_deps1 <- function(x) {
     invalid()
   )
 }
+
+answer_deps2 <- function(x) {
+  choices(
+    x,
+    a = no("The report still has dependencies."),
+    b = no("tar_render() can detect the dependencies of an R Markdown report without needing to render it."),
+    c = yes(),
+    d = no("The report should still depend on run_relu and run_sigmoid."),
+    invalid()
+  )
+}
