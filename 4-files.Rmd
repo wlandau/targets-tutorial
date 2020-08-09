@@ -148,7 +148,7 @@ Whenever a single target like `churn_cor` tracks multiple files or directories, 
 
 # Literate programming
  
-Literare programming is the practice of writing code and explanatory prose in the same source file, such as this R Markdown document. We have already been using literate programming / R Markdown on top of `targets`. In this section, we will explore literate programming as a piece of a `targets`-powered workflow.
+Literate programming is the practice of writing code and explanatory prose in the same source file, such as this R Markdown document. We have already been using literate programming / R Markdown on top of `targets`. In this section, we will explore literate programming as a piece of a `targets`-powered workflow.
 
 The R Markdown report in `4-files/results.Rmd` uses `tar_read()` and `tar_load()` to load targets we previously built, and it has prose to explain the meaning of each target so others can better understand our research.
 
@@ -201,7 +201,7 @@ What are the dependencies of the `report_step` target?
 Which target(s) does `results.Rmd` depend on? Why?
 
 A. None. `results.Rmd` is not a target or a pipeline.
-B. `run_relu` becuase the report calls `tar_read(run_relu)` in an active code chunk.
+B. `run_relu` because the report calls `tar_read(run_relu)` in an active code chunk.
 C. `run_sigmoid` because the report calls `tar_load(run_sigmoid)` in an active code chunk.
 D. `run_relu` and `run_sigmoid` because the report calls `tar_read(run_relu)` and `tar_load(run_sigmoid)` in active code chunks.
 
@@ -284,7 +284,7 @@ tar_make()
 
 What happened? Why?
 
-A. Only `report_step` reran becasue the R Markdown source file changed and all the other targets stayed up to date.
+A. Only `report_step` reran because the R Markdown source file changed and all the other targets stayed up to date.
 B. Only `report_step` reran because R Markdown reports always rerun.
 C. All targets reran because `results.Rmd` is a dependency of the whole pipeline.
 D. No targets reran because the pipeline does not track changes to the R Markdown source.
