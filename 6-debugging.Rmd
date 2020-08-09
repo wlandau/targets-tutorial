@@ -1,0 +1,100 @@
+---
+title: "Interactive debugging"
+output: html_document
+---
+
+# Setup
+
+Start with a fresh data store.
+
+```{r}
+library(targets)
+tar_destroy()
+```
+
+Copy the starting `_targets.R` file into the working directory.
+
+```{r}
+tmp <- file.copy("6-debugging/initial_targets.R", "_targets.R", overwrite = TRUE)
+```
+
+# Problem
+
+This pipeline has a bug, and it only happens in one of the models. Your job is to find it.
+
+```{r}
+tar_make()
+```
+
+```{r}
+tar_visnetwork()
+```
+
+To begin to search for clues, we review the error message and warnings stored in the metadata. Make a note of the branch of `run` that threw the error.
+
+```{r}
+tar_meta(starts_with("run"), fields = c("error", "warnings"))
+```
+
+# Interactive debugging.
+
+We need more information, so we invoke `tar_make()` with interactive debugging. First, open `_targets.R` for editing.
+
+```{r}
+library(usethis)
+edit_file("_targets.R", open = TRUE)
+```
+
+In `tar_option_set()`, set the `debug` argument equal to the name of the branch that threw the error (e.g. `"run_6d754468"`).
+
+Run `tar_make()` with `callr_function = NULL`. This is not usually recommended because it runs the pipeline in your workspace instead of a fresh clean R process, but we need it for interactive debugging.
+
+```{r}
+tar_make(callr_function = NULL)
+```
+
+```{r}
+tar_visnetwork()
+```
+
+After a couple seconds, R should drop you into an interactive debugger.
+
+```{r, eval = FALSE}
+#> ● run branch run_6d754468
+#> Called from: eval(expr, envir)
+#> Browse[1]> 
+```
+
+From here, we can easily figure out which model caused the error.
+
+```{r, eval = FALSE}
+#> Browse[1]> act1
+#> [1] "sigmoid"
+#> Browse[1]> units1
+#> [1] 32
+```
+
+But we want to know more. With interactive debugging, we can sneak right up to the error and interrogate the environment right before things go wrong. So at this point, you should call `debug()` on the function the target is about to run and then press `n` in the R console to advance to the next line of code.
+
+```{r, eval = FALSE}
+#> Browse[1]> debug(test_model)
+#> Browse[1]> n
+#> debugging in: test_model(act1 = activations, units1 = units, churn_data, churn_recipe)
+#> debug at 6-debugging/functions.R#215: {
+#>     churn_model <- train_model(churn_recipe, units1, units2, 
+#>         act1, act2, act3)
+#>     accuracy <- test_accuracy(churn_data, churn_recipe, churn_model)
+#>     tibble(accuracy = accuracy, units1 = units1, units2 = units2, 
+#>         act1 = act1, act2 = act2, act3 = act3)
+#> }
+#> Browse[3]> 
+```
+
+The output says you are about to call `train_model()`, so debug that function too and continue on.
+
+```{r, eval = FALSE}
+#> Browse[1]> debug(train_model)
+#> Browse[1]> n
+```
+
+Continue this process until you find the bug. Once you fix it, run `tar_make()` normally to confirm the bug is gone.
