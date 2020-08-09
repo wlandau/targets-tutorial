@@ -32,5 +32,5 @@ Challenge | [`7-challenge.Rmd`](https://github.com/wlandau/targets-tutorial/blob
 
 # Help
 
-Post an issue to <https://github.com/wlandau/targets-tutorial> to ask for help. Please follow the [code of conduct](https://github.com/wlandau/targets-tutorial/blob/master/CODE_OF_CONDUCT.md).
+Post an issue to <https://github.com/wlandau/targets-tutorial> to ask for help. Be sure to follow the [code of conduct](https://github.com/wlandau/targets-tutorial/blob/master/CODE_OF_CONDUCT.md).
 
