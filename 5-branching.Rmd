@@ -233,19 +233,31 @@ Then, any pattern that branches over it will iterate over those groups. Open `_t
 1. Define a new target called `grouped_run` with the command `run %>% group_by(act1) %>% tar_group()`. Set `iteration = "group"` in `tar_target()`. Do not `map()` over `run`. Thanks to vector iteration, `run` will automatically appear to `grouped_run` as a single data frame with our 9 model runs.
 2. Define a new branching target (i.e. pattern) called `nrows` which maps over `grouped_run` and counts the number of rows.
 
-The graph should look like this:
+Check the graph.
+
+```{r}
+tar_visnetwork()
+```
+
+It should look like this:
 
 ```{r}
 readRDS("5-branching/group_graph.rds")
 ```
 
-And the manifest should look like this:
+Also check the manifest.
+
+```{r}
+tar_manifest()
+```
+
+It should look like this:
 
 ```{r, paged.print = FALSE}
 readRDS("5-branching/group_manifest.rds")
 ```
 
-When your workflow agrees with the above, run the pipeline.
+Then, run the pipeline.
 
 ```{r}
 tar_make()
@@ -279,7 +291,98 @@ D. A list of 3 data frames, each with 3 rows, because we mapped over the groups 
 answer5_nrows("E")
 ```
 
+# Branching over files and patterns.
 
-# Branching over files
+In `targets`, it is possible to branch over multiple data files. To see this, let's switch to a new pipeline.
 
+```{r}
+tmp <- file.copy("5-branching/files_targets.R", "_targets.R", overwrite = TRUE)
+```
 
+Take a look at the new `_targets.R`.
+
+```{r}
+edit_file("_targets.R", open = TRUE)
+```
+
+This pipeline uses the `tar_files()` helper from the `tarchetypes` package. Here, we use `tar_files()` to ensure we can correctly branch over the files in the `data/` folder. The mechanism requires two different targets to work correctly. `churn_file_files` does the actual work and returns the output files we want to track, and `churn_file` separates the output files into iterable branches.
+
+```{r}
+tar_manifest()
+```
+
+We can now branch over `churn_file`. Add two targets to the pipeline:
+
+1. A target named `churn_data` that maps over `churn_file` and has the command `split_data(churn_file)`.
+2. A target named `churn_recipe` that maps over `churn_data` and has the command ` prepare_recipe(churn_data)`. 
+
+Check the abridged graph.
+
+```{r}
+tar_glimpse()
+```
+
+It should look like this:
+
+```{r}
+readRDS("5-branching/files_graph.rds")
+```
+
+Then run `tar_make()`.
+
+```{r}
+tar_make()
+```
+
+How many branches were created for each of `churn_data` and `churn_recipe`? Why?
+
+A. 3 for both. `churn_data` maps over the 3 branches of `churn_file`, so each `churn_data` branch corresponds to one of the CSV files in `data/`. `churn_recipe` produces one branch for each branch of `churn_data` (i.e. each dataset).
+B. 3 for both. `churn_data` knows to create 3 branches because it checks the files in `data/`. 
+C. 1 for both. We can branch over vectors and data frames, but not patterns (branching targets).
+D. 1 for both. We do not use any branching after `churn_file`.
+
+```{r}
+answer5_files_branch("E")
+```
+
+If we try to read in the datasets, we get an error.
+
+```{r}
+library(rsample)
+tar_read(churn_data)
+```
+
+What is the cause of the error?
+
+A. The saved data in `_targets/` is corrupted.
+B. We did not map over `churn_file` correctly.
+C. The return value from each individual branch is incorrect.
+D. `tar_read()` assumed vector iteration because we did not set the `iteration` argument of `tar_target()`. That means `vctrs::vec_c()` tried to combine a bunch of `rsplit` objects into a vector-like object, which is not possible. We need list iteration for both `churn_data` and `churn_recipe`.
+
+```{r}
+answer5_error("E")
+```
+
+Fix the error in `_targets.R` and rerun the pipeline.
+
+```{r}
+tar_make()
+```
+
+Try again to read the data.
+
+```{r}
+library(rsample)
+tar_read(churn_data)
+```
+
+What data structure do you see?
+
+A. A list of data frames.
+B. A vector of data frames.
+C. A list of `rsplit` objects with training and testing datasets.
+D. A vector of `rsplit` objects with training and testing datasets.
+
+```{r}
+answer5_churn_data("E")
+```

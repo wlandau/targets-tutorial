@@ -86,3 +86,35 @@ answer5_nrows <- function(x) {
   )
 }
 
+answer5_files_branch <- function(x) {
+  choices(
+    x,
+    a = yes(),
+    b = no("churn_file_files already checked the data and churn_file branched over the file names."),
+    c = no("We can branch over any pattern (branching target) as well as any well-behaved singleton (stem)."),
+    d = no("churn_data and churn_recipe both use branching here."),
+    invalid()
+  )
+}
+
+answer5_error <- function(x) {
+  choices(
+    x,
+    a = no(),
+    b = no(),
+    c = no(),
+    d = yes(),
+    invalid()
+  )
+}
+
+answer5_churn_data <- function(x) {
+  choices(
+    x,
+    a = no(),
+    b = no(),
+    c = yes(),
+    d = no(),
+    invalid()
+  )
+}
