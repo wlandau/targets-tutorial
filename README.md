@@ -1,6 +1,6 @@
 # Tutorial of the `targets` R package
 
-[![Launch RStudio Cloud](https://img.shields.io/badge/RStudio-Cloud-blue)](https://rstudio.cloud/project/1500267)
+[![Launch RStudio Cloud](https://img.shields.io/badge/RStudio-Cloud-blue)](https://rstudio.cloud/project/1512447)
 
 This interactive tutorial is a hands-on step-by-step introduction to the [`targets`](https://github.com/wlandau/targets) R package. Students gradually build up a [`targets`](https://github.com/wlandau/targets)-powered data analysis project based on a [practical machine learning case study](https://blogs.rstudio.com/ai/posts/2018-01-11-keras-customer-churn/).
 
@@ -19,7 +19,7 @@ Challenge | [`7-challenge.Rmd`](https://github.com/wlandau/targets-tutorial/blob
 # Browser access
 
 1. Sign up for a free account at <https://rstudio.cloud>.
-1. Log into <https://rstudio.cloud/project/1500267> to access a free instance of RStudio Server in the cloud.
+1. Log into <https://rstudio.cloud/project/1512447> to access a free instance of RStudio Server in the cloud.
 1. Proceed through the R notebooks in the syllabus in order.
 
 # Local access
