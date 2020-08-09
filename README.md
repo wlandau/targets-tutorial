@@ -1,4 +1,3 @@
-
 # Tutorial of the `targets` R package
 
 [![Launch RStudio Cloud](https://img.shields.io/badge/RStudio-Cloud-blue)](https://rstudio.cloud/project/1500267)
@@ -9,11 +8,11 @@ This interactive tutorial is a hands-on step-by-step introduction to the [`targe
 
 Topic | Notebook
 ---|---
-Custom functions | [`1-functions.Rmd`](https://github.com/wlandau/targets-tutorial/blob/master/1-functions.Rmd)
-`targets` pipelines | [`2-pipelines.Rmd`](https://github.com/wlandau/targets-tutorial/blob/master/2-pipelines.Rmd)
-Changing workflows | [`3-changes.Rmd`](https://github.com/wlandau/targets-tutorial/blob/master/3-changes.Rmd)
-External files | [`4-files.Rmd`](https://github.com/wlandau/targets-tutorial/blob/master/4-files.Rmd)
-Patterns and branching | [`5-branching.Rmd`](https://github.com/wlandau/targets-tutorial/blob/master/5-branching.Rmd)
+Functions | [`1-functions.Rmd`](https://github.com/wlandau/targets-tutorial/blob/master/1-functions.Rmd)
+Pipelines | [`2-pipelines.Rmd`](https://github.com/wlandau/targets-tutorial/blob/master/2-pipelines.Rmd)
+Changes | [`3-changes.Rmd`](https://github.com/wlandau/targets-tutorial/blob/master/3-changes.Rmd)
+Files | [`4-files.Rmd`](https://github.com/wlandau/targets-tutorial/blob/master/4-files.Rmd)
+Branching | [`5-branching.Rmd`](https://github.com/wlandau/targets-tutorial/blob/master/5-branching.Rmd)
 Debugging | [`6-debugging.Rmd`](https://github.com/wlandau/targets-tutorial/blob/master/6-debugging.Rmd)
 Challenge | [`7-challenge.Rmd`](https://github.com/wlandau/targets-tutorial/blob/master/7-challenge.Rmd)
 
@@ -30,3 +29,8 @@ Challenge | [`7-challenge.Rmd`](https://github.com/wlandau/targets-tutorial/blob
 1. [Download or clone](https://docs.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository) the code at <https://github.com/wlandau/targets-tutorial>.
 1. Open the tutorial as an [RStudio project](https://github.com/wlandau/targets-tutorial/blob/master/targets-tutorial.Rproj) in the [RStudio Desktop](https://rstudio.com/products/rstudio/download/#download).
 1. Run the [setup script](https://github.com/wlandau/targets-tutorial/blob/master/setup/local.R) to install the required R and Python packages.
+
+# Help
+
+Post an issue to <https://github.com/wlandau/targets-tutorial> to ask for help. Please follow the [code of conduct](https://github.com/wlandau/targets-tutorial/blob/master/CODE_OF_CONDUCT.md).
+
