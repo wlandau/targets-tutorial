@@ -64,4 +64,25 @@ answer5_fickle <- function(x) {
   )
 }
 
+answer5_grouped <- function(x) {
+  choices(
+    x,
+    a = no(),
+    b = yes(),
+    c = no(),
+    d = no(),
+    invalid()
+  )
+}
+
+answer5_nrows <- function(x) {
+  choices(
+    x,
+    a = no("Because of tar_group() and group iteration, we branched over 3 groups."),
+    b = no("Because of tar_group() and group iteration, we branched over 3 groups."),
+    c = yes(),
+    d = no("We called nrow() on each group."),
+    invalid()
+  )
+}
 

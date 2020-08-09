@@ -219,6 +219,67 @@ answer5_fickle("E")
 
 # Group iteration
 
+`targets` lets you dynamically iterate over arbitrary subsets of a data frame. It's like `dplyr::group_by()`, but with branches. The `tar_group()` function is the key. It creates a special `tar_group` column explicitly indicate group membership.
+
+```{r, message = FALSE}
+library(tidyverse)
+tar_read(run) %>%
+  group_by(act1) %>%
+  tar_group()
+```
+
+Then, any pattern that branches over it will iterate over those groups. Open `_targets.R` and try it out yourself:
+
+1. Define a new target called `grouped_run` with the command `run %>% group_by(act1) %>% tar_group()`. Set `iteration = "group"` in `tar_target()`. Do not `map()` over `run`. Thanks to vector iteration, `run` will automatically appear to `grouped_run` as a single data frame with our 9 model runs.
+2. Define a new branching target (i.e. pattern) called `nrows` which maps over `grouped_run` and counts the number of rows.
+
+The graph should look like this:
+
+```{r}
+readRDS("5-branching/group_graph.rds")
+```
+
+And the manifest should look like this:
+
+```{r, paged.print = FALSE}
+readRDS("5-branching/group_manifest.rds")
+```
+
+When your workflow agrees with the above, run the pipeline.
+
+```{r}
+tar_make()
+```
+
+How many branches of `grouped_run` were created? How many branches of `nrows`?
+
+A. None for `grouped_run`, none for `nrows`.
+B. None for `grouped_run`, 3 for `nrows`.
+C. 3 for `grouped_run`, none for `nrows`.
+D. 3 for `grouped_run`, 3 for `nrows`.
+
+```{r}
+answer5_grouped("E")
+```
+
+Read `nrows`.
+
+```{r}
+tar_read(nrows)
+```
+
+What is in `nrows`? Why?
+
+A. The number 9, because `grouped_df` had 9 rows
+B. A vector of length 9 with elements all equal to 1, because we mapped over `grouped_df`, which has 9 rows.
+C. A vector of length 3 with each element equal to 3. We mapped over the groups in `grouped_df` and counted the rows in each group.
+D. A list of 3 data frames, each with 3 rows, because we mapped over the groups in `grouped_df`.
+
+```{r}
+answer5_nrows("E")
+```
+
+
 # Branching over files
 
 
