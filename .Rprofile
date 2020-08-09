@@ -4,8 +4,10 @@ options(
   tidyverse.quiet = TRUE,
   warnPartialMatchArgs = FALSE
 )
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>",
-  paged.print = FALSE
-)
+if (requireNamespace("knitr", quietly = TRUE)) {
+  knitr::opts_chunk$set(
+    collapse = TRUE,
+    comment = "#>",
+    paged.print = FALSE
+  )
+}
