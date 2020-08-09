@@ -15,7 +15,7 @@ Changing workflows | [`3-changes.Rmd`](https://github.com/wlandau/targets-tutori
 External files | [`4-files.Rmd`](https://github.com/wlandau/targets-tutorial/blob/master/4-files.Rmd)
 Patterns and branching | [`5-branching.Rmd`](https://github.com/wlandau/targets-tutorial/blob/master/5-branching.Rmd)
 Debugging | [`6-debugging.Rmd`](https://github.com/wlandau/targets-tutorial/blob/master/6-debugging.Rmd)
-Review | [`7-review.Rmd`](https://github.com/wlandau/targets-tutorial/blob/master/7-review.Rmd)
+Challenge | [`7-challenge.Rmd`](https://github.com/wlandau/targets-tutorial/blob/master/7-challenge.Rmd)
 
 # Browser access
 
