@@ -77,6 +77,12 @@ background-size: contain;
 * Clinical trial simulation
 * Target identification
 
+???
+
+Thank you all for coming, and thank you to R/Pharma for the opportunity to speak today.
+
+I come from the life sciences, and we develop ambitious computational workflows for Statistics and data science. There's a lot of Bayesian analysis, machine learning, simulation, and prediction. Other domains have similar workloads, and we need to think about both efficiency and reproducibility right from the start.
+
 ---
 
 ## Common features
@@ -90,12 +96,20 @@ background-size: contain;
 &lt;br&gt;
 &lt;a href="https://openclipart.org/detail/275842/sisyphus-overcoming-silhouette"&gt;https://openclipart.org/detail/275842/sisyphus-overcoming-silhouette&lt;/a&gt;
 
+???
+
+Many of these projects require long runtimes. Methods like Markov chain Monte Carlo and deep neural nets are computationally expensive. It could take hours or even days just to fit a single model. That's fine if you're only going to run the project once, or at regularly scheduled times. But if the code is still under development, it's easy to get trapped in a vicious Sisyphean cycle.
+
 ---
 
 ## Interconnected tasks
 &lt;center&gt;
 &lt;img src = "./images/workflow.png" align="middle" style="border: none; box-shadow: none; text-align: center;"&gt;
 &lt;/center&gt;
+
+???
+
+A large workflow has a large number of moving parts. We have datasets that we preprocess or simulate, analyses of those datasets, and summaries of the analyses.
 
 ---
 
@@ -105,6 +119,10 @@ background-size: contain;
 &lt;img src = "./images/change.png" align="middle" style="border: none; box-shadow: none; text-align: center;"&gt;
 &lt;/center&gt;
 
+???
+
+If you change any one of these parts - whether it's a bugfix, a tweak to a model, or some new data -
+
 ---
 
 ## Consequences
@@ -112,6 +130,10 @@ background-size: contain;
 &lt;center&gt;
 &lt;img src = "./images/downstream.png" align="middle" style="border: none; box-shadow: none; text-align: center;"&gt;
 &lt;/center&gt;
+
+???
+
+Then everything that depends on it is no longer valid, and you need to rerun the computation to bring the results back up to date. This is seriously frustrating when you're in development and you're still making a constant stream of changes to code and data in real time. If every change means you need to rerun the project, there's no way the results can keep up...
 
 ---
 
@@ -123,6 +145,10 @@ background-size: contain;
 
 - Tons exist already: [github.com/pditommaso/awesome-pipeline](https://github.com/pditommaso/awesome-pipeline).
 - Most are language-agnostic or designed for Python or the shell.
+
+???
+
+...unless you use a pipeline tool. There are pipeline tools for production which resemble Apache Airflow, and there are pipeline tools for development which resemble GNU Make. Today, I'm going to focus on Make-like tools because those are the ones I think are designed for this part of the process. It's an action-packed space, and there are a lot of great options. But unfortunately, there's not a whole lot for R.
 
 ---
 
@@ -137,6 +163,10 @@ background-size: contain;
 * Abstracts files as R objects and automatically manages data.
 * Surpasses the permanent limitations of its predecessor, [`drake`](https://github.com/ropensci/drake): &lt;https://wlandau.github.io/targets/articles/need.html&gt;
 
+???
+
+That's where targets comes in. targets is a Make-like pipeline tool that is fundamentally designed for R. You can call it from an R session, it supports a clean, idiomatic, function-oriented style of programming, and it helps you store and retrieve your results. Most importantly, it gets you out of the Sisyphean loop of long computation, enhances reproducibility, and takes the frustration out of data science.
+
 ---
 
 ## What about `drake`?
@@ -149,6 +179,11 @@ background-size: contain;
     1. More flexible dynamic branching, including compatibility with `dplyr::group_by()`.
     1. Improved parallel efficiency.
     1. Designed for custom user-side [metaprogramming](https://wlandau.github.io/targets-manual/branching.html#metaprogramming) and target archetypes: &lt;https://wlandau.github.io/tarchetypes/&gt;.
+* The statement of need describes the details: &lt;https://wlandau.github.io/targets/articles/need.html&gt;.
+
+???
+
+But what about drake? drake already does all these things, and it's still an excellent choice for Make-like pipeline management. But it does have permanent user-side limitations. We've been developing, improving, expanding, and refining drake for several years, and we've reached the point where the most important problems to tackle are exactly the problems we cannot solve in this tool. It's just too big and too set in its ways, and its architecture was originally designed around assumptions that no longer hold up. To overcome these permanent limitations, we need a new tool that borrows from drake's journey and advances the user experience beyond what drake is capable of, and that new tool is targets. targets has stronger guardrails, lighter data management, greater transparency around data and the process of watching for changes, more flexible dynamic branching, better parallel efficiency, and design that lets us build on top of it more easily. The targets package website has a statement of need describing the changes in more detail.
 
 ---
 
@@ -157,6 +192,10 @@ background-size: contain;
 - Find the model that best predicts which customers will cancel their telecom subscriptions.
 - [IBM Watson Telco Customer Churn dataset](https://www.ibm.com/communities/analytics/watson-analytics-blog/predictive-insights-in-the-telco-customer-churn-data-set/).
 - Workflow principles generalize to the other fields, such as the life sciences.
+
+???
+
+Let's look at an example. We're going to set up a machine learning project to predict customer dropout, or churn, based on the publicly available IBM Watson Telco customer churn dataset. We're going to train a bunch of deep neural nets on the data and pick the one with the best testing accuracy.
 
 ---
 
@@ -176,6 +215,10 @@ R/
 data/
 └── customer_churn.csv
 ```
+
+???
+
+Before we get started, let's talk about the implementation strategy. We're going to move away from numbered scripts and R Markdown as a way to manage the computation end to end. It's an okay strategy for small projects, but it falls apart quickly as a project grows.
 
 ---
 
@@ -198,6 +241,12 @@ add_things(1, 2)
 add_things(c(3, 4), c(5, 6))
 #&gt; [1]  8 10
 ```
+
+???
+
+Functions scale much better for big stuff. A function is just a reusable set of instructions with multiple inputs and a single return value. Usually those inputs are explicitly defined and easy to create, and usually the function has an informative name. Functions are a fundamental built-in feature of almost every programming language we have, and they are particularly well suited to R, which was designed with formal functional programming principles in mind.
+
+The most obvious use for functions is as a way to avoid copies of repeated code scattered throughout your project. So instead of copying and pasting the same code block everywhere, you just call the function. But functions are not just for code you want to reuse, they're for code you want to understand. Functions are custom shorthand. They make your work easier to read, understand, break down into manageable pieces, document, test, and validate for serious research.
 
 ---
 
@@ -226,6 +275,10 @@ prepare_recipe &lt;- function(churn_data) {
 }
 ```
 
+???
+
+Most of your functions revolve around 3 kinds of tasks: preparing datasets, analyzing datasets, and summarizing analyses. These two functions are all about the data. The first one accepts a file path, reads in the data, and splits it into training and test sets. The prepare_recipe() function accepts the return value from split_data() and converts the data into a format that our Keras models can accept in subsequent steps.
+
 ---
 
 ## Functions for customer churn
@@ -253,6 +306,10 @@ retrain_run &lt;- function(churn_run, churn_recipe) {
 }
 ```
 
+???
+
+Similarly, you define functions to define, train, and test the Keras models.
+
 ---
 
 ## Typical project structure
@@ -261,13 +318,18 @@ retrain_run &lt;- function(churn_run, churn_recipe) {
 
 
 ```r
-_targets/  # Output data objects are automatically written here.
 _targets.R # Required top-level configuration file.
 R/
 *└── functions.R
 data/
 └── customer_churn.csv
 ```
+
+???
+
+You can organize your functions however you want, but it's common practice to put them in scripts inside an R/ folder. Similarly, input datasets can go anywhere, but a data/ folder just helps keep things clean.
+
+And at this point, you have a good clean function-oriented project. Even if you decide not to use targets, this function-oriented style still has a lot of value. However, if you're thinking about using targets, then converting to functions is almost all of the work. Once you've done that, you're already almost there. All you need now is to outline the specific steps of the computation in a formal pipeline. And that's where this _targets.R script comes into play. It always lives at the root of the project, and it's always called "_targets.R".
 
 ---
 
@@ -288,6 +350,12 @@ tar_pipeline(
 
 
 
+???
+
+The purpose of _targets.R is to set up the project at a high level. It loads the packages required to define the pipeline, it loads your custom functions and global objects, it sets high-level options such as the packages the targets are going to need, and it defines the pipeline at the very end.
+
+Inside the tar_pipeline() function, you list out objects called targets. Each target is an individual step in the workflow. It has an informative name like "sim" or "patients", and it has a R command that invokes your custom functions and returns a value.
+
 ---
 
 ## The pipeline is a collection of skippable *targets*.
@@ -303,6 +371,11 @@ tar_manifest(fields = c("name", "command"))
 #&gt; 3 churn_file   "\"data/customer_churn.csv\""
 ```
 
+
+???
+
+There are several utility functions that inspect the pipeline for correctness. The tar_manifest() function shows you all the names of the targets and the R commands associated with them.
+
 ---
 
 ## targets understands code and data dependencies.
@@ -315,6 +388,12 @@ tar_visnetwork()
 &lt;center&gt;
 &lt;img src="images/graph1.png", height = "400px" align="middle" style="border: none; box-shadow: none; text-align: center;"&gt;
 &lt;/center&gt;
+
+???
+
+It's always good practice to visualize the dependency graph of the plan. targets has functions to do this for you, and it really demystifies how the package works. So here you see the flow of the project from left to right. We reproducibly track an input data file, we load that data to split into training and test, and we prepare that data for the models using a Tidymodels recipe.
+
+But how does targets deduce this flow? How does it know that the churn_recipe depend on churn_data? The order you write targets in the pipeline does not matter. targets knows that churn_recipe depends on churn_data because the symbol "churn_data" is mentioned in the command for "churn_recipe" in the pipeline. targets scans your commands and functions without actually running them it in order to look for changes and understand dependency relationships. This is called static code analysis.
 
 ---
 
@@ -332,6 +411,10 @@ tar_make()
 #&gt; ● run target churn_recipe
 ```
 
+???
+
+To actually run the workflow, we use a function called tar_make(). tar_make() creates a clean new reproducible R process, runs _targets.R to populate the new session and define the pipeline, resolves the dependency graph, runs the correct targets in the correct order from the dependency graph, and writes the return values to storage.
+
 ---
 
 ## Check the targets for problems
@@ -348,6 +431,10 @@ ncol(juice(churn_recipe))
 #&gt; [1] 36
 ```
 
+???
+
+Afterwards, all the targets are in storage. There's a special key-value store in a hidden _targets/ folder, and targets has functions tar_load() and tar_read() to retrieve data from the store. targets abstracts artifacts as ordinary objects. You don't need to worry about where these files are located, you just need to know the target names. This is the exploratory analysis phase. Always inspect your targets for issues between calls to tar_make().
+
 ---
 
 ## Build up the pipeline *gradually*.
@@ -358,6 +445,10 @@ ncol(juice(churn_recipe))
 3. Inspect the new targets with `tar_load()` and `tar_read()`.
 4. Repeat often. Not very time-consuming because `tar_make()` skips up-to-date targets.
 ]
+
+???
+
+This is part of an iterative process for building up a pipeline. We add a couple targets, run the pipeline, inspect the new targets, and repeat. We do this early and often. And as you will see, because targets can iterate frequently while still saving you time.
 
 ---
 
@@ -380,6 +471,10 @@ tar_pipeline(
 
 
 
+???
+
+With the data in place, we are now ready to add some models. We start with two models fit to the same data using different hyperparameters.
+
 ---
 
 ## Previous work is still up to date.
@@ -394,6 +489,10 @@ tar_outdated()
 #&gt; [1] "run_relu"    "run_sigmoid"
 ```
 
+???
+
+When we inspect the pipeline, we see that some work needs to be done. But all our data processing steps are already up to date.
+
 ---
 
 ## Previous work is still up to date.
@@ -405,6 +504,10 @@ tar_visnetwork()
 &lt;center&gt;
 &lt;img src="images/graph2.png", height = "400px" align="middle" style="border: none; box-shadow: none; text-align: center;"&gt;
 &lt;/center&gt;
+
+???
+
+We can see this even more clearly in the dependency graph.
 
 ---
 
@@ -424,6 +527,10 @@ tar_make()
 #&gt; ● run target run_sigmoid
 ```
 
+???
+
+So when we run the pipeline again, only the models run. The tool skips the data targets because they are already up to date.
+
 ---
 
 ## Inspect the newest targets.
@@ -434,7 +541,7 @@ tar_read(run_relu)
 #&gt; # A tibble: 1 x 6
 #&gt;   accuracy units1 units2 act1  act2  act3   
 #&gt;      &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;  
-#&gt; 1    0.795     16     16 relu  relu  sigmoid
+#&gt; 1    0.799     16     16 relu  relu  sigmoid
 
 tar_read(run_sigmoid)
 #&gt; # A tibble: 1 x 6
@@ -442,6 +549,10 @@ tar_read(run_sigmoid)
 #&gt;      &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;  
 #&gt; 1    0.800     16     16 sigmoid relu  sigmoid
 ```
+
+???
+
+And as usual, we read our newest targets and verify there are no obvious issues.
 
 ---
 
@@ -473,6 +584,10 @@ tar_pipeline(
 
 
 
+???
+
+And we repeat the process to gradually build up the pipeline. Here, we add new targets to find the model run with the highest accuracy so far and retrain that model to return a fitted model object. For fitted Keras models, we need to write 'format = "keras"' in tar_target() because Keras models cannot be saved with R's ordinary serialization functionality.
+
 ---
 
 ## Find the best model
@@ -492,6 +607,10 @@ tar_make()
 #&gt; ● run target best_run
 #&gt; ● run target best_model
 ```
+
+???
+
+As before, only only the new targets run because we didn't change any other code or data,
 
 ---
 
@@ -521,6 +640,10 @@ tar_read(best_model)
 #&gt; ________________________________________________________________________________
 ```
 
+???
+
+and now one of our targets is actually a trained Keras model.
+
 ---
 
 ## Try another model.
@@ -548,6 +671,10 @@ tar_pipeline(
 
 
 
+???
+
+If we try another model, we just need to add another target and reference that new target in any downstream targets that need it.
+
 ---
 
 ## What gets done stays done.
@@ -562,6 +689,10 @@ tar_outdated()
 #&gt; [1] "run_softmax" "best_run"    "best_model"
 ```
 
+???
+
+Now, not only are the new model and the best_run target outdated, the tool automatically calls everything downstream into question, so best_model is suspect as well.
+
 ---
 
 ## What gets done stays done.
@@ -574,6 +705,10 @@ tar_visnetwork()
 &lt;center&gt;
 &lt;img src="images/graph3.png", height = "400px" align="middle" style="border: none; box-shadow: none; text-align: center;"&gt;
 &lt;/center&gt;
+
+???
+
+Again, we see this clearly in the dependency graph. run_softmax is new, best_run is outdated because it uses run_softmax, and best_model is suspect because it depends on best_run.
 
 ---
 
@@ -596,6 +731,10 @@ tar_make()
 ```
 
 
+
+???
+
+When we run the pipeline again, of course run_softmax and best_run both execute. But if best_run doesn't change, we skip best_model. targets looks at the actual fingerprint of the data to make decisions, unlike GNU Make, which just uses timestamps.
 
 ---
 
@@ -624,6 +763,10 @@ define_model &lt;- function(churn_recipe, units1, units2, act1, act2, act3) {
     ...
 ```
 
+???
+
+If we change a function in a nontrivial way, targets notices. Let's increase the dropout rate in one of the layers in the neural net.
+
 ---
 
 ## Show invalidated functions and targets.
@@ -636,6 +779,10 @@ tar_visnetwork()
 &lt;center&gt;
 &lt;img src="images/graph4.png", height = "400px" align="middle" style="border: none; box-shadow: none; text-align: center;"&gt;
 &lt;/center&gt;
+
+???
+
+The define_model() function is no longer up to date. That means neither is train_model() because it calls define_model(), and likewise with downstream functions. That means the targets downstream, which include all our model runs, are also invalidated.
 
 ---
 
@@ -653,6 +800,10 @@ tar_make()
 #&gt; ● run target best_run
 #&gt; ● run target best_model
 ```
+
+???
+
+But we can bring everything back up to date without rerunning the data processing.
 
 ---
 
@@ -672,6 +823,10 @@ tar_make()
 #&gt; ● run target best_model
 ```
 
+???
+
+But the data processing does rerun if we change our data file. This is because in our upstream target churn_file, we selected 'format = "file"' in the tar_target() function. That tells targets to treat the return value of the command as a vector of file and directory paths, and it watches that data for changes.
+
 ---
 
 ## Evidence of reproducibility
@@ -690,6 +845,10 @@ tar_make(plan)
 #&gt; ✓ Already up to date.
 ```
 
+???
+
+At the end of the day, targets can tell you if all your targets are up to date. This is tangible evidence that your output matches the code and data it's supposed to come from. It's evidence that someone else running the same code would get the same results. That's reproducibility. It's certainly not the only form of reproducibility, but it does increase the trust we can place in the conclusions of the project.
+
 ---
 
 ## Evidence of reproducibility
@@ -705,6 +864,10 @@ tar_visnetwork()
 &lt;center&gt;
 &lt;img src="images/graph5.png", height = "350px" align="middle" style="border: none; box-shadow: none; text-align: center;"&gt;
 &lt;/center&gt;
+
+???
+
+And again, utility functions can confirm the status of targets without needing to run tar_make().
 
 ---
 
@@ -725,6 +888,13 @@ remotes::install_github("wlandau/targets")
 * Development repository: &lt;https://github.com/wlandau/targets&gt;
 * Full user manual: &lt;https://wlandau.github.io/targets-manual/&gt;
 * Reference website: &lt;https://wlandau.github.io/targets/&gt;
+
+???
+
+There are several resources to learn about targets. There's a reference website, an online user manual, and a repository with the example code from today.
+
+targets is nearing the end of its beta phase. I am about to submit it to rOpenSci for peer review, and I hope to have it on CRAN at the end of this year or early next year. Now is a great time for feedback because there is no formal release yet and the interface is not yet set in stone.
+
 
 ---
 
@@ -751,6 +921,10 @@ remotes::install_github("wlandau/targets")
 &lt;/tr&gt;
 &lt;/table&gt;
 
+???
+
+I borrowed this use case from Matt Dancho, and Edgar Ruiz originally put it together with drake. so many thanks to them for providing the content for the example I covered.
+
 ---
 
 ## The tutorial
@@ -758,6 +932,7 @@ remotes::install_github("wlandau/targets")
 1. Sign up for a free account at &lt;https://rstudio.cloud&gt;.
 2. Log into &lt;https://rstudio.cloud/project/1500267&gt;.
 3. Work through the R notebooks in order.
+4. Optional: revisit the material again later at &lt;https://github.com/wlandau/targets-tutorial&gt;.
 
 Topic | Notebook
 ---|---
@@ -769,6 +944,10 @@ Patterns and branching | [`5-branching.Rmd`](https://github.com/wlandau/targets-
 Metaprogramming | [`6-metaprogramming.Rmd`](https://github.com/wlandau/targets-tutorial/blob/master/6-metaprogramming.Rmd)
 
 
+
+???
+
+The workshop is publicly available and deployed to RStudio Cloud. Just sign up for a cloud account and log into a free instance of RStudio Server. We will spend our remaining time working through interactive exercises in the R notebooks here, with some breaks for Q&amp;A and live coding demos to go over the solutions. If you missed part of the exercises or just want to go back and study in your own time, the workshop will still be available. I included the link to both the source and the cloud project here.
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
