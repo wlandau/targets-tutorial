@@ -212,9 +212,10 @@ But what about drake? drake already does all these things, and it's still an exc
 
 ## Example targets workflow
 
-- Find the model that best predicts which customers will cancel their telecom subscriptions.
-- [IBM Watson Telco Customer Churn dataset](https://www.ibm.com/communities/analytics/watson-analytics-blog/predictive-insights-in-the-telco-customer-churn-data-set/).
-- Workflow principles generalize to the other fields, such as the life sciences.
+* Find the model that best predicts which customers will cancel their telecom subscriptions.
+* [IBM Cognos Analytics Telco customer churn dataset](https://community.ibm.com/community/user/businessanalytics/blogs/steven-macko/2019/07/11/telco-customer-churn-1113).
+* Example from [Matt Dancho's 2018 RStudio AI Blog post](https://blogs.rstudio.com/tensorflow/posts/2018-01-11-keras-customer-churn/).
+* Workflow principles generalize to the other fields, such as the life sciences.
 
 ???
 
@@ -910,36 +911,6 @@ There are several resources to learn about targets. There's a reference website,
 
 targets is nearing the end of its beta phase. I am about to submit it to rOpenSci for peer review, and I hope to have it on CRAN at the end of this year or early next year. Now is a great time for feedback because there is no formal release yet and the interface is not yet set in stone.
 
-
----
-
-## Thanks
-
-<br>
-<br>
-<table style = "border: none">
-<tr>
-<td style = "padding-right: 125px">
-<ul style>
-<img src = "./images/edgar.jpg" style="border: none; box-shadow: none; height: 150px">
-<li><a href = "https://github.com/edgararuiz">Edgar Ruiz</a></li>
-<li><a href = "https://github.com/sol-eng/tensorflow-w-r/blob/master/workflow/tensorflow-drake.Rmd">example code</a></li>
-</ul>
-</td>
-<td>
-<ul>
-<img src = "./images/matt.jpg" style="border: none; box-shadow: none; height: 150px">
-<li><a href = "https://github.com/mdancho84">Matt Dancho</a></li>
-<li><a href = "https://blogs.rstudio.com/tensorflow/posts/2018-01-11-keras-customer-churn/">blog post</a></li>
-</ul>
-</td>
-</tr>
-</table>
-
-???
-
-I borrowed this use case from Matt Dancho, and Edgar Ruiz originally put it together with drake. so many thanks to them for providing the content for the example I covered.
-
 ---
 
 ## The tutorial
@@ -967,3 +938,10 @@ unlink("_targets.R")
 ???
 
 The workshop is publicly available and deployed to RStudio Cloud. Just sign up for a cloud account and log into a free instance of RStudio Server. We will spend our remaining time working through interactive exercises in the R notebooks here, with some breaks for Q&A and live coding demos to go over the solutions. If you missed part of the exercises or just want to go back and study in your own time, the workshop will still be available. I included the link to both the source and the cloud project here.
+
+---
+
+## References
+
+* Dancho. "Deep Learning With Keras To Predict Customer Churn." RStudio AI Blog, 2018-01-11. <https://blogs.rstudio.com/tensorflow/posts/2018-01-11-keras-customer-churn/>
+* IBM Cognos Analytics. "Telco customer churn (11.1.3+)." IBM Community, 2019-07-11. <https://community.ibm.com/community/user/businessanalytics/blogs/steven-macko/2019/07/11/telco-customer-churn-1113>
