@@ -213,7 +213,7 @@ But what about drake? drake already does all these things, and it's still an exc
 ## Example targets workflow
 
 * Find the model that best predicts which customers will cancel their telecom subscriptions.
-* [IBM Cognos Analytics Telco customer churn dataset](https://community.ibm.com/community/user/businessanalytics/blogs/steven-macko/2019/07/11/telco-customer-churn-1113).
+* IBM Cognos Analytics Telco customer churn dataset (links [here](https://community.ibm.com/community/user/businessanalytics/blogs/steven-macko/2019/07/11/telco-customer-churn-1113) and [here](https://github.com/IBM/telco-customer-churn-on-icp4d/blob/master/data/Telco-Customer-Churn.csv)).
 * Example from [Matt Dancho's 2018 RStudio AI Blog post](https://blogs.rstudio.com/tensorflow/posts/2018-01-11-keras-customer-churn/).
 * Workflow principles generalize to the other fields, such as the life sciences.
 
@@ -944,4 +944,5 @@ The workshop is publicly available and deployed to RStudio Cloud. Just sign up f
 ## References
 
 * Dancho. "Deep Learning With Keras To Predict Customer Churn." RStudio AI Blog, 2018-01-11. <https://blogs.rstudio.com/tensorflow/posts/2018-01-11-keras-customer-churn/>
+* D'Angelo, Scott and Nayak, Sandhya and Martinelli, Steve. "Predict Customer Churn using Watson Machine Learning and Jupyter Notebooks on Cloud Pak for Data." Released to GitHub by IBM under the Apache Software License version 2.0. <https://github.com/IBM/telco-customer-churn-on-icp4d>. Last accessed 2020-08-29.
 * IBM Cognos Analytics. "Telco customer churn (11.1.3+)." IBM Community, 2019-07-11. <https://community.ibm.com/community/user/businessanalytics/blogs/steven-macko/2019/07/11/telco-customer-churn-1113>
