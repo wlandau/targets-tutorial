@@ -36,7 +36,7 @@ To begin to search for clues, we review the error message and warnings stored in
 tar_meta(starts_with("run"), fields = c("error", "warnings"))
 ```
 
-# Interactive debugging.
+# Debugging with saved workspaces
 
 We need more information, so we invoke `tar_make()` with interactive debugging. First, open `_targets.R` for editing.
 
@@ -45,56 +45,75 @@ library(usethis)
 edit_file("_targets.R", open = TRUE)
 ```
 
-In `tar_option_set()`, set the `debug` argument equal to the name of the branch that threw the error (e.g. `"run_6d754468"`).
+In `tar_option_set()`, set `error` to `"save"`. Next time a target errors out, `targets` will save a workspace image file in `_targets/workspaces/`.
 
-Run `tar_make()` with `callr_function = NULL`. This is not usually recommended because it runs the pipeline in your workspace instead of a fresh clean R process, but we need it for interactive debugging.
+```{r, eval = FALSE}
+tar_option_set(
+  packages = c(
+    "corrr",
+    "keras",
+    "recipes",
+    "rsample",
+    "tidyverse",
+    "yardstick"
+  ),
+  error = "save"
+)
+```
+
+Now, run `tar_make()` and let the error happen.
 
 ```{r}
-tar_make(callr_function = NULL)
+tar_make()
 ```
+
+Find the name of the failed target.
 
 ```{r}
-tar_visnetwork()
+library(tidyverse)
+failed <- tar_meta(fields = error) %>%
+  na.omit() %>%
+  pull(name) %>%
+  head(n = 1)
+print(failed)
 ```
 
-After a couple seconds, R should drop you into an interactive debugger.
+Load the workspace of this target to restore the packages, environment, and random number generator seed of the target from when it errored out.
 
-```{r, eval = FALSE}
-#> ● run branch run_6d754468
-#> Called from: eval(expr, envir)
-#> Browse[1]> 
+```{r}
+tar_workspace(run_________) # Supply the failed target name.
 ```
 
-From here, we can easily figure out which model caused the error.
+You environment should now have the correct values of `activations`, `units`, `churn_data`, and `churn_recipe` to supply to `test_model(act1 = activations, units1 = units, churn_data, churn_recipe)` (the target's command).
 
-```{r, eval = FALSE}
-#> Browse[1]> act1
-#> [1] "sigmoid"
-#> Browse[1]> units1
-#> [1] 32
+```{r}
+print(activations) # Should be a scalar.
+print(units) # Should be a scalar.
 ```
 
-But we want to know more. With interactive debugging, we can sneak right up to the error and interrogate the environment right before things go wrong. So at this point, you should call `debug()` on the function the target is about to run and then press `n` in the R console to advance to the next line of code.
+You should now be able to run the target's command and reproduce the error without `tar_make()`
 
-```{r, eval = FALSE}
-#> Browse[1]> debug(test_model)
-#> Browse[1]> n
-#> debugging in: test_model(act1 = activations, units1 = units, churn_data, churn_recipe)
-#> debug at 6-debugging/functions.R#215: {
-#>     churn_model <- train_model(churn_recipe, units1, units2, 
-#>         act1, act2, act3)
-#>     accuracy <- test_accuracy(churn_data, churn_recipe, churn_model)
-#>     tibble(accuracy = accuracy, units1 = units1, units2 = units2, 
-#>         act1 = act1, act2 = act2, act3 = act3)
-#> }
-#> Browse[3]> 
+```{r}
+test_model(act1 = activations, units1 = units, churn_data, churn_recipe)
 ```
 
-The output says you are about to call `train_model()`, so debug that function too and continue on.
+# Your turn
 
-```{r, eval = FALSE}
-#> Browse[1]> debug(train_model)
-#> Browse[1]> n
+Now, go find that error and fix it! You have completed the exercise when `tar_make()` runs without error. Once you are done, remove the workspace files using `tar_undebug()`. This is good practice because workspace files can get quite large.
+
+# Tip: interactive debugging
+
+Base utilities `debug()`, `debugonce()`, `undebug()`, and `browse()` are particularly helpful here. More information on interactive debugging can be found at <https://rstats.wtf/debugging-r-code.html>.
+
+```{r}
+debugonce(test_model)
+test_model(act1 = activations, units1 = units, churn_data, churn_recipe)
 ```
 
-Continue this process until you find the bug. Once you fix it, run `tar_make()` normally to confirm the bug is gone.
+Once you are inside the debugger, you can access objects in the runtime environment and gradually step through the code. Press `n` to advance to the next line, and press `c` to continue on to the next breakpoint (place where the debuggger pauses). Press `Q` to exit the debugger.
+
+# Interactive debugging in `targets`
+
+`targets` also has its own interactive debugging features, which you are welcome to use for this exercise. In `tar_option_set()`, simply set the `debug` argument equal to the name of the failed target. Then, restart your session and run `tar_make(callr_function = NULL)`.
+
+Some situations may require you to debug this way instead of `error = "save"`. For example, if some of your target's dependencies cannot be serialized with `qs::qsave()` (e.g. Keras model objects) then the workspace cannot be saved properly.
