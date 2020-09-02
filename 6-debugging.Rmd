@@ -78,6 +78,12 @@ failed <- tar_meta(fields = error) %>%
 print(failed)
 ```
 
+Confirm that a saved workspace exists for this target.
+
+```{r}
+list.files("_targets/workspaces")
+```
+
 Load the workspace of this target to restore the packages, environment, and random number generator seed of the target from when it errored out.
 
 ```{r}
@@ -99,7 +105,7 @@ test_model(act1 = activations, units1 = units, churn_data, churn_recipe)
 
 # Your turn
 
-Now, go find that error and fix it! You have completed the exercise when `tar_make()` runs without error. Once you are done, remove the workspace files using `tar_undebug()`. This is good practice because workspace files can get quite large.
+Now go find that error and fix it! You have completed the exercise when `tar_make()` runs without error. Once you are done, remove the workspace files using `tar_undebug()`. This is good practice because workspace files can get quite large.
 
 # Tip: interactive debugging
 
@@ -114,6 +120,12 @@ Once you are inside the debugger, you can access objects in the runtime environm
 
 # Interactive debugging in `targets`
 
-`targets` also has its own interactive debugging features, which you are welcome to use for this exercise. In `tar_option_set()`, simply set the `debug` argument equal to the name of the failed target. Then, restart your session and run `tar_make(callr_function = NULL)`.
+To debug interactively in `tar_make()`, set these options in `_targets.R`
+
+```{r}
+tar_option_set(debug = "run_________", cue = tar_cue(mode = "never"))
+```
+
+Then, restart R and run `tar_make(callr_function = NULL)`. `targets` will drop you into an interactive debugger at the errored target.
 
 Some situations may require you to debug this way instead of `error = "save"`. For example, if some of your target's dependencies cannot be serialized with `qs::qsave()` (e.g. Keras model objects) then the workspace cannot be saved properly.
