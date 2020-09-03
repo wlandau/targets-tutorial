@@ -1,8 +1,9 @@
-# Tutorial of the `targets` R package
+# Reproducible computation at scale in R with [`targets`](https://github.com/wlandau/targets)
 
 [![Launch RStudio Cloud](https://img.shields.io/badge/RStudio-Cloud-blue)](https://rstudio.cloud/project/1512447)
 
-This interactive tutorial is a hands-on step-by-step introduction to the [`targets`](https://github.com/wlandau/targets) R package. Students gradually build up a [`targets`](https://github.com/wlandau/targets)-powered data analysis project based on a [practical machine learning case study](https://blogs.rstudio.com/ai/posts/2018-01-11-keras-customer-churn/).
+Data science can be slow. A single round of statistical computation can take several minutes, hours, or even days to complete. The [`targets`](https://github.com/wlandau/targets) R package keeps results up to date and reproducible while minimizing the number of expensive tasks that actually run. [`
+targets`](https://github.com/wlandau/targets) learns how your pipeline fits together, skips costly runtime for steps that are already up to date, runs the rest with optional implicit parallel computing, abstracts files as R objects, and shows tangible evidence that the output matches the underlying code and data. In other words, the package saves time while increasing our ability to trust the conclusions of the research. [`targets`](https://github.com/wlandau/targets) surpasses the most burdensome permanent limitations of its predecessor, [`drake`](https://github.com/ropensci/drake), to achieve greater efficiency and provide a safer, smoother, friendlier user experience. This hands-on workshop teaches targets using a realistic [case study](https://blogs.rstudio.com/ai/posts/2018-01-11-keras-customer-churn/). Participants begin with the R implementation of a machine learning project, convert the workflow into a [`targets`](https://github.com/wlandau/targets)-powered pipeline, and efficiently maintain the output as the code and data change.
 
 # Syllabus
 
