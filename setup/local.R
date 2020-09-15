@@ -6,7 +6,6 @@ install.packages(c(
   "recipes",
   "remotes",
   "rmarkdown",
-  "rsample",
   "rprojroot",
   "rsample",
   "tidyverse",
