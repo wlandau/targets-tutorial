@@ -2,6 +2,7 @@ install.packages(c(
   "corrr",
   "fst",
   "keras",
+  "qs",
   "recipes",
   "remotes",
   "rmarkdown",
