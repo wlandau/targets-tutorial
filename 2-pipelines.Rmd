@@ -55,8 +55,7 @@ file.copy("2-pipelines/initial_targets.R", "_targets.R", overwrite = TRUE)
 Now, open `_targets.R` in the RStudio IDE for editing. You will manually make changes to `_targets.R` throughout the entire chapter.
 
 ```{r}
-library(usethis)
-edit_file("_targets.R", open = TRUE)
+tar_edit()
 ```
 
 Functions `tar_make()`, `tar_validate()`, `tar_manifest()`, `tar_glimpse()`, and `tar_visnetwork()` all need `_targets.R`. `_targets.R` lets these functions invoke the pipeline from a new external R process in order to ensure reproducibility.
@@ -148,7 +147,7 @@ run_sigmoid <- test_model(act1 = "sigmoid", churn_data, churn_recipe) # Model 2
 Your turn: open `_targets.R` for editing.
 
 ```{r}
-edit_file("_targets.R", open = TRUE)
+tar_edit()
 ```
 
 Then, type in the models as formal targets in the pipeline.
@@ -214,7 +213,7 @@ tar_read(run_sigmoid)
 Your turn: open `_targets.R` for editing and type in a third model with a different activation function. Use the `act1 = "softmax"` this time.
 
 ```{r}
-edit_file("_targets.R", open = TRUE)
+tar_edit()
 ```
 
 ```{r, eval = FALSE}

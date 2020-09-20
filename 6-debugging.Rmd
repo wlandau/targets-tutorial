@@ -41,8 +41,7 @@ tar_meta(starts_with("run"), fields = c("error", "warnings"))
 We need more information, so we invoke `tar_make()` with interactive debugging. First, open `_targets.R` for editing.
 
 ```{r}
-library(usethis)
-edit_file("_targets.R", open = TRUE)
+tar_edit()
 ```
 
 In `tar_option_set()`, set `error` to `"save"`. Next time a target errors out, `targets` will save a workspace image file in `_targets/workspaces/`.

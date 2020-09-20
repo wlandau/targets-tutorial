@@ -34,8 +34,7 @@ source("5-branching/answers.R")
 Our `_targets.R` file has a new version of our pipeline with branching. Open for editing.
 
 ```{r}
-library(usethis)
-edit_file("_targets.R", open = TRUE)
+tar_edit()
 ```
 
 What is different about this new pipeline?
@@ -171,7 +170,7 @@ Take a look at the new pipeline.
 
 
 ```{r}
-edit_file("_targets.R", open = TRUE)
+tar_edit()
 ```
 
 Sometimes, we may not want to aggregate all the branches into a vector or data frame. Try `iteration = "list"` in `tar_target()` for the `run` target. Then, run the pipeline.
@@ -302,7 +301,7 @@ tmp <- file.copy("5-branching/files_targets.R", "_targets.R", overwrite = TRUE)
 Take a look at the new `_targets.R`.
 
 ```{r}
-edit_file("_targets.R", open = TRUE)
+tar_edit()
 ```
 
 This pipeline uses the `tar_files()` helper from the `tarchetypes` package. Here, we use `tar_files()` to ensure we can correctly branch over the files in the `data/` folder. The mechanism requires two different targets to work correctly. `churn_file_files` does the actual work and returns the output files we want to track, and `churn_file` separates the output files into iterable branches.

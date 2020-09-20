@@ -34,6 +34,5 @@ Begin with a fresh copy of `_targets.R`.
 
 ```{r}
 unlink("_targets.R")
-library(usethis)
-edit_file("_targets.R", open = TRUE)
+tar_edit()
 ```

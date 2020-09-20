@@ -32,8 +32,7 @@ file.copy("4-files/initial_targets.R", "_targets.R", overwrite = TRUE)
 Open `_targets.R` for editing
 
 ```{r}
-library(usethis)
-edit_file("_targets.R", open = TRUE)
+tar_edit()
 ```
 
 # Review: input data files
@@ -80,7 +79,7 @@ In `targets`, we configure output files the exact same way. The only difference 
 As an example, open `_targets.R` and create a new file targets `churn_cor`, which saves a CSV file and a plot of correlations (the correlation of each covariate with customer churn in the preprocessed testing data). Functions `compute_cor()` and `plot_cor()` in `4-files/functions.R` do most of the work.
 
 ```{r}
-edit_file("_targets.R", open = TRUE)
+tar_edit()
 ```
 
 Enter the new target below into `tar_pipeline()` in `_targets.R`.
@@ -176,7 +175,7 @@ For the sake of convenience and reproducibility, we can render this report insid
 Open `_targets.R` for editing.
 
 ```{r}
-edit_file("_targets.R", open = TRUE)
+tar_edit()
 ```
 
 Write `library(tarchetypes)` at the very top, and write `tar_render(report_step, "results.Rmd")` as a target in the pipeline. Sketch:
