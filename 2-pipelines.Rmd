@@ -105,10 +105,12 @@ Targets `churn_data` and `churn_recipe` now live in a special `_targets/` data s
 ```{r}
 list.files("_targets/objects")
 ```
-`churn_file` is an [external input file](https://wlandau.github.io/targets-manual/files.html#external-input-files), declared with `format = "file"` in `tar_target()`, so its value is not in the data store. However, the actual file path, hash, and other metadata are stored in the `_targets/meta/meta` spreadsheet.
+`churn_file` is an [external input file](https://wlandau.github.io/targets-manual/files.html#external-input-files), declared with `format = "file"` in `tar_target()`, so its value is not in the data store. However, the actual file path, hash, and other metadata are stored in the `_targets/meta/meta` spreadsheet, which you can read with `tar_meta()`.
 
 ```{r}
-cat(readLines("_targets/meta/meta"), sep = "\n")
+library(dplyr)
+tar_meta(names = starts_with("churn"), fields = path) %>%
+  mutate(path = unlist(path))
 ```
 
 But rather than access the files in `_targets/` directly, it is good practice to go through user-side functions in `targets`.
