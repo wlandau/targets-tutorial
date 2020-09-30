@@ -116,17 +116,17 @@ tar_meta(names = starts_with("churn"), fields = path) %>%
 Other user-side functions read the actual data objects.
 
 ```{r}
-tar_load(churn_file)
-churn_file
-```
-
-```{r}
 tar_read(churn_data)
 ```
 
 
 ```{r}
 tar_read(churn_recipe)
+```
+
+```{r}
+tar_load(churn_file)
+churn_file
 ```
 
 # Build up the pipeline.
