@@ -76,6 +76,12 @@ D. All the above.
 answer4_review("E")
 ```
 
+Hint:
+
+```{r}
+tar_read(churn_file)
+```
+
 # Output files
 
 In `targets`, we configure output files the exact same way. The only difference between input and output files is that output files are created when the target runs.
