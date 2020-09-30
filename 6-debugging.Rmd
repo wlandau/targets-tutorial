@@ -138,4 +138,4 @@ Then, restart R and run `tar_make(callr_function = NULL)`. `targets` will drop y
 tar_make(callr_function = NULL)
 ```
 
-Some situations may require you to debug this way instead of `error = "save"`. For example, if some of your target's dependencies cannot be serialized with `qs::qsave()` (e.g. Keras model objects) then the workspace cannot be saved properly with `tar_option_set(error = "save")`.
+Some situations may require you to debug this way instead of `error = "save"`. For example, this technique allows you to debug that did not necessarily throw an error. In addition, if some of your target's dependencies cannot be serialized with `qs::qsave()` (e.g. Keras model objects) then the workspace cannot be saved properly with `tar_option_set(error = "save")`.
