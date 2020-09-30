@@ -49,10 +49,14 @@ Verify that all targets are now up to date.
 tar_make()
 ```
 
-Now, open the customer churn data file for editing. Manually remove the last line of data in the file.
+Now, remove the last line of data in the file.
 
-```{r}
-edit_file("data/churn.csv")
+```{r, message = FALSE}
+library(tidyverse)
+"data/churn.csv" %>%
+  read_csv(col_types = cols()) %>%
+  head(n = nrow(.) - 1) %>%
+  write_csv("data/churn.csv")
 ```
 
 When we call `tar_make()` again, all targets should rerun because they all depend on the upstream file target `churn_file`.
