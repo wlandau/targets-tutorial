@@ -144,7 +144,7 @@ Your turn: open `_targets.R` for editing.
 tar_edit()
 ```
 
-Then, type in the models as formal targets in the pipeline.
+Then, express the model commands above as formal targets in the pipeline.
 
 ```{r, eval = FALSE}
 # Should go in _targets.R:
