@@ -20,7 +20,7 @@ root <- rprojroot::find_rstudio_root_file()
 reticulate::install_miniconda(file.path(root, "miniconda"))
 lines <- c(
   "TAR_SCRIPT_ASK=false",
-  "TF_CPP_MIN_LOG_LEVEL=1",
+  "TF_CPP_MIN_LOG_LEVEL=10000",
   paste0("CONDA=", file.path(root, "miniconda", "bin", "conda")),
   paste0("WORKON_HOME=", file.path(root, "virtualenvs")),
   paste0("RETICULATE_PYTHON=", file.path(root, "miniconda", "bin", "python"))
