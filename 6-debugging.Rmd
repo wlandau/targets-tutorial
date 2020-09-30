@@ -30,7 +30,7 @@ tar_make()
 tar_visnetwork()
 ```
 
-To begin to search for clues, we review the error message and warnings stored in the metadata. Make a note of the branch of `run` that threw the error.
+To begin to search for clues, review the error message and warnings stored in the metadata. Make a note of the branch of `run` that threw the error.
 
 ```{r}
 tar_meta(starts_with("run"), fields = c("error", "warnings"))
@@ -47,6 +47,7 @@ tar_edit()
 In `tar_option_set()`, set `error` to `"save"`. Next time a target errors out, `targets` will save a workspace image file in `_targets/workspaces/`.
 
 ```{r, eval = FALSE}
+# Do not run here.
 tar_option_set(
   packages = c(
     "corrr",
@@ -60,7 +61,7 @@ tar_option_set(
 )
 ```
 
-Now, run `tar_make()` and let the error happen.
+Now, run `tar_make()` and let the error happen again.
 
 ```{r}
 tar_make()
@@ -83,7 +84,7 @@ Confirm that a saved workspace exists for this target.
 list.files("_targets/workspaces")
 ```
 
-Load the workspace of this target to restore the packages, environment, and random number generator seed of the target from when it errored out.
+Load the workspace of this target to restore the packages, environment, and random number generator seed that were loaded when the target errored out.
 
 ```{r}
 tar_workspace(run_________) # Supply the failed target name.
@@ -108,7 +109,7 @@ Now go find that error and fix it! You have completed the exercise when `tar_mak
 
 # Tip: interactive debugging
 
-Base utilities `debug()`, `debugonce()`, `undebug()`, and `browse()` are particularly helpful here. More information on interactive debugging can be found at <https://rstats.wtf/debugging-r-code.html>.
+Base utilities `debug()`, `debugonce()`, `undebug()`, and `browse()` are extremely helpful for debugging functions. More information on interactive debugging can be found at <https://rstats.wtf/debugging-r-code.html>.
 
 ```{r}
 debugonce(test_model)
@@ -119,12 +120,16 @@ Once you are inside the debugger, you can access objects in the runtime environm
 
 # Interactive debugging in `targets`
 
-To debug interactively in `tar_make()`, set these options in `_targets.R`
+As an alternative technique, you can debug interactively while `tar_make()` is actually running. Set these options in `_targets.R`.
 
 ```{r}
 tar_option_set(debug = "run_________", cue = tar_cue(mode = "never"))
 ```
 
 Then, restart R and run `tar_make(callr_function = NULL)`. `targets` will drop you into an interactive debugger at the errored target.
+
+```{r}
+tar_make(callr_function = NULL)
+```
 
 Some situations may require you to debug this way instead of `error = "save"`. For example, if some of your target's dependencies cannot be serialized with `qs::qsave()` (e.g. Keras model objects) then the workspace cannot be saved properly.
