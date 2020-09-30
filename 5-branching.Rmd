@@ -181,7 +181,6 @@ tmp <- file.copy("5-branching/iteration_targets.R", "_targets.R", overwrite = TR
 
 Take a look at the new pipeline.
 
-
 ```{r}
 tar_edit()
 ```
