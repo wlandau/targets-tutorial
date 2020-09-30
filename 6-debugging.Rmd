@@ -20,7 +20,7 @@ tmp <- file.copy("6-debugging/initial_targets.R", "_targets.R", overwrite = TRUE
 
 # Problem
 
-This pipeline has a bug, and it only happens in one of the models. Your job is to find it.
+This pipeline has a bug, and it only happens in one of the models. Your job is to find and fix it.
 
 ```{r}
 tar_make()
