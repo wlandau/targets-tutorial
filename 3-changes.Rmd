@@ -31,7 +31,13 @@ Run the line below to begin with a new `_targets.R` file.
 tmp <- file.copy("3-changes/initial_targets.R", "_targets.R", overwrite = TRUE)
 ```
 
-Then, open `_targets.R` manually in the RStudio IDE. What do you see?
+Then, open `_targets.R` in the RStudio IDE.
+
+```{r}
+tar_edit()
+```
+
+What do you see?
 
 A. A call to `source("3-changes/functions.R")` to load our custom functions.
 B. A call to `tar_option_set()` to declare the packages the targets need when they run.
