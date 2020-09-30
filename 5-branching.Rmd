@@ -116,10 +116,10 @@ tar_read(run)
 
 Which model runs do you see in the output?
 
-A. 3 model runs, 1 for each of the relu, sigmoid, and softmax activation functions in the first layer of the neural net. Each model run has the same value for `units1`.
-B. 3 model runs, 1 for each of the relu, sigmoid, and softmax activation functions in the first layer of the neural net. In the first layer, the relu model has 16 neurons, the sigmoid model has 32 neurons, and the softmax model has 64 runs.
-C. 9 model runs, 3 for each of the relu, sigmoid, and softmax activation functions in the first layer of the neural net. Each model run has the same value for `units1`.
-D. 9 model runs, one for each combination of activation function and units in the first layer.
+A. 3 model runs: 1 for each of the relu, sigmoid, and softmax activation functions in the first layer of the neural net. Each model run has the same value for `units1`.
+B. 3 model runs: 1 for each of the relu, sigmoid, and softmax activation functions in the first layer of the neural net. In the first layer, the relu model has 16 neurons, the sigmoid model has 32 neurons, and the softmax model has 64 runs.
+C. 9 model runs: 3 for each of the relu, sigmoid, and softmax activation functions in the first layer of the neural net. Each model run has the same value for `units1`.
+D. 9 model runs: one for each combination of activation function and units in the first layer.
 
 ```{r}
 answer5_map2("E")
