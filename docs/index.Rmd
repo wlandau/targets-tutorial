@@ -916,7 +916,7 @@ targets is nearing the end of its beta phase. I am about to submit it to rOpenSc
 ## The tutorial
 
 1. Sign up for a free account at <https://rstudio.cloud>.
-2. Log into <https://rstudio.cloud/project/1512447>.
+2. Log into <https://rstudio.cloud/project/1699460>.
 3. Work through the R notebooks in order.
 4. Optional: revisit the material again later at <https://github.com/wlandau/targets-tutorial>.
 
