@@ -312,15 +312,23 @@ D. No targets reran because the pipeline does not track changes to the R Markdow
 answer4_rmd("E")
 ```
 
-## Change a dependency target
+## Change an upstream dependency
 
-Open the file `data/churn.csv` and remove the last row in the dataset.
+Remove another line of `data/churn.csv`.
 
-```{r}
-edit_file("data/churn.csv", open = TRUE)
+```{r, message = FALSE}
+library(tidyverse)
+"data/churn.csv" %>%
+  read_csv(col_types = cols()) %>%
+  head(n = nrow(.) - 1) %>%
+  write_csv("data/churn.csv")
 ```
 
 Now, rerun the pipeline.
+
+```{r}
+tar_make()
+```
 
 Did `report_step` rerun? Why?
 
