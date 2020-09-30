@@ -3,6 +3,8 @@ title: "Custom functions for the customer churn workflow"
 output: html_document
 ---
 
+If you have not done so already, please view the slides at <https://wlandau.github.io/targets-tutorial> for an introduction to the `targets` R package.
+
 # About
 
 In this notebook, we will explore Keras models that predict customer behavior, and we will express our implementation in 7 custom functions. These functions are the essential building blocks of the `targets` workflows to come.
