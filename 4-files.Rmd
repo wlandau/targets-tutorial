@@ -137,7 +137,7 @@ Take a look at the new output file `cor.png`. You should see a plot of each vari
 read_csv("cor.csv", col_types = cols())
 ```
 
-Now, delete one of the files and rerun the pipeline.
+Now, delete one of the output files and rerun the pipeline.
 
 ```{r}
 tmp <- file.remove("cor.png")
