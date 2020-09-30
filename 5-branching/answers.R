@@ -68,7 +68,7 @@ answer5_fickle <- function(x) {
   choices(
     x,
     a = no("Yes, this choice saves time because it skips models when the iteration method of the summaries changes. However, it is not the only correct answer."),
-    b = no("In this situation, combining targets together would make your work more brittle (the monolithic target would invalidate often and rerun everything inside.)."),
+    b = no("In this situation, combining targets together would make your pipeline even more brittle (the monolithic target would invalidate often and rerun everything inside.)."),
     c = no("It is a good answer, but not the only one."),
     d = yes(),
     invalid()
