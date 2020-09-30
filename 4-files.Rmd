@@ -317,7 +317,6 @@ answer4_rmd("E")
 Remove another line of `data/churn.csv`.
 
 ```{r, message = FALSE}
-library(tidyverse)
 "data/churn.csv" %>%
   read_csv(col_types = cols()) %>%
   head(n = nrow(.) - 1) %>%
