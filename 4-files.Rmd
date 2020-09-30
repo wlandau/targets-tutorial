@@ -290,8 +290,9 @@ answer4_html("E")
 Add some prose anywhere in the body of `results.Rmd`.
 
 ```{r}
+library(usethis)
 edit_file("results.Rmd", open = TRUE)
-# Edit the file to add comments to explain the results.
+# Add comments in the report to explain the results.
 ```
 
 Now, rerun the pipeline.
