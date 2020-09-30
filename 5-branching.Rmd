@@ -85,7 +85,7 @@ Now, run the pipeline.
 tar_make()
 ```
 
-Which targets reran? Why?
+Which target(s) reran? Why?
 
 A. Just the new run with the softmax activation function. The rest of the targets were already up to date, so `tar_make()` skipped them.
 B. Just the new run with the sigmoid activation function. The rest of the targets were already up to date, so `tar_make()` skipped them.
