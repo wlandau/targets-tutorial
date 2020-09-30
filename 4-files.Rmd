@@ -226,7 +226,7 @@ answer4_deps1("E")
 At the bottom of the `report.Rmd`, add an active code chunk to print out the best model (`tar_read(best_model)`). Then, look at the graph again.
 
 ```{r}
-tar_visnetwork().
+tar_visnetwork()
 ```
 
 What changed? Why?
