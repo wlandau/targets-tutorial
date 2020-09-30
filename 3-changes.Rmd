@@ -127,7 +127,7 @@ Restart your R session.
 rstudioapi::restartSession()
 ```
 
-Reload the quiz.
+Restore the session.
 
 ```{r}
 source("R/quiz.R")
@@ -224,6 +224,7 @@ answer3_command("E")
 Open `3-changes/functions.R` for editing in the RStudio IDE. In the body of `define_model()`, change the `rate` argument to 0.2 in the first call to `layer_dropout()`.
 
 ```{r, eval = FALSE}
+# Do not run here.
 layer_dropout(rate = 0.2) # previously 0.1
 ```
 
