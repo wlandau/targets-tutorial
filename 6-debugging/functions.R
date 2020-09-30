@@ -46,55 +46,6 @@ prepare_recipe <- function(churn_data) {
     prep()
 }
 
-#' @title Customer churn Keras model definition.
-#' @description Define a Keras model for customer churn.
-#' @export
-#' @return An uncompiled Keras model object.
-#' @param churn_recipe A prepped `recipe object` for the churn data.
-#' @param units1 Positive integer, number of neurons in the
-#'   first layer of the deep neural network.
-#' @param units2 Positive integer, number of neurons in the
-#'   second layer of the deep neural network.
-#' @param act1 Character, name of the activation function in the first
-#'   layer of the deep neural network.
-#' @param act2 Character, name of the activation function in the second
-#'   layer of the deep neural network.
-#' @param act3 Character, name of the activation function in the third
-#'   layer of the deep neural network.
-#' @examples
-#' library(keras)
-#' library(recipes)
-#' library(rsample)
-#' library(tidyverse)
-#' churn_data <- split_data("data/churn.csv")
-#' churn_recipe <- prepare_recipe(churn_data)
-#' define_model(churn_recipe, 16, 16, "sigmoid", "sigmoid", "relu")
-define_model <- function(churn_recipe, units1, units2, act1, act2, act3) {
-  input_shape <- ncol(
-    juice(churn_recipe, all_predictors(), composition = "matrix")
-  )
-  out <- keras_model_sequential() %>%
-    layer_dense(
-      units = units1,
-      kernel_initializer = "uniform",
-      activation = act1,
-      input_shape = input_shape
-    ) %>%
-    layer_dropout(rate = 0.1) %>%
-    layer_dense(
-      units = units2,
-      kernel_initializer = "uniform",
-      activation = act2
-    ) %>%
-    layer_dropout(rate = 0.1) %>%
-    layer_dense(
-      units = 1,
-      kernel_initializer = "uniform",
-      activation = act3
-    )
-  out
-}
-
 #' @title Train a Keras model for customer churn.
 #' @description Predict customer churn on the training dataset.
 #' @export
@@ -117,9 +68,6 @@ train_model <- function(
   act3 = "sigmoid"
 ) {
   model <- define_model(churn_recipe, units1, units2, act1, act2, act3)
-  if (act1 == "sigmoid" && units1 == 32) {
-    stop("Error: cannot allocate vector of size 801.2 Mb", call. = FALSE)
-  }
   compile(
     model,
     optimizer = "adam",
@@ -259,4 +207,56 @@ retrain_run <- function(churn_run, churn_recipe) {
     churn_run$act2,
     churn_run$act3
   )
+}
+
+#' @title Customer churn Keras model definition.
+#' @description Define a Keras model for customer churn.
+#' @export
+#' @return An uncompiled Keras model object.
+#' @param churn_recipe A prepped `recipe object` for the churn data.
+#' @param units1 Positive integer, number of neurons in the
+#'   first layer of the deep neural network.
+#' @param units2 Positive integer, number of neurons in the
+#'   second layer of the deep neural network.
+#' @param act1 Character, name of the activation function in the first
+#'   layer of the deep neural network.
+#' @param act2 Character, name of the activation function in the second
+#'   layer of the deep neural network.
+#' @param act3 Character, name of the activation function in the third
+#'   layer of the deep neural network.
+#' @examples
+#' library(keras)
+#' library(recipes)
+#' library(rsample)
+#' library(tidyverse)
+#' churn_data <- split_data("data/churn.csv")
+#' churn_recipe <- prepare_recipe(churn_data)
+#' define_model(churn_recipe, 16, 16, "sigmoid", "sigmoid", "relu")
+define_model <- function(churn_recipe, units1, units2, act1, act2, act3) {
+  input_shape <- ncol(
+    juice(churn_recipe, all_predictors(), composition = "matrix")
+  )
+  out <- keras_model_sequential() %>%
+    layer_dense(
+      units = units1,
+      kernel_initializer = "uniform",
+      activation = act1,
+      input_shape = input_shape
+    ) %>%
+    layer_dropout(rate = 0.1) %>%
+    layer_dense(
+      units = units2,
+      kernel_initializer = "uniform",
+      activation = act2
+    ) %>%
+    layer_dropout(rate = 0.1) %>%
+    layer_dense(
+      units = 1,
+      kernel_initializer = "uniform",
+      activation = act3
+    )
+  if (act1 == "sigmoid" && units1 == 32) {
+    stop("Error: cannot allocate vector of size 801.2 Mb", call. = FALSE)
+  }
+  out
 }
