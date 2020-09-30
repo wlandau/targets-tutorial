@@ -161,12 +161,13 @@ Whenever a single target like `churn_cor` tracks multiple files or directories, 
  
 Literate programming is the practice of writing code and explanatory prose in the same source file. This R Markdown document is an example. All this time, we have been using literate programming on top of `targets`. But now, we will explore literate programming *within* a target.
 
-The R Markdown report in `4-files/results.Rmd` uses `tar_read()` and `tar_load()` to load targets we previously built, and it has prose to explain the meaning of each target so others can better understand our research.
+The R Markdown report in `4-files/results.Rmd` uses `tar_read()` and `tar_load()` to load targets we previously built, and it has prose to explain the results.
 
 Copy `4-files/results.Rmd` to the working directory and open the file for editing. Locate the calls to `tar_read()` and `tar_load()` in the active code chunks.
 
 ```{r}
 tmp <- file.copy("4-files/results.Rmd", "results.Rmd", overwrite = TRUE)
+library(usethis)
 edit_file("results.Rmd", open = TRUE)
 ```
 
