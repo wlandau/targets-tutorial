@@ -187,7 +187,7 @@ tar_edit()
 
 Sometimes, we may not want to aggregate all the branches into a vector or data frame. Set `iteration = "list"` in `tar_target()` for the `run` target.
 
-```{r}
+```{r, eval = FALSE}
 # Do not run here.
 tar_target(
   run,
@@ -222,19 +222,32 @@ answer5_alt_iteration("E")
 
 # Vector iteration
 
-Now, hopefully you see the magic behind the default `iteration = "vector"`. With vector iteration, `tar_read()` and targets downstream of `run` need only mention the symbol `run`, and all the branches will automatically come together in a friendlier data structure (for most use cases).
+Now, hopefully you see the magic behind the default `iteration = "vector"`. With vector iteration, `tar_read()` and targets downstream of `run` need only mention the symbol `run`, and all the branches will automatically come together in a friendlier data structure.
 
-Switch back to `iteration = "vector"` and rerun the pipeline.
+Switch back to `iteration = "vector"`.
+
+```{r, eval = FALSE}
+# Do not run here.
+tar_target(
+  run,
+  test_model(act1 = activations, units1 = units, churn_data, churn_recipe),
+  pattern = cross(activations, units),
+  iteration = "vector" # vector iteration
+)
+```
+
+Then, rerun the pipeline.
+
 ```{r}
 tar_make()
 ```
 
-Yes, I know we had to fit all 9 models all over again, and that took a lot of runtime. How do we save time if we need to switch back and forth frequently?
+Yes, I know we had to fit all 9 models all over again, and that took a lot of runtime. How do we save time if we need to frequently switch iteration methods?
 
-A. Split the `run` target into a model-fitting target that returns a Keras model and summarization step that computes the data frame with accuracy and hyperparameters.
+A. Split the `run` target into a model-fitting target that returns a Keras model and summarization step that computes the data frame with accuracy and hyperparameters. That way, the changes are absorbed by computationally cheaper targets.
 B. Combine all the `run` branches into a single target that fits all the models together.
 C. If your downstream code does not care how the model runs get aggregated, set `cue = tar_cue(iteration = FALSE)` in `tar_target()` so that the change in iteration method does not invalidate all the branches.
-D. Choices A and C.
+D. A or C.
 
 ```{r}
 answer5_fickle("E")
