@@ -9,7 +9,7 @@ In this chapter, you will test your knowledge and build a complete pipeline from
 
 1. Create a dataset and recipe target for each dataset in `data/`.
 2. Fit a model to each dataset for each activation function (relu, sigmoid, softmax) for a total of 9 models.
-3. Identify the highest-accuracy model. (No need to retrain it.)
+3. Identify the highest-accuracy model. (No need to retrain it at the end.)
 
 Tips:
 
