@@ -161,19 +161,22 @@ Whenever a single target like `churn_cor` tracks multiple files or directories, 
  
 Literate programming is the practice of writing code and explanatory prose in the same source file. This R Markdown document is an example. All this time, we have been using literate programming on top of `targets`. But now, we will explore literate programming *within* a target.
 
-The R Markdown report in `4-files/results.Rmd` uses `tar_read()` and `tar_load()` to load targets we previously built, and it has prose to explain the results.
+## R Markdown on its own
 
-Copy `4-files/results.Rmd` to the working directory and open the file for editing. Locate the calls to `tar_read()` and `tar_load()` in the active code chunks.
+Let's pull an example R Markdown file.
 
 ```{r}
 tmp <- file.copy("4-files/results.Rmd", "results.Rmd", overwrite = TRUE)
+```
+
+Open `results.Rmd` for editing.
+
+```{r}
 library(usethis)
 edit_file("results.Rmd", open = TRUE)
 ```
 
-## R Markdown on its own
-
-Because we ran the pipeline before, our targets live in the `_targets/` data store. Switch back to `results.Rmd` in the RStudio IDE  and click the `knit` button to generate the output file `results.html`. Then, view `results.html` in the IDE or a web browser. Alternatively, you can render and view the report with the following code.
+Notice the calls to `tar_load()` and `tar_read()` in active the code chunks. `results.Rmd`. On its own, this report leverages the results of previous targets.
 
 ```{r}
 library(rmarkdown)
