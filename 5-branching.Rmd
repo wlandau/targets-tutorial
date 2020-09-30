@@ -205,7 +205,7 @@ tar_make()
 
 Take a look at the results now.
 
-```{r}
+```{r, paged.print = FALSE}
 tar_read(run)
 ```
 
