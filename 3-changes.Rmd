@@ -238,7 +238,7 @@ Which targets ran? Why?
 
 A. None. No target directly calls `define_model()`.
 B. None. The model definition did not change much.
-C. `run_relu`, `run_sigmoid`, `run_softmax`, `best_run`, and possibly `best_model`.  `best_model` might not run because it only depends on `best_model`.
+C. `run_relu`, `run_sigmoid`, `run_softmax`, `best_run`, and possibly `best_model`.  `best_model` might not run because it only depends on `best_run`.
 D. `run_relu`, `run_sigmoid`, `run_softmax`, `best_run`, and `best_model`.
 
 ```{r}
