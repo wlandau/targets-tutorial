@@ -88,6 +88,8 @@ In `targets`, we configure output files the exact same way. The only difference 
 
 As an example, open `_targets.R` and create a new file targets `churn_cor`, which saves a CSV file and a plot of correlations (the correlation of each covariate with customer churn in the preprocessed testing data). Functions `compute_cor()` and `plot_cor()` in `4-files/functions.R` do most of the work.
 
+Open `_targets.R` for editing.
+
 ```{r}
 tar_edit()
 ```
