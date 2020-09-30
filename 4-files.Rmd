@@ -186,17 +186,16 @@ browseURL("results.html")
 
 ## R Markdown inside a target
 
-For the sake of convenience and reproducibility, we can render this report inside a target in the pipeline. That way, `targets` will automatically regenerate `results.html` whenever its dependencies change. The `tar_render()` function from the `tarchetpyes` package is the correct way to include an R Markdown report with dependencies. It automatically creates a target that reproducibly tracks the R Markdown source file, the rendered output file, and the target dependencies mentioned with `tar_load()` and `tar_read()`.
-
-Open `_targets.R` for editing.
+We can put `results.Rmd` in a target so it automatically re-renders when its dependencies change. Open `_targets.R` for editing.
 
 ```{r}
 tar_edit()
 ```
 
-Write `library(tarchetypes)` at the very top, and write `tar_render(report_step, "results.Rmd")` as a target in the pipeline. Sketch:
+Write `library(tarchetypes)` at the very top, and write `tar_render(report_step, "results.Rmd")` as a target in the pipeline.
 
 ```{r, eval = FALSE}
+# Do not run here.
 library(tarchetypes)
 # Existing setup code goes here.
 tar_pipeline(
@@ -205,17 +204,15 @@ tar_pipeline(
 )
 ```
 
-To check your work, take a look at the dependency graph.
+`tar_render()` analyzes `report.Rmd` and constructs a target that depends on the report's `tar_read()`/`tar_load()` dependencies. To see this for yourself, take a look at the dependency graph.
 
 ```{r}
 tar_visnetwork()
 ```
 
-What are the dependencies of the `report_step` target?
+Which targets does `report_step` depend on? Why?
 
-Which target(s) does `results.Rmd` depend on? Why?
-
-A. None. `results.Rmd` is not a target or a pipeline.
+A. None. No upstream targets are mentioned in the target's command.
 B. `run_relu` because the report calls `tar_read(run_relu)` in an active code chunk.
 C. `run_sigmoid` because the report calls `tar_load(run_sigmoid)` in an active code chunk.
 D. `run_relu` and `run_sigmoid` because the report calls `tar_read(run_relu)` and `tar_load(run_sigmoid)` in active code chunks.
