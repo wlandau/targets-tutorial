@@ -173,7 +173,7 @@ tar_outdated()
 
 # List iteration
 
-For this section, let's use just the first part of our crossed pipeline from earlier. Copy it over to `_targets.R`
+For this section, let's use just the first part of our crossed pipeline from earlier. Copy it over to `_targets.R`.
 
 ```{r}
 tmp <- file.copy("5-branching/iteration_targets.R", "_targets.R", overwrite = TRUE)
