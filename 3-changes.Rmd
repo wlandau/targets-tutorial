@@ -183,9 +183,17 @@ answer3_data("E")
 
 # Change a command.
 
-Open `_targets.R` for editing in the RStudio IDE. In the command of target `best_run`, change the function to `rbind()` to the preferred `bind_rows()` from `dplyr`. The target definition should look like this:
+Open `_targets.R` for editing in the RStudio IDE.
+
+```{r}
+library(targets)
+tar_edit()
+```
+
+In the command of target `best_run`, change the function to `rbind()` to the preferred `bind_rows()` from `dplyr`. The target definition should look like this:
 
 ```{r, eval = FALSE}
+# Do not run here.
 tar_target(
   best_run,
   bind_rows(run_relu, run_sigmoid, run_softmax) %>%
