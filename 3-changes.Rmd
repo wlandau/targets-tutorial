@@ -260,6 +260,12 @@ define_model <- function(churn_recipe, units1, units2, act1, act2, act3) {
 }
 ```
 
+Then, run the pipeline again.
+
+```{r}
+tar_make()
+```
+
 Which targets ran? Why?
 
 A. `run_relu`, `run_sigmoid`, `run_softmax`, `best_run`, and `best_model`. The `define_model()` function changed, which affects all these targets.
