@@ -5,7 +5,7 @@ output: html_notebook
 
 # About
 
-In this chapter, we will explore the primary motivation behind the `targets` package e. When we modify the code and data of an existing workflow, `targets` automatically detects the changes, and `tar_make()` only reruns the affected targets, skipping all targets that are already up to date. This behavior is the best feature of `targets`, and it saves tons of time when a project is still under development and rapidly changing.
+In this chapter, we will put `targets` to the test. We will modify code and data and and watch `tar_make()` run the minimum amount of computation required to bring the results back up to date. This saves time when an ambitious project is still under development and rapidly changing.
 
 # Instructions
 
