@@ -55,6 +55,7 @@ file.copy("2-pipelines/initial_targets.R", "_targets.R", overwrite = TRUE)
 Now, open `_targets.R` in the RStudio IDE for editing. You will manually make changes to `_targets.R` throughout the entire chapter.
 
 ```{r}
+library(targets)
 tar_edit()
 ```
 
