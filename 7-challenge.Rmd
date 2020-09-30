@@ -13,7 +13,7 @@ In this chapter, you will test your knowledge and build a complete pipeline from
 
 Tips:
 
-1. As you write code, remember the incremental development strategy discussed in `2-pipelines.Rmd`. Remember to check the graph and the manifest early and often.
+1. As you write code, remember the incremental development strategy discussed in `2-pipelines.Rmd`: write the first targets, then explore them, then add new targets gradually. Remember to check the graph and the manifest early and often.
 2. Formal branching, e.g. `tar_target(pattern = map(...))` will help in some places, but not others. Throughout this short course, sometimes we branched over hyperparameters, while other times we branched over datasets. If you try to use branching everywhere, you risk overcomplicating the problem. And if you use branching nowhere, you will need to type out every single model by hand, which is not the recommended solution here.
 3. This chapter includes a modified set of functions in `7-challenge/functions.R`. `test_model()` now omits some hyperparameters but includes the sizes of the training and testing datasets. Here is an example collection of model runs.
 
