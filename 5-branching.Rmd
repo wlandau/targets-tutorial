@@ -348,7 +348,7 @@ This pipeline uses the `tar_files()` helper from the `tarchetypes` package. Here
 tar_manifest()
 ```
 
-We can now branch over `churn_file`. Add two targets to the pipeline:
+We can now branch over `churn_file`, which actually tracks multiple files (one per branch). Add two targets to the pipeline:
 
 1. A target named `churn_data` that maps over `churn_file` and has the command `split_data(churn_file)`.
 2. A target named `churn_recipe` that maps over `churn_data` and has the command ` prepare_recipe(churn_data)`. 
