@@ -100,7 +100,7 @@ answer5_map_runs("E")
 
 1. Define a new target called `units` which returns `c(16, 32, 64)`.
 2. For the `run` target, change `map(activations)` to `map(activations, units)`.
-3. Change the command of `run` to `test_model(act1 = activations, units1 = untis, churn_data, churn_recipe)`
+3. Change the command of `run` to `test_model(act1 = activations, units1 = units, churn_data, churn_recipe)`
 
 Now, run the pipeline again.
 
