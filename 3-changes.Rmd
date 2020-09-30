@@ -125,6 +125,11 @@ Restart your R session.
 
 ```{r}
 rstudioapi::restartSession()
+```
+
+Reload the quiz.
+
+```{r}
 source("R/quiz.R")
 source("3-changes/answers.R")
 ```
