@@ -5,7 +5,7 @@ output: html_document
 
 # About
 
-`targets` can watch input files, output files, and literate programming documents for changes. This chapter explores how to configure a target to automatically run when a file changes.
+`targets` can reproducibly watch input files, output files, and literate programming documents. This chapter explores how to configure a target to automatically run when a file changes.
 
 # Setup
 
