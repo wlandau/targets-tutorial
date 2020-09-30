@@ -250,6 +250,7 @@ answer3_function("E")
 Open `3-changes/functions.R` for editing in the RStudio IDE. Add a comment in the body of `define_model()` and change nothing else.
 
 ```{r, eval = FALSE}
+# Do not run here.
 define_model <- function(churn_recipe, units1, units2, act1, act2, act3) {
   # This is an arbitrary comment.
   input_shape <- ncol(
