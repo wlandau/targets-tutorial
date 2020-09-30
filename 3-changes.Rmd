@@ -89,7 +89,7 @@ tar_load(best_model)
 print(best_model)
 ```
 
-What did you see?
+What do you see?
 
 A. A function.
 B. A trained Keras model.
