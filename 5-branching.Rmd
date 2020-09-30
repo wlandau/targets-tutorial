@@ -255,7 +255,7 @@ answer5_fickle("E")
 
 # Group iteration
 
-`targets` lets you dynamically iterate over arbitrary subsets of a data frame. It's like `dplyr::group_by()`, but with branches. The `tar_group()` function is the key. It creates a special `tar_group` column explicitly indicate group membership.
+`targets` lets you dynamically iterate over arbitrary subsets of a data frame. It's like `dplyr::group_by()`, but with branches. The `tar_group()` function is the key. It looks at your `dplyr` groups and creates a special `tar_group` column to explicitly indicate group membership.
 
 ```{r, message = FALSE}
 library(tidyverse)
