@@ -9,7 +9,7 @@ In this chapter, we will put `targets` to the test. We will modify code and data
 
 # Instructions
 
-Throughout this chapter, you will test your understanding with quiz questions. Supply your choices to the `answer3_*()` functions when you come to them. Run the code chunk below to set up the quizzes, but try not to peak in advance. It is okay to answer incorrectly at first.
+Throughout this chapter, you will test your understanding with quiz questions. Supply your choices to the `answer3_*()` functions. Run the code chunk below to set up the quiz questions. Please try not to peak in advance. It is okay to answer incorrectly at first.
 
 ```{r}
 source("R/quiz.R")
