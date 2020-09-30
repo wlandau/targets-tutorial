@@ -16,7 +16,7 @@ source("R/quiz.R")
 source("3-changes/answers.R")
 ```
 
-Let's clear out the old `_targets/` data store if it exists.
+Let's clear out the old `_targets/` data store.
 
 ```{r}
 library(targets)
