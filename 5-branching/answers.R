@@ -31,6 +31,17 @@ answer5_map2 <- function(x) {
   )
 }
 
+answer5_cross_reruns <- function(x) {
+  choices(
+    x,
+    a = no("Some old targets from map() still carry over."),
+    b = no("cross() created new and thus outdated targets."),
+    c = yes(),
+    d = no(),
+    invalid()
+  )
+}
+
 answer5_cross <- function(x) {
   choices(
     x,

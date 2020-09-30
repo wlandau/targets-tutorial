@@ -133,6 +133,17 @@ answer5_map2("E")
 tar_make()
 ```
 
+In that call to `tar_make()`, how many `run_*` branches executed?
+
+A. All of them, because we changed the branching structure.
+B. None, because all targets stayed up to date.
+C. The 3 branches from the earlier `map()` call were still up to date, so they were skipped. `cross()` added 6 additional targets to the pipeline, and those ran for the first time.
+D. The 9 branches from the earlier `map()` call were still up to date, so they were skipped. `cross()` added 3 additional targets to the pipeline, and those ran for the first time.
+
+```{r}
+answer5_cross_reruns("E")
+```
+
 View the results.
 
 ```{r}
@@ -148,12 +159,6 @@ D. 9 model runs, one for each combination of activation function and units in th
 
 ```{r}
 answer5_cross("E")
-```
-
-That call to `tar_make()` took a long time because we have so many models now. But whenever our targets are already up to date, we can skip all that time!
-
-```{r}
-tar_make() # Runs much faster now!
 ```
 
 # List iteration
