@@ -266,8 +266,9 @@ tar_read(run) %>%
 
 Then, any pattern that branches over it will iterate over those groups. Open `_targets.R` and try it out yourself:
 
-1. Define a new target called `grouped_run` with the command `run %>% group_by(act1) %>% tar_group()`. Set `iteration = "group"` in `tar_target()`. Do not `map()` over `run`. Thanks to vector iteration, `run` will automatically appear to `grouped_run` as a single data frame with our 9 model runs.
-2. Define a new branching target (i.e. pattern) called `nrows` which maps over `grouped_run` and counts the number of rows.
+1. Define a new target called `grouped_run` with the command `run %>% group_by(act1) %>% tar_group()`.
+2. Set `iteration = "group"` in `tar_target()` for `grouped_run`. Do not `map()` over `run`. Thanks to vector iteration, `run` will automatically appear to `grouped_run` as a single data frame with our 9 model runs.
+3. Define a new branching target (i.e. pattern) called `nrows` which maps over `grouped_run` and counts the number of rows.
 
 Check the graph.
 
