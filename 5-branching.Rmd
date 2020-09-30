@@ -62,7 +62,7 @@ To read the return values of branches, you can use `tar_read()` and `tar_load()`
 tar_read(run)
 ```
 
-Above, we see a data frame with two rows, one from each branch. By default, `targets` uses `vctrs::vec_c()` to aggregate the results from branches. `vctrs` is smart enough to detect that the branches are really data frames, and it automatically binds the rows into a single data frame..
+Above, we see a data frame with two rows, one from each branch. By default, `targets` uses `vctrs::vec_c()` to aggregate the results from branches. `vctrs` is smart enough to detect that the branches are data frames, and it automatically binds the rows into a single data frame.
 
 You can select individual branches to read with the `branches` argument.
 
