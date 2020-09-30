@@ -185,7 +185,19 @@ Take a look at the new pipeline.
 tar_edit()
 ```
 
-Sometimes, we may not want to aggregate all the branches into a vector or data frame. Set `iteration = "list"` in `tar_target()` for the `run` target. Then, run the pipeline.
+Sometimes, we may not want to aggregate all the branches into a vector or data frame. Set `iteration = "list"` in `tar_target()` for the `run` target.
+
+```{r}
+# Do not run here.
+tar_target(
+  run,
+  test_model(act1 = activations, units1 = units, churn_data, churn_recipe),
+  pattern = cross(activations, units),
+  iteration = "list" # list iteration
+)
+```
+
+Then, run the pipeline.
 
 ```{r}
 tar_make()
