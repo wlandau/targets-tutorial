@@ -105,7 +105,7 @@ test_model(act1 = activations, units1 = units, churn_data, churn_recipe)
 
 # Your turn
 
-Now go find that error and fix it! You have completed the exercise when `tar_make()` runs without error. Once you are done, remove the workspace files using `tar_undebug()`. This is good practice because workspace files can get quite large.
+Now go find that error and fix it! You may have to explore the `6-debugging/functions.R` file, which is where `test_model()` lives. You have completed the exercise when `tar_make()` runs without error. Once you are done, remove the workspace files using `tar_undebug()`. This is good practice because workspace files can get quite large.
 
 # Tip: interactive debugging
 
@@ -132,4 +132,4 @@ Then, restart R and run `tar_make(callr_function = NULL)`. `targets` will drop y
 tar_make(callr_function = NULL)
 ```
 
-Some situations may require you to debug this way instead of `error = "save"`. For example, if some of your target's dependencies cannot be serialized with `qs::qsave()` (e.g. Keras model objects) then the workspace cannot be saved properly.
+Some situations may require you to debug this way instead of `error = "save"`. For example, if some of your target's dependencies cannot be serialized with `qs::qsave()` (e.g. Keras model objects) then the workspace cannot be saved properly with `tar_option_set(error = "save")`.
