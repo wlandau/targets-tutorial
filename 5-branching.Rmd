@@ -161,6 +161,16 @@ D. 9 model runs, one for each combination of activation function and units in th
 answer5_cross("E")
 ```
 
+All targets should be up to date now.
+
+```{r}
+tar_make()
+```
+
+```{r}
+tar_outdated()
+```
+
 # List iteration
 
 For this section, let's use just the first part of our crossed pipeline from earlier. Copy it over to `_targets.R`
