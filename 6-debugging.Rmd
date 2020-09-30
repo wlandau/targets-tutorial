@@ -105,7 +105,13 @@ test_model(act1 = activations, units1 = units, churn_data, churn_recipe)
 
 # Your turn
 
-Now go find that error and fix it! You may have to explore the `6-debugging/functions.R` file, which is where `test_model()` lives. You have completed the exercise when `tar_make()` runs without error. Once you are done, remove the workspace files using `tar_undebug()`. This is good practice because workspace files can get quite large.
+Now go find that error and fix it! You may have to explore the `6-debugging/functions.R` file, which is where `test_model()` lives.
+
+```{r}
+usethis::edit_file("6-debugging/functions.R")
+```
+
+You have completed the exercise when `tar_make()` runs without error. Once you are done, remove the workspace files using `tar_undebug()`. This is good practice because workspace files can get quite large.
 
 # Tip: interactive debugging
 
