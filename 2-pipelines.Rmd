@@ -113,7 +113,7 @@ tar_meta(names = starts_with("churn"), fields = path) %>%
   mutate(path = unlist(path))
 ```
 
-But rather than access the files in `_targets/` directly, it is good practice to go through user-side functions in `targets`.
+Other user-side functions read the actual data objects.
 
 ```{r}
 tar_load(churn_file)
@@ -127,15 +127,6 @@ tar_read(churn_data)
 
 ```{r}
 tar_read(churn_recipe)
-```
-
-```{r}
-meta <- tar_meta(starts_with("churn_"), fields = c("data", "format", "path"))
-meta
-```
-
-```{r}
-as.character(meta$path)
 ```
 
 # Build up the pipeline.
