@@ -1,3 +1,12 @@
+root <- rprojroot::find_rstudio_root_file()
+lines <- c(
+  "TAR_SCRIPT_ASK=false",
+  "TF_CPP_MIN_LOG_LEVEL=10000",
+  paste0("CONDA=", file.path(root, "miniconda", "bin", "conda")),
+  paste0("WORKON_HOME=", file.path(root, "virtualenvs")),
+  paste0("RETICULATE_PYTHON=", file.path(root, "miniconda", "bin", "python"))
+)
+writeLines(lines, file.path(root, ".Renviron"))
 install.packages(c(
   "corrr",
   "fst",
@@ -16,16 +25,7 @@ install.packages(c(
 remotes::install_github("rstudio/reticulate")
 remotes::install_github("wlandau/targets")
 remotes::install_github("wlandau/tarchetypes")
-root <- rprojroot::find_rstudio_root_file()
 reticulate::install_miniconda(file.path(root, "miniconda"))
-lines <- c(
-  "TAR_SCRIPT_ASK=false",
-  "TF_CPP_MIN_LOG_LEVEL=10000",
-  paste0("CONDA=", file.path(root, "miniconda", "bin", "conda")),
-  paste0("WORKON_HOME=", file.path(root, "virtualenvs")),
-  paste0("RETICULATE_PYTHON=", file.path(root, "miniconda", "bin", "python"))
-)
-writeLines(lines, file.path(root, ".Renviron"))
 rstudioapi::restartSession()
 reticulate::virtualenv_create(
   "r-reticulate",
