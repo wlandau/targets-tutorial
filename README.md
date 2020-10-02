@@ -40,7 +40,7 @@ Challenge | [`7-challenge.Rmd`](https://github.com/wlandau/targets-tutorial/blob
 
 This schedule budgets time for a 4-hour iteration of the workshop (8 AM to noon).
 
-| Topic                        | Format     | Breakout rooms | Minutes | Start | End   | Materials                                                               |
+| Topic                        | Format     | [Breakout rooms](https://blog.zoom.us/using-zoom-breakout-rooms/) | Minutes | Start | End   | Materials                                                               |
 |------------------------------|------------|----------------|---------|-------|-------|-------------------------------------------------------------------------|
 | Intro presentation           | lecture    | no             | 20      | 8:00  | 8:20  | [slides](https://wlandau.github.io/targets-tutorial)                             |
 | Q&A                          | discussion | no             | 10      | 8:20  | 8:30  | [slides](https://wlandau.github.io/targets-tutorial)                             |
