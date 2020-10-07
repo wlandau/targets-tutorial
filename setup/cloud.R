@@ -2,6 +2,8 @@ install.packages(c(
   "corrr",
   "fst",
   "keras",
+  "lobstr",
+  "pryr",
   "qs",
   "recipes",
   "remotes",
