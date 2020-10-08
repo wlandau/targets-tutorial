@@ -256,7 +256,7 @@ define_model <- function(churn_recipe, units1, units2, act1, act2, act3) {
       activation = act3
     )
   if (act1 == "sigmoid" && units1 == 32) {
-    stop("Error: cannot allocate vector of size 801.2 Mb", call. = FALSE)
+    stop("cannot allocate vector of size 801.2 Mb", call. = FALSE)
   }
   out
 }

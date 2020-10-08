@@ -15,7 +15,13 @@ tar_destroy()
 Copy the starting `_targets.R` file into the working directory.
 
 ```{r}
-tmp <- file.copy("6-debugging/initial_targets.R", "_targets.R", overwrite = TRUE)
+tmp <- file.copy("5-debugging/initial_targets.R", "_targets.R", overwrite = TRUE)
+```
+
+Open this file for editing and verify that `source("5-debugging/functions.R")` appears near the top.
+
+```{r}
+tar_edit()
 ```
 
 # Problem
@@ -105,10 +111,10 @@ test_model(act1 = activations, units1 = units, churn_data, churn_recipe)
 
 # Your turn
 
-Now go find that error and fix it! You may have to explore the `6-debugging/functions.R` file, which is where `test_model()` lives.
+Now go find that error and fix it! You may have to explore the `5-debugging/functions.R` file, which is where `test_model()` lives.
 
 ```{r}
-usethis::edit_file("6-debugging/functions.R")
+usethis::edit_file("5-debugging/functions.R")
 ```
 
 You have completed the exercise when `tar_make()` runs without error. Once you are done, remove the workspace files using `tar_undebug()`. This is good practice because workspace files can get quite large.
@@ -132,9 +138,11 @@ As an alternative technique, you can debug interactively while `tar_make()` is a
 tar_option_set(debug = "run_________", cue = tar_cue(mode = "never"))
 ```
 
-Then, restart R and run `tar_make(callr_function = NULL)`. `targets` will drop you into an interactive debugger at the errored target.
+Then, restart R and run `tar_make(callr_function = NULL)` in the R console (not in a chunk in this notebook). `targets` will drop you into an interactive debugger at the errored target. 
 
 ```{r}
+# Copy and paste directly into the console.
+# Do not run in this notebook. If you do, it will hang.
 tar_make(callr_function = NULL)
 ```
 

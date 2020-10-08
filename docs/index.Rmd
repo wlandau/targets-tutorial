@@ -926,8 +926,8 @@ Functions | [`1-functions.Rmd`](https://github.com/wlandau/targets-tutorial/blob
 Pipelines | [`2-pipelines.Rmd`](https://github.com/wlandau/targets-tutorial/blob/master/2-pipelines.Rmd)
 Changes | [`3-changes.Rmd`](https://github.com/wlandau/targets-tutorial/blob/master/3-changes.Rmd)
 Files | [`4-files.Rmd`](https://github.com/wlandau/targets-tutorial/blob/master/4-files.Rmd)
-Branching | [`5-branching.Rmd`](https://github.com/wlandau/targets-tutorial/blob/master/5-branching.Rmd)
-Debugging | [`6-debugging.Rmd`](https://github.com/wlandau/targets-tutorial/blob/master/6-debugging.Rmd)
+Debugging | [`5-debugging.Rmd`](https://github.com/wlandau/targets-tutorial/blob/master/5-debugging.Rmd)
+Branching | [`6-branching.Rmd`](https://github.com/wlandau/targets-tutorial/blob/master/6-branching.Rmd)
 Challenge | [`7-challenge.Rmd`](https://github.com/wlandau/targets-tutorial/blob/master/7-challenge.Rmd)
 
 ```{r, include = FALSE}

@@ -19,14 +19,14 @@ tar_destroy()
 Copy the starting `_targets.R` file into the working directory.
 
 ```{r}
-tmp <- file.copy("5-branching/initial_targets.R", "_targets.R", overwrite = TRUE)
+tmp <- file.copy("6-branching/initial_targets.R", "_targets.R", overwrite = TRUE)
 ```
 
 Also load the quiz questions. Try not to peek in advance.
 
 ```{r}
 source("R/quiz.R")
-source("5-branching/answers.R")
+source("6-branching/answers.R")
 ```
 
 # Branching with map()
@@ -176,7 +176,7 @@ tar_outdated()
 For this section, let's use just the first part of our crossed pipeline from earlier. Copy it over to `_targets.R`.
 
 ```{r}
-tmp <- file.copy("5-branching/iteration_targets.R", "_targets.R", overwrite = TRUE)
+tmp <- file.copy("6-branching/iteration_targets.R", "_targets.R", overwrite = TRUE)
 ```
 
 Take a look at the new pipeline.
@@ -279,7 +279,7 @@ tar_visnetwork()
 It should look like this:
 
 ```{r}
-readRDS("5-branching/group_graph.rds")
+readRDS("6-branching/group_graph.rds")
 ```
 
 Also check the manifest.
@@ -291,7 +291,7 @@ tar_manifest()
 It should look like this:
 
 ```{r, paged.print = FALSE}
-readRDS("5-branching/group_manifest.rds")
+readRDS("6-branching/group_manifest.rds")
 ```
 
 Then, run the pipeline.
@@ -333,7 +333,7 @@ answer5_nrows("E")
 In `targets`, it is possible to branch over multiple data files. To see this, let's switch to a new pipeline.
 
 ```{r}
-tmp <- file.copy("5-branching/files_targets.R", "_targets.R", overwrite = TRUE)
+tmp <- file.copy("6-branching/files_targets.R", "_targets.R", overwrite = TRUE)
 ```
 
 Take a look at the new `_targets.R`.
@@ -362,7 +362,7 @@ tar_glimpse()
 It should look like this:
 
 ```{r}
-readRDS("5-branching/files_graph.rds")
+readRDS("6-branching/files_graph.rds")
 ```
 
 Then run `tar_make()`.
