@@ -16,7 +16,7 @@
 #' split_data("data/churn.csv")
 split_data <- function(churn_file) {
   read_csv(churn_file, col_types = cols()) %>%
-    initial_split(prop = 0.3) # from the rsample package
+    initial_split(prop = 0.7) # from the rsample package
 }
 
 #' @title Create a preprocessing recipe.

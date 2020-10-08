@@ -257,7 +257,7 @@ The most obvious use for functions is as a way to avoid copies of repeated code 
 ```r
 split_data &lt;- function(churn_file) {
   read_csv(churn_file, col_types = cols()) %&gt;%
-    initial_split(prop = 0.3)
+    initial_split(prop = 0.7)
 }
 
 prepare_recipe &lt;- function(churn_data) {

@@ -275,7 +275,7 @@ The most obvious use for functions is as a way to avoid copies of repeated code 
 ```{r, eval = FALSE}
 split_data <- function(churn_file) {
   read_csv(churn_file, col_types = cols()) %>%
-    initial_split(prop = 0.3)
+    initial_split(prop = 0.7)
 }
 
 prepare_recipe <- function(churn_data) {
