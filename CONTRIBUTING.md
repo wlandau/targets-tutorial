@@ -4,7 +4,7 @@ Development is a community effort, and we welcome participation.
 
 ## Code of Conduct
 
-By participating in this project, you agree to abide by the [code of conduct](https://github.com/wlandau/targets-tutorial/blob/master/CODE_OF_CONDUCT.md).
+By participating in this project, you agree to abide by the [code of conduct](https://github.com/wlandau/targets-tutorial/blob/main/CODE_OF_CONDUCT.md).
 
 ## Issues
 
@@ -37,6 +37,6 @@ Please also follow these additional guidelines.
 * Respect the architecture and reasoning of the project.
 * If possible, keep contributions small enough to easily review manually. It is okay to split up your work into multiple pull requests.
 * Format your code according to the [tidyverse style guide](https://style.tidyverse.org/).
-* Describe your contribution in the project's [`NEWS.md`](https://github.com/wlandau/targets-tutorial/blob/master/NEWS.md) file. Be sure to mention relevent GitHub issue numbers and your GitHub name as done in existing news entries.
+* Describe your contribution in the project's [`NEWS.md`](https://github.com/wlandau/targets-tutorial/blob/main/NEWS.md) file. Be sure to mention relevent GitHub issue numbers and your GitHub name as done in existing news entries.
 * If your description is substantial, add yourself as an author or contributor in `AUTHORS.md`.
 
