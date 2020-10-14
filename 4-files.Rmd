@@ -339,3 +339,39 @@ D. Yes. If a single target imports a data file, all targets in the pipeline reru
 ```{r}
 answer4_rmd_data("E")
 ```
+
+## Bonus: parameterized R Markdown
+
+[`tarchetypes::tar_render()`](https://wlandau.github.io/tarchetypes/reference/tar_render.html) supports [parameterized R Markdown](https://rmarkdown.rstudio.com/developer_parameterized_reports.html), and parameters can be values of upstream targets in the pipeline. In the following pipeline:
+
+```{r, eval = FALSE}
+tar_pipeline(
+  tar_target(data, data.frame(x = seq_len(26), y = letters))
+  tar_render(report, "report.Rmd", params = list(your_param = data))
+)
+```
+
+the `report` target will run:
+
+```{r, eval = FALSE}
+rmarkdown::render("report.Rmd", params = list(your_param = your_target))
+```
+
+where `report.Rmd` has the following YAML front matter:
+
+```{yaml}
+---
+title: report
+output_format: html_document
+params:
+  your_param: "default value"
+---
+```
+
+and the following code chunk:
+
+```{r, eval = FALSE}
+print(params$your_param)
+```
+
+See [these examples](https://wlandau.github.io/tarchetypes/reference/tar_render.html#examples) for a demonstration.
