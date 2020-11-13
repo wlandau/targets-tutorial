@@ -50,7 +50,7 @@ We need more information, so we invoke `tar_make()` with interactive debugging. 
 tar_edit()
 ```
 
-In `tar_option_set()`, set `error` to `"save"`. Next time a target errors out, `targets` will save a workspace image file in `_targets/workspaces/`.
+In `tar_option_set()`, set `error` to `"workspace"`. Next time a target errors out, `targets` will save a workspace image file in `_targets/workspaces/`. (Alternatively, you could set `tar_option_set(workspace = c("target1", "target2"))` to always save workspaces for a specific set of targets.)
 
 ```{r, eval = FALSE}
 # Do not run here.
@@ -63,7 +63,7 @@ tar_option_set(
     "tidyverse",
     "yardstick"
   ),
-  error = "save"
+  error = "workspace"
 )
 ```
 
@@ -146,4 +146,4 @@ Then, restart R and run `tar_make(callr_function = NULL)` in the R console (not 
 tar_make(callr_function = NULL)
 ```
 
-Some situations may require you to debug this way instead of `error = "save"`. For example, this technique allows you to debug that did not necessarily throw an error. In addition, if some of your target's dependencies cannot be serialized with `qs::qsave()` (e.g. Keras model objects) then the workspace cannot be saved properly with `tar_option_set(error = "save")`.
+Some situations may require you to debug this way instead of `error = "workspace"`. For example, this technique allows you to debug that did not necessarily throw an error. In addition, if some of your target's dependencies cannot be serialized with `qs::qsave()` (e.g. Keras model objects) then the workspace cannot be saved properly with `tar_option_set(error = "workspace")`.
