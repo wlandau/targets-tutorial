@@ -334,7 +334,7 @@ And at this point, you have a good clean function-oriented project. Even if you 
 
 ---
 
-## Build up your workflow as a pipeline of targets.
+## Build up your workflow as a list of targets.
 
 
 ```r
@@ -342,7 +342,7 @@ And at this point, you have a good clean function-oriented project. Even if you 
 library(targets)
 source("R/functions.R")
 tar_option_set(packages = c("keras", "tidyverse", "rsample", "recipes", "yardstick"))
-tar_pipeline(
+list(
   tar_target(churn_file, "data/customer_churn.csv", format = "file"),
   tar_target(churn_data, split_data(churn_file)),
   tar_target(churn_recipe, prepare_recipe(churn_data))
@@ -355,7 +355,7 @@ tar_pipeline(
 
 The purpose of _targets.R is to set up the project at a high level. It loads the packages required to define the pipeline, it loads your custom functions and global objects, it sets high-level options such as the packages the targets are going to need, and it defines the pipeline at the very end.
 
-Inside the tar_pipeline() function, you list out objects called targets. Each target is an individual step in the workflow. It has an informative name like "sim" or "patients", and it has a R command that invokes your custom functions and returns a value.
+At the bottom of _targets.R, you list out objects called targets. Each target is an individual step in the workflow. It has an informative name like "sim" or "patients", and it has a R command that invokes your custom functions and returns a value.
 
 ---
 
@@ -364,6 +364,16 @@ Inside the tar_pipeline() function, you list out objects called targets. Each ta
 
 ```r
 tar_manifest(fields = c("name", "command"))
+#&gt; 
+-
+
+\
+
+|
+
+/
+
+ 
 #&gt; # A tibble: 3 x 2
 #&gt;   name         command                      
 #&gt;   &lt;chr&gt;        &lt;chr&gt;                        
@@ -461,7 +471,7 @@ This is part of an iterative process for building up a pipeline. We add a couple
 library(targets)
 source("R/functions.R")
 tar_option_set(packages = c("keras", "tidyverse", "rsample", "recipes", "yardstick"))
-tar_pipeline(
+list(
   tar_target(churn_file, "data/customer_churn.csv", format = "file"),
   tar_target(churn_data, split_data(churn_file)),
   tar_target(churn_recipe, prepare_recipe(churn_data)),
@@ -521,9 +531,9 @@ tar_make()
 
 
 ```
-#&gt; ✓ skip target churn_file
-#&gt; ✓ skip target churn_data
-#&gt; ✓ skip target churn_recipe
+#&gt; ✔ skip target churn_file
+#&gt; ✔ skip target churn_data
+#&gt; ✔ skip target churn_recipe
 #&gt; ● run target run_relu
 #&gt; ● run target run_sigmoid
 ```
@@ -542,13 +552,13 @@ tar_read(run_relu)
 #&gt; # A tibble: 1 x 6
 #&gt;   accuracy units1 units2 act1  act2  act3   
 #&gt;      &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;  
-#&gt; 1    0.792     16     16 relu  relu  sigmoid
+#&gt; 1    0.797     16     16 relu  relu  sigmoid
 
 tar_read(run_sigmoid)
 #&gt; # A tibble: 1 x 6
 #&gt;   accuracy units1 units2 act1    act2  act3   
 #&gt;      &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;  
-#&gt; 1    0.800     16     16 sigmoid relu  sigmoid
+#&gt; 1    0.810     16     16 sigmoid relu  sigmoid
 ```
 
 ???
@@ -565,7 +575,7 @@ And as usual, we read our newest targets and verify there are no obvious issues.
 library(targets)
 source("R/functions.R")
 tar_option_set(packages = c("keras", "tidyverse", "rsample", "recipes", "yardstick"))
-tar_pipeline(
+list(
   ...,
   tar_target(run_relu, test_model(act1 = "relu", churn_data, churn_recipe)),
   tar_target(run_sigmoid, test_model(act1 = "sigmoid", churn_data, churn_recipe)),
@@ -600,11 +610,11 @@ tar_make()
 
 
 ```
-#&gt; ✓ skip target churn_file
-#&gt; ✓ skip target churn_data
-#&gt; ✓ skip target churn_recipe
-#&gt; ✓ skip target run_relu
-#&gt; ✓ skip target run_sigmoid
+#&gt; ✔ skip target churn_file
+#&gt; ✔ skip target churn_data
+#&gt; ✔ skip target churn_recipe
+#&gt; ✔ skip target run_relu
+#&gt; ✔ skip target run_sigmoid
 #&gt; ● run target best_run
 #&gt; ● run target best_model
 ```
@@ -625,15 +635,15 @@ tar_read(best_model)
 #&gt; ________________________________________________________________________________
 #&gt; Layer (type)                        Output Shape                    Param #     
 #&gt; ================================================================================
-#&gt; dense_6 (Dense)                     (None, 16)                      576         
-#&gt; ________________________________________________________________________________
-#&gt; dropout_4 (Dropout)                 (None, 16)                      0           
-#&gt; ________________________________________________________________________________
-#&gt; dense_7 (Dense)                     (None, 16)                      272         
+#&gt; dense_8 (Dense)                     (None, 16)                      576         
 #&gt; ________________________________________________________________________________
 #&gt; dropout_5 (Dropout)                 (None, 16)                      0           
 #&gt; ________________________________________________________________________________
-#&gt; dense_8 (Dense)                     (None, 1)                       17          
+#&gt; dense_7 (Dense)                     (None, 16)                      272         
+#&gt; ________________________________________________________________________________
+#&gt; dropout_4 (Dropout)                 (None, 16)                      0           
+#&gt; ________________________________________________________________________________
+#&gt; dense_6 (Dense)                     (None, 1)                       17          
 #&gt; ================================================================================
 #&gt; Total params: 865
 #&gt; Trainable params: 865
@@ -655,7 +665,7 @@ and now one of our targets is actually a trained Keras model.
 library(targets)
 source("R/functions.R")
 tar_option_set(packages = c("keras", "tidyverse", "rsample", "recipes", "yardstick"))
-tar_pipeline(
+list(
   ...,
   tar_target(run_relu, test_model(act1 = "relu", churn_data, churn_recipe)),
   tar_target(run_sigmoid, test_model(act1 = "sigmoid", churn_data, churn_recipe)),

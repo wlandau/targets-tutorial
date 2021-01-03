@@ -44,7 +44,7 @@ To formalize our three targets, we express the computation in a special configur
 
 1. Load any functions and global objects that the targets depend on.
 2. Set any options, including packages that the targets depend on.
-3. Declare the targets and pipeline using functions `tar_target()` and `tar_pipeline()`. The `_targets.R` script must always end with a pipeline object, preferably an explicit call to `tar_pipeline()`.
+3. Declare a list of targets using `tar_target()`. The `_targets.R` script must always end with a list of target objects.
 
 Run the following code chunk to put the `_targets.R` file for this chapter in your working directory.
 
@@ -82,7 +82,7 @@ library(codetools)
 findGlobals(function() split_data(churn_file))
 ```
 
-That means the order you write your targets does not matter. Even if you rearrange the calls to `tar_target()` inside `tar_pipeline()`, you will still get the same workflow.
+That means the order you write your targets does not matter. Even if you rearrange the calls to `tar_target()` inside the list, you will still get the same workflow.
 
 `tar_visnetwork()` also includes functions in the dependency graph, as well as color-coded status information.
 
@@ -92,7 +92,7 @@ tar_visnetwork()
 
 # Run the pipeline.
 
-Everything we did so far was just setup. To actually run the pipeline, use the `tar_make()` function. `tar_make()` creates a fresh new reproducible R process that runs `_targets.R` and executes the correct targets in the correct order (from the dependency graph, not the order in `tar_pipeline()`).
+Everything we did so far was just setup. To actually run the pipeline, use the `tar_make()` function. `tar_make()` creates a fresh new reproducible R process that runs `_targets.R` and executes the correct targets in the correct order (from the dependency graph, not the order in the target list).
 
 ```{r}
 tar_make()
@@ -151,7 +151,7 @@ Then, express the model commands above as formal targets in the pipeline.
 library(targets)
 source("2-pipelines/functions.R")
 tar_option_set(packages = c("keras", "recipes", "rsample", "tidyverse", "yardstick"))
-tar_pipeline(
+list(
   tar_target(churn_file, "data/churn.csv", format = "file"),
   tar_target(churn_data, split_data(churn_file)),
   tar_target(churn_recipe, prepare_recipe(churn_data)),
@@ -215,7 +215,7 @@ tar_edit()
 library(targets)
 source("2-pipelines/functions.R")
 tar_option_set(packages = c("keras", "recipes", "rsample", "tidyverse", "yardstick"))
-tar_pipeline(
+list(
   tar_target(churn_file, "data/churn.csv", format = "file"), 
   tar_target(churn_data, split_data(churn_file)),
   tar_target(churn_recipe,  prepare_recipe(churn_data)),
@@ -264,7 +264,7 @@ Your turn: open `_targets.R` and type the above into a new target. Note: althoug
 library(targets)
 source("2-pipelines/functions.R")
 tar_option_set(packages = c("keras", "recipes", "rsample", "tidyverse", "yardstick"))
-tar_pipeline(
+list(
   tar_target(churn_file, "data/churn.csv", format = "file"), 
   tar_target(churn_data, split_data(churn_file)),
   tar_target(churn_recipe,  prepare_recipe(churn_data)),
@@ -305,7 +305,7 @@ Finally, open `_targets.R` for editing and add a new target to retrain the best 
 library(targets)
 source("2-pipelines/functions.R")
 tar_option_set(packages = c("keras", "recipes", "rsample", "tidyverse", "yardstick"))
-tar_pipeline(
+list(
   tar_target(churn_file, "data/churn.csv", format = "file"), 
   tar_target(churn_data, split_data(churn_file)),
   tar_target(churn_recipe,  prepare_recipe(churn_data)),
@@ -354,7 +354,7 @@ The full pipeline in `_targets.R` should look like this.
 library(targets)
 source("2-pipelines/functions.R")
 tar_option_set(packages = c("keras", "recipes", "rsample", "tidyverse", "yardstick"))
-tar_pipeline(
+list(
   tar_target(churn_file, "data/churn.csv", format = "file"), 
   tar_target(churn_data, split_data(churn_file)),
   tar_target(churn_recipe,  prepare_recipe(churn_data)),

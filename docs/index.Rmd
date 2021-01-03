@@ -350,14 +350,14 @@ And at this point, you have a good clean function-oriented project. Even if you 
 
 ---
 
-## Build up your workflow as a pipeline of targets.
+## Build up your workflow as a list of targets.
 
 ```{r, eval = FALSE}
 # _targets.R
 library(targets)
 source("R/functions.R")
 tar_option_set(packages = c("keras", "tidyverse", "rsample", "recipes", "yardstick"))
-tar_pipeline(
+list(
   tar_target(churn_file, "data/customer_churn.csv", format = "file"),
   tar_target(churn_data, split_data(churn_file)),
   tar_target(churn_recipe, prepare_recipe(churn_data))
@@ -369,7 +369,7 @@ tar_script({
 library(targets)
 source("R/functions.R")
 tar_option_set(packages = c("keras", "tidyverse", "rsample", "recipes", "yardstick"))
-tar_pipeline(
+list(
   tar_target(churn_file, "data/customer_churn.csv", format = "file"),
   tar_target(churn_data, split_data(churn_file)),
   tar_target(churn_recipe, prepare_recipe(churn_data))
@@ -381,7 +381,7 @@ tar_pipeline(
 
 The purpose of _targets.R is to set up the project at a high level. It loads the packages required to define the pipeline, it loads your custom functions and global objects, it sets high-level options such as the packages the targets are going to need, and it defines the pipeline at the very end.
 
-Inside the tar_pipeline() function, you list out objects called targets. Each target is an individual step in the workflow. It has an informative name like "sim" or "patients", and it has a R command that invokes your custom functions and returns a value.
+At the bottom of _targets.R, you list out objects called targets. Each target is an individual step in the workflow. It has an informative name like "sim" or "patients", and it has a R command that invokes your custom functions and returns a value.
 
 ---
 
@@ -471,7 +471,7 @@ This is part of an iterative process for building up a pipeline. We add a couple
 library(targets)
 source("R/functions.R")
 tar_option_set(packages = c("keras", "tidyverse", "rsample", "recipes", "yardstick"))
-tar_pipeline(
+list(
   tar_target(churn_file, "data/customer_churn.csv", format = "file"),
   tar_target(churn_data, split_data(churn_file)),
   tar_target(churn_recipe, prepare_recipe(churn_data)),
@@ -485,7 +485,7 @@ tar_script({
 library(targets)
 source("R/functions.R")
 tar_option_set(packages = c("keras", "tidyverse", "rsample", "recipes", "yardstick"))
-tar_pipeline(
+list(
   tar_target(churn_file, "data/customer_churn.csv", format = "file"),
   tar_target(churn_data, split_data(churn_file)),
   tar_target(churn_recipe, prepare_recipe(churn_data)),
@@ -569,7 +569,7 @@ And as usual, we read our newest targets and verify there are no obvious issues.
 library(targets)
 source("R/functions.R")
 tar_option_set(packages = c("keras", "tidyverse", "rsample", "recipes", "yardstick"))
-tar_pipeline(
+list(
   ...,
   tar_target(run_relu, test_model(act1 = "relu", churn_data, churn_recipe)),
   tar_target(run_sigmoid, test_model(act1 = "sigmoid", churn_data, churn_recipe)),
@@ -592,7 +592,7 @@ tar_script({
 library(targets)
 source("R/functions.R")
 tar_option_set(packages = c("keras", "tidyverse", "rsample", "recipes", "yardstick"))
-tar_pipeline(
+list(
   tar_target(churn_file, "data/customer_churn.csv", format = "file"),
   tar_target(churn_data, split_data(churn_file)),
   tar_target(churn_recipe, prepare_recipe(churn_data)),
@@ -654,7 +654,7 @@ and now one of our targets is actually a trained Keras model.
 library(targets)
 source("R/functions.R")
 tar_option_set(packages = c("keras", "tidyverse", "rsample", "recipes", "yardstick"))
-tar_pipeline(
+list(
   ...,
   tar_target(run_relu, test_model(act1 = "relu", churn_data, churn_recipe)),
   tar_target(run_sigmoid, test_model(act1 = "sigmoid", churn_data, churn_recipe)),
@@ -674,7 +674,7 @@ tar_script({
 library(targets)
 source("R/functions.R")
 tar_option_set(packages = c("keras", "tidyverse", "rsample", "recipes", "yardstick"))
-tar_pipeline(
+list(
   tar_target(churn_file, "data/customer_churn.csv", format = "file"),
   tar_target(churn_data, split_data(churn_file)),
   tar_target(churn_recipe, prepare_recipe(churn_data)),

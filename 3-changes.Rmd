@@ -60,8 +60,8 @@ Which target ran first? Why?
 
 A. `churn_data`, because the rest of the targets depend on it.
 B. `churn_file`, because the rest of the targets depend on it.
-C. `churn_data`, because it appears first in `tar_pipeline()`.
-D. `churn_file`, because it appears first in `tar_pipeline()`.
+C. `churn_data`, because it appears first in `_targets.R`.
+D. `churn_file`, because it appears first in `_targets.R`.
 
 ```{r}
 answer3_first("E")

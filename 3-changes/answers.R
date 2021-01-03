@@ -14,8 +14,8 @@ answer3_first <- function(x) {
     x,
     a = no("churn_data does not run first, and churn_file does not depend on churn_data."),
     b = yes(),
-    c = no("churn_data does not run first, and the order you write targets in tar_pipeline() does not matter."),
-    d = no("The order you write targets in tar_pipeline() does not matter."),
+    c = no("churn_data does not run first, and the order you write targets in _targets.R does not matter."),
+    d = no("The order you write targets in _targets.R does not matter."),
     invalid()
   )
 }
@@ -24,7 +24,7 @@ answer3_last <- function(x) {
   choices(
     x,
     a = yes(),
-    b = no("The order you write targets in tar_pipeline() does not matter."),
+    b = no("The order you write targets in _targets.R does not matter."),
     c = no("There is a downstream target that depends on best_run."),
     invalid()
   )

@@ -111,7 +111,7 @@ tar_option_set(
     "yardstick"
   )
 )
-tar_pipeline(
+list(
   tar_files(churn_file, list.files("data", full.names = TRUE)),
   tar_target(
     churn_data,
@@ -171,7 +171,7 @@ runs <- tar_map(
     pattern = map(churn_data, churn_recipe)
   )
 )
-tar_pipeline(
+list(
   tar_files(churn_file, list.files("data", full.names = TRUE)),
   tar_target(
     churn_data,
