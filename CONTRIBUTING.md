@@ -19,7 +19,7 @@ Please abide by the following guidelines.
 
 * Before posting a new issue, please take a moment to search for existing similar issues in order to avoid duplication.
 * For bug reports: if you can, please install the latest GitHub version of `targets` (i.e. `remotes::install_github("wlandau/targets")`) and verify that the issue still persists.
-* Describe your issue in prose as clearly and concisely as possible. The following three-paragraph format is preferred.
+* Describe your issue in prose as clearly and concisely as possible.
 * Be considerate of the maintainer's time and make it as easy as possible to troubleshoot any problems you identify. Read [here](https://stackoverflow.com/questions/5963269/how-to-make-a-great-r-reproducible-example) and [here](https://www.tidyverse.org/help/) to learn about minimal reproducible examples. Format your code according to the [tidyverse style guide](https://style.tidyverse.org/) to make it easier for others to read.
 
 ## Development
