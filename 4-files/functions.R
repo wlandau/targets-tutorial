@@ -281,9 +281,8 @@ compute_cor <- function(churn_recipe) {
     juice() %>%
     correlate(quiet = TRUE) %>%
     focus(Churn) %>%
-    rename(feature = rowname) %>%
-    arrange(abs(Churn)) %>%
-    mutate(feature = as_factor(feature)) 
+    rename(feature = term) %>%
+    arrange(abs(Churn))
 }
 
 #' @title Visualize correlations in the customer churn training data.
