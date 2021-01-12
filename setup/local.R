@@ -16,7 +16,7 @@ install.packages(c(
   "yardstick"
 ))
 remotes::install_github("rstudio/reticulate")
-remotes::install_github("wlandau/targets")
-remotes::install_github("wlandau/tarchetypes")
+remotes::install_github("ropensci/targets")
+remotes::install_github("ropensci/tarchetypes")
 reticulate::install_miniconda()
 keras::install_keras()

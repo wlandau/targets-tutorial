@@ -161,7 +161,7 @@ Then everything that depends on it is no longer valid, and you need to rerun the
 * Fundamentally designed for R.
 * Supports a clean, modular, function-oriented programming style.
 * Abstracts files as R objects and automatically manages data.
-* Surpasses the permanent limitations of its predecessor, [`drake`](https://github.com/ropensci/drake): &lt;https://wlandau.github.io/targets/articles/need.html&gt;
+* Surpasses the permanent limitations of its predecessor, [`drake`](https://github.com/ropensci/drake).
 
 ???
 
@@ -178,8 +178,7 @@ That's where targets comes in. targets is a Make-like pipeline tool that is fund
     1. Show which *functions* are up to date.
     1. More flexible dynamic branching, including compatibility with `dplyr::group_by()`.
     1. Improved parallel efficiency.
-    1. Designed for custom user-side [metaprogramming](https://wlandau.github.io/targets-manual/branching.html#metaprogramming) and target archetypes: &lt;https://wlandau.github.io/tarchetypes/&gt;.
-* The statement of need describes the details: &lt;https://wlandau.github.io/targets/articles/need.html&gt;.
+    1. Designed for custom user-side [metaprogramming](https://wlandau.github.io/targets-manual/branching.html#metaprogramming) and target archetypes: &lt;https://docs.ropensci.org/tarchetypes/&gt;.
 
 ???
 
@@ -364,22 +363,12 @@ At the bottom of _targets.R, you list out objects called targets. Each target is
 
 ```r
 tar_manifest(fields = c("name", "command"))
-#&gt; 
--
-
-\
-
-|
-
-/
-
- 
 #&gt; # A tibble: 3 x 2
 #&gt;   name         command                      
 #&gt;   &lt;chr&gt;        &lt;chr&gt;                        
-#&gt; 1 churn_recipe "prepare_recipe(churn_data)" 
+#&gt; 1 churn_file   "\"data/customer_churn.csv\""
 #&gt; 2 churn_data   "split_data(churn_file)"     
-#&gt; 3 churn_file   "\"data/customer_churn.csv\""
+#&gt; 3 churn_recipe "prepare_recipe(churn_data)"
 ```
 
 
@@ -420,6 +409,7 @@ tar_make()
 #&gt; ● run target churn_file
 #&gt; ● run target churn_data
 #&gt; ● run target churn_recipe
+#&gt; ● end pipeline
 ```
 
 ???
@@ -531,11 +521,12 @@ tar_make()
 
 
 ```
-#&gt; ✔ skip target churn_file
-#&gt; ✔ skip target churn_data
-#&gt; ✔ skip target churn_recipe
+#&gt; ✓ skip target churn_file
+#&gt; ✓ skip target churn_data
+#&gt; ✓ skip target churn_recipe
 #&gt; ● run target run_relu
 #&gt; ● run target run_sigmoid
+#&gt; ● end pipeline
 ```
 
 ???
@@ -552,13 +543,13 @@ tar_read(run_relu)
 #&gt; # A tibble: 1 x 6
 #&gt;   accuracy units1 units2 act1  act2  act3   
 #&gt;      &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;  
-#&gt; 1    0.797     16     16 relu  relu  sigmoid
+#&gt; 1    0.798     16     16 relu  relu  sigmoid
 
 tar_read(run_sigmoid)
 #&gt; # A tibble: 1 x 6
 #&gt;   accuracy units1 units2 act1    act2  act3   
 #&gt;      &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;  
-#&gt; 1    0.810     16     16 sigmoid relu  sigmoid
+#&gt; 1    0.811     16     16 sigmoid relu  sigmoid
 ```
 
 ???
@@ -610,13 +601,14 @@ tar_make()
 
 
 ```
-#&gt; ✔ skip target churn_file
-#&gt; ✔ skip target churn_data
-#&gt; ✔ skip target churn_recipe
-#&gt; ✔ skip target run_relu
-#&gt; ✔ skip target run_sigmoid
+#&gt; ✓ skip target churn_file
+#&gt; ✓ skip target churn_data
+#&gt; ✓ skip target churn_recipe
+#&gt; ✓ skip target run_relu
+#&gt; ✓ skip target run_sigmoid
 #&gt; ● run target best_run
 #&gt; ● run target best_model
+#&gt; ● end pipeline
 ```
 
 ???
@@ -884,21 +876,21 @@ And again, utility functions can confirm the status of targets without needing t
 
 ## Resources
 
-* Get [`targets`](https://github.com/wlandau/targets):
+* Get [`targets`](https://github.com/ropensci/targets):
 
 
 ```r
 install.packages("remotes")
-remotes::install_github("wlandau/targets")
+remotes::install_github("ropensci/targets")
 ```
 
 * Code: &lt;https://github.com/wlandau/targets-keras&gt;
 * RStudio Cloud workspace: &lt;https://rstudio.cloud/project/1430828/&gt;
-* These slides: &lt;https://wlandau.github.io/targets-tutorial&gt;
+* These slides: &lt;https://docs.ropensci.org/targets-tutorial&gt;
 * Tutorial materials: &lt;https://github.com/wlandau/targets-tutorial&gt;
-* Development repository: &lt;https://github.com/wlandau/targets&gt;
+* Development repository: &lt;https://github.com/ropensci/targets&gt;
 * Full user manual: &lt;https://wlandau.github.io/targets-manual/&gt;
-* Reference website: &lt;https://wlandau.github.io/targets/&gt;
+* Reference website: &lt;https://docs.ropensci.org/targets/&gt;
 
 ???
 

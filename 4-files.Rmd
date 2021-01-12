@@ -342,7 +342,7 @@ answer4_rmd_data("E")
 
 ## An aside: parameterized R Markdown
 
-[`tarchetypes::tar_render()`](https://wlandau.github.io/tarchetypes/reference/tar_render.html) supports [parameterized R Markdown](https://rmarkdown.rstudio.com/developer_parameterized_reports.html), and parameters can be values of upstream targets in the pipeline. In the following pipeline:
+[`tarchetypes::tar_render()`](https://docs.ropensci.org/tarchetypes/reference/tar_render.html) supports [parameterized R Markdown](https://rmarkdown.rstudio.com/developer_parameterized_reports.html), and parameters can be values of upstream targets in the pipeline. In the following pipeline:
 
 ```{r, eval = FALSE}
 list(
@@ -374,4 +374,4 @@ and the following code chunk:
 print(params$your_param)
 ```
 
-See [these examples](https://wlandau.github.io/tarchetypes/reference/tar_render.html#examples) for a demonstration.
+See [these examples](https://docs.ropensci.org/tarchetypes/reference/tar_render.html#examples) for a demonstration.

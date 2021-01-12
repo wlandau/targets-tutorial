@@ -15,8 +15,8 @@ install.packages(c(
   "visNetwork",
   "yardstick"
 ))
-remotes::install_github("wlandau/targets")
-remotes::install_github("wlandau/tarchetypes")
+remotes::install_github("ropensci/targets")
+remotes::install_github("ropensci/tarchetypes")
 root <- rprojroot::find_rstudio_root_file()
 reticulate::virtualenv_create("r-reticulate")
 line <- "reticulate::use_virtualenv(\"r-reticulate\")"
