@@ -57,9 +57,8 @@ Imports:
   usethis (>= 2.0.0),
   visNetwork (>= 2.0.9)
 Suggests:
-    knitr (>= 1.30),
-    rmarkdown (>= 2.4),
-    testthat (>= 3.0.0)
+  knitr (>= 1.30),
+  testthat (>= 3.0.0)
 Remotes:
   ropensci/tarchetypes,
   ropensci/targets

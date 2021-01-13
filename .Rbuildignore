@@ -8,3 +8,12 @@
 ^google_analytics\.html$
 ^.*\.yml
 ^.*\.code-workspace$
+^data$
+^docs$
+^setup$
+^2-pipelines$
+^3-changes$
+^4-files$
+^5-debugging$
+^6-branching$
+^7-challenge$
