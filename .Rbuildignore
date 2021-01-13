@@ -1,0 +1,10 @@
+^.*\.Rproj$
+^\.Rproj\.user$
+^codemeta\.json$
+^\.github$
+^.*\.md$
+^.*\.Rmd$
+^footer\.html$
+^google_analytics\.html$
+^.*\.yml
+^.*\.code-workspace$
