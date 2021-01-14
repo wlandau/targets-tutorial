@@ -16,6 +16,8 @@ Description: Data science can be slow.
   Participants begin with the R implementation of a machine
   learning project, convert the workflow into a 'targets'-powered pipeline,
   and efficiently maintain the output as the code and data change.
+  The case study comes from an 2018 RStudio AI Blog post by Matt Dancho:
+  <https://blogs.rstudio.com/ai/posts/2018-01-11-keras-customer-churn>.
 Version: 0.0.1
 License: MIT + file LICENSE
 URL: https://wlandau.github.io/targets-tutorial,

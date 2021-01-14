@@ -2,8 +2,7 @@
 
 [![Launch RStudio Cloud](https://img.shields.io/badge/RStudio-Cloud-blue)](https://rstudio.cloud/project/1699460)
 
-Data science can be slow. A single round of statistical computation can take several minutes, hours, or even days to complete. The [`targets`](https://github.com/ropensci/targets) R package keeps results up to date and reproducible while minimizing the number of expensive tasks that actually run. [`targets`](https://github.com/ropensci/targets) learns how your pipeline fits together, skips costly runtime for steps that are already up to date, runs the rest with optional implicit parallel computing, abstracts files as R objects, and shows tangible evidence that the output matches the underlying code and data. In other words, the package saves time while increasing our ability to trust the conclusions of the research. [`targets`](https://github.com/ropensci/targets) surpasses the most burdensome permanent limitations of its predecessor, [`drake`](https://github.com/ropensci/drake), to achieve greater efficiency and provide a safer, smoother, friendlier user experience. This hands-on workshop teaches targets using a realistic [case study](https://blogs.rstudio.com/ai/posts/2018-01-11-keras-customer-churn/). Participants begin with the R implementation of a machine learning project, convert the workflow into a [`targets`](https://github.com/ropensci/targets)-powered pipeline, and efficiently maintain the output as the code and data change.
-
+Data science can be slow. A single round of statistical computation can take several minutes, hours, or even days to complete. The [`targets`](https://github.com/ropensci/targets) R package keeps results up to date and reproducible while minimizing the number of expensive tasks that actually run. [`targets`](https://github.com/ropensci/targets) learns how your pipeline fits together, skips costly runtime for steps that are already up to date, runs the rest with optional implicit parallel computing, abstracts files as R objects, and shows tangible evidence that the output matches the underlying code and data. In other words, the package saves time while increasing our ability to trust the conclusions of the research. [`targets`](https://github.com/ropensci/targets) surpasses the most burdensome permanent limitations of its predecessor, [`drake`](https://github.com/ropensci/drake), to achieve greater efficiency and provide a safer, smoother, friendlier user experience. This hands-on workshop teaches targets using a realistic case study from an 2018 RStudio AI Blog post by Matt Dancho: <https://blogs.rstudio.com/ai/posts/2018-01-11-keras-customer-churn>. Participants begin with the R implementation of a machine learning project, convert the workflow into a [`targets`](https://github.com/ropensci/targets)-powered pipeline, and efficiently maintain the output as the code and data change.
 
 # Browser access
 
@@ -62,3 +61,8 @@ This schedule budgets time for a 4-hour iteration of the workshop (8 AM to noon)
 | Challenge exercise           | exercises  | yes            | 20      | 11:25 | 11:45 | [`7-challenge.Rmd`](https://github.com/wlandau/targets-tutorial/blob/main/7-challenge.Rmd) |
 | Review challenge exercise            | lecture    | no             | 5       | 11:45 | 11:50 | [`7-challenge.Rmd`](https://github.com/wlandau/targets-tutorial/blob/main/7-challenge.Rmd) |
 | Q&A                          | discussion | no             | 10      | 11:50 | 12:00 |                                                                         |
+
+# References
+
+* Dancho (2018, Jan. 11). RStudio AI Blog: Deep Learning With Keras To Predict Customer Churn. Retrieved from <https://blogs.rstudio.com/tensorflow/posts/2018-01-11-keras-customer-churn/>.
+

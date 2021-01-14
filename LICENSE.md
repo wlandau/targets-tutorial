@@ -1,1 +1,21 @@
-The Telco customer churn case study for this tutorial (as well as the customer churn dataset) came from <https://github.com/sol-eng/tensorflow-w-r/blob/main/workflow/tensorflow-drake.Rmd> (by RStudio) and <https://github.com/IBM/telco-customer-churn-on-icp4d> (by IBM). Both repos were released under the Apache License Version 2.0 and copyright remains with their respective companies. This includes the user-defined functions in `1-functions.Rmd` and appearances of these functions everywhere else in this repository. Credit also goes to Matt Dancho for his RStudio AI Blog post at <https://blogs.rstudio.com/ai/posts/2018-01-11-keras-customer-churn/>, which helps explain the motivation and usage of these functions. The additional material in this repository, such as [`targets`](https://github.com/ropensci/targets) pipelines, is released under the MIT License, copyright Eli Lilly and Company.
+# MIT License
+
+Copyright (c) 2021 Eli Lilly and Company
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
