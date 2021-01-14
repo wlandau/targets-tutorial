@@ -44,7 +44,6 @@ Imports:
   fst (>= 0.9.4),
   keras (>= 2.3.0.0),
   lobstr (>= 1.1.1),
-  pingr (>= 2.0.1),
   pryr (>= 0.1.4),
   qs (>= 0.23.4),
   recipes (>= 0.1.15),
@@ -60,6 +59,7 @@ Imports:
 Suggests:
   bs4Dash (>= 0.5.0),
   knitr (>= 1.30),
+  pingr (>= 2.0.1),
   shiny (>= 1.5.0),
   shinycssloaders (>= 1.0.0),
   testthat (>= 3.0.0)
