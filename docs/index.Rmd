@@ -201,7 +201,7 @@ That's where targets comes in. targets is a Make-like pipeline tool that is fund
     1. Show which *functions* are up to date.
     1. More flexible dynamic branching, including compatibility with `dplyr::group_by()`.
     1. Improved parallel efficiency.
-    1. Designed for custom user-side [metaprogramming](https://wlandau.github.io/targets-manual/branching.html#metaprogramming) and target archetypes: <https://docs.ropensci.org/tarchetypes/>.
+    1. Designed for custom user-side [metaprogramming](https://books.ropensci.org/targets/static.html#metaprogramming) and target archetypes: <https://docs.ropensci.org/tarchetypes/>.
 
 ???
 
@@ -901,7 +901,7 @@ remotes::install_github("ropensci/targets")
 * These slides: <https://docs.ropensci.org/targets-tutorial>
 * Tutorial materials: <https://github.com/wlandau/targets-tutorial>
 * Development repository: <https://github.com/ropensci/targets>
-* Full user manual: <https://wlandau.github.io/targets-manual/>
+* Full user manual: <https://books.ropensci.org/targets/>
 * Reference website: <https://docs.ropensci.org/targets/>
 
 ???

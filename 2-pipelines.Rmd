@@ -105,7 +105,7 @@ Targets `churn_data` and `churn_recipe` now live in a special `_targets/` data s
 ```{r}
 list.files("_targets/objects")
 ```
-`churn_file` is an [external input file](https://wlandau.github.io/targets-manual/files.html#external-input-files), declared with `format = "file"` in `tar_target()`, so its value is not in the data store. However, the actual file path, hash, and other metadata are stored in the `_targets/meta/meta` spreadsheet, which you can read with `tar_meta()`.
+`churn_file` is an [external input file](https://books.ropensci.org/targets/files.html#external-input-files), declared with `format = "file"` in `tar_target()`, so its value is not in the data store. However, the actual file path, hash, and other metadata are stored in the `_targets/meta/meta` spreadsheet, which you can read with `tar_meta()`.
 
 ```{r}
 library(dplyr)
