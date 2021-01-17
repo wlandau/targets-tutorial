@@ -26,7 +26,7 @@ tar_edit()
 
 # Problem
 
-This pipeline has a bug, and it only happens in one of the models. Your job is to find and fix it.
+This pipeline has a bug, and your job is to find and fix it.
 
 ```{r}
 tar_make()
@@ -36,7 +36,7 @@ tar_make()
 tar_visnetwork()
 ```
 
-To begin to search for clues, review the error message and warnings stored in the metadata. Make a note of the branch of `run` that threw the error.
+To begin to search for clues, review the error message and warnings stored in the metadata.
 
 ```{r}
 tar_meta(starts_with("run"), fields = c("error", "warnings"))
@@ -44,7 +44,7 @@ tar_meta(starts_with("run"), fields = c("error", "warnings"))
 
 # Debugging with saved workspaces
 
-We need more information, so we invoke `tar_make()` with interactive debugging. First, open `_targets.R` for editing.
+We need more information, so we invoke `tar_make()` with workspaces enabled. First, open `_targets.R` for editing.
 
 ```{r}
 tar_edit()
@@ -73,7 +73,7 @@ Now, run `tar_make()` and let the error happen again.
 tar_make()
 ```
 
-Find the name of the failed target.
+Confirm the name of the failed target.
 
 ```{r}
 library(tidyverse)
@@ -90,28 +90,27 @@ Confirm that a saved workspace exists for this target.
 list.files("_targets/workspaces")
 ```
 
-Load the workspace of this target to restore the packages, environment, and random number generator seed that were loaded when the target errored out.
+Load the workspace of this target.
 
 ```{r}
-tar_workspace(run___) # Supply the failed target name.
+tar_workspace(run)
 ```
 
-You environment should now have the correct values of `activations`, `units`, `churn_data`, and `churn_recipe` to supply to `test_model(act1 = activations, units1 = units, churn_data, churn_recipe)` (the target's command).
+The required packages, functions, RNG seed, and upstream dependencies (`churn_data` and `churn_recipe`) are now in your global environment.
 
 ```{r}
-print(activations) # Should be a scalar.
-print(units) # Should be a scalar.
+ls()
 ```
 
-You should now be able to run the target's command and reproduce the error without `tar_make()`
+Now, you can more easily reproduce the error and search for the cause.
 
 ```{r}
-test_model(act1 = activations, units1 = units, churn_data, churn_recipe)
+test_model(act1 = "sigmoid", units1 = 32, churn_data, churn_recipe)
 ```
 
 # Your turn
 
-Now go find that error and fix it! You may have to explore the `4-debugging/functions.R` file, which is where `test_model()` lives.
+Go find that error and fix it! You may have to explore the `4-debugging/functions.R` file.
 
 ```{r}
 usethis::edit_file("4-debugging/functions.R")
