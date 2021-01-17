@@ -118,6 +118,10 @@ usethis::edit_file("4-debugging/functions.R")
 
 You have completed the exercise when `tar_make()` runs without error. Once you are done, remove the workspace files using `tar_undebug()`. This is good practice because workspace files can get quite large.
 
+# Tip: workspaces option
+
+If you want to save workspaces for a targets that do not necessarily error out, simply supply the names to the `workspaces` argument of `tar_option_set()`.
+
 # Tip: interactive debugging
 
 Base utilities `debug()`, `debugonce()`, `undebug()`, and `browse()` are extremely helpful for debugging functions. More information on interactive debugging can be found at <https://rstats.wtf/debugging-r-code.html>.
@@ -146,3 +150,7 @@ tar_make(callr_function = NULL)
 ```
 
 Debugging this way is not always possible: for example, if you run `tar_make_clustermq()` to distribute your targets on a cluster. However, it can often recreate the error more easily and quickly than the `error = "workspace"` approach.
+
+# Dynamic branching
+
+This short course covers dynamic branching in chapter 6. Both kinds of debugging (workspaces and interactive) support dynamic branching. Interface functions like `tar_option_set()` can accept either individual branches or whole patterns.
