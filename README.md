@@ -52,7 +52,7 @@ This schedule budgets time for a 4-hour iteration of the workshop (8 AM to noon)
 | Review iterating on changes               | lecture    | no             | 5       | 9:45  | 9:50  | [`3-changes.Rmd`](https://github.com/wlandau/targets-tutorial/blob/main/3-changes.Rmd)   |
 | Break                        | break      | no             | 10      | 9:50  | 10:00 |                                                                         |
 | Debugging pipelines  | exercises  | yes            | 20      | 10:25 | 10:45 | [`4-debugging.Rmd`](https://github.com/wlandau/targets-tutorial/blob/main/4-debugging.Rmd) |
-| Review interactive debugging             | lecture    | no             | 5       | 10:45 | 10:50 | [`4-debugging.Rmd`](https://github.com/wlandau/targets-tutorial/blob/main/4-debugging.Rmd) |
+| Review debugging pipelines    | lecture    | no             | 5       | 10:45 | 10:50 | [`4-debugging.Rmd`](https://github.com/wlandau/targets-tutorial/blob/main/4-debugging.Rmd) |
 | Break                        | break      | no             | 10      | 10:50 | 11:00 |                                                                         |
 | External files               | exercises  | yes            | 20      | 10:00 | 10:20 | [`5-files.Rmd`](https://github.com/wlandau/targets-tutorial/blob/main/5-files.Rmd)     |
 | Review external files                 | lecture    | no             | 5       | 10:20 | 10:25 | [`5-files.Rmd`](https://github.com/wlandau/targets-tutorial/blob/main/5-files.Rmd)     |
