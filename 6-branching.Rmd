@@ -3,9 +3,13 @@ title: "Dynamic branching"
 output: html_document
 ---
 
-# About
+# About dynamic branching
 
 For pipelines with hundreds of targets, it is impractical to write out every single target by hand in `_targets.R`. That's why the `targets` package supports dynamic branching, a way to write shorthand for large collections of similar targets.
+
+# Static vs dynamic branching
+
+`targets` also supports static branching, an alternative kind of shorthand. This course does not cover it, but it is easier to understand just by reading about it: <https://books.ropensci.org/targets/static.html>.
 
 # Setup
 
