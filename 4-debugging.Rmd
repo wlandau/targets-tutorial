@@ -1,5 +1,5 @@
 ---
-title: "Interactive debugging"
+title: "Debugging pipelines"
 output: html_document
 ---
 
