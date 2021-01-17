@@ -1,11 +1,11 @@
 ---
-title: "Patterns and branching"
+title: "Dynamic branching"
 output: html_document
 ---
 
 # About
 
-For pipelines with hundreds or thousands of targets, it is impractical to write out every single target by hand in `_targets.R`. That's why the `targets` package supports branching, which is a way to write shorthand for large collections of similar targets.
+For pipelines with hundreds of targets, it is impractical to write out every single target by hand in `_targets.R`. That's why the `targets` package supports dynamic branching, a way to write shorthand for large collections of similar targets.
 
 # Setup
 
