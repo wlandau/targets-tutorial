@@ -20,13 +20,13 @@ Load this chapter's quiz questions. Try not to peek in advance.
 
 ```{r}
 source("R/quiz.R")
-source("4-files/answers.R")
+source("5-files/answers.R")
 ```
 
 Run the following command to write the required `_targets.R` script to the your working directory.
 
 ```{r, echo = FALSE}
-file.copy("4-files/initial_targets.R", "_targets.R", overwrite = TRUE)
+file.copy("5-files/initial_targets.R", "_targets.R", overwrite = TRUE)
 ```
 
 Open `_targets.R` for editing
@@ -86,7 +86,7 @@ tar_read(churn_file)
 
 In `targets`, we configure output files the exact same way. The only difference between input and output files is that output files are created when the target runs.
 
-As an example, open `_targets.R` and create a new file targets `churn_cor`, which saves a CSV file and a plot of correlations (the correlation of each covariate with customer churn in the preprocessed testing data). Functions `compute_cor()` and `plot_cor()` in `4-files/functions.R` do most of the work.
+As an example, open `_targets.R` and create a new file targets `churn_cor`, which saves a CSV file and a plot of correlations (the correlation of each covariate with customer churn in the preprocessed testing data). Functions `compute_cor()` and `plot_cor()` in `5-files/functions.R` do most of the work.
 
 Open `_targets.R` for editing.
 
@@ -166,7 +166,7 @@ Literate programming is the practice of writing code and explanatory prose in th
 Let's pull an example R Markdown file.
 
 ```{r}
-tmp <- file.copy("4-files/results.Rmd", "results.Rmd", overwrite = TRUE)
+tmp <- file.copy("5-files/results.Rmd", "results.Rmd", overwrite = TRUE)
 ```
 
 Open `results.Rmd` for editing.

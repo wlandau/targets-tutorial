@@ -15,10 +15,10 @@ tar_destroy()
 Copy the starting `_targets.R` file into the working directory.
 
 ```{r}
-tmp <- file.copy("5-debugging/initial_targets.R", "_targets.R", overwrite = TRUE)
+tmp <- file.copy("4-debugging/initial_targets.R", "_targets.R", overwrite = TRUE)
 ```
 
-Open this file for editing and verify that `source("5-debugging/functions.R")` appears near the top.
+Open this file for editing and verify that `source("4-debugging/functions.R")` appears near the top.
 
 ```{r}
 tar_edit()
@@ -111,10 +111,10 @@ test_model(act1 = activations, units1 = units, churn_data, churn_recipe)
 
 # Your turn
 
-Now go find that error and fix it! You may have to explore the `5-debugging/functions.R` file, which is where `test_model()` lives.
+Now go find that error and fix it! You may have to explore the `4-debugging/functions.R` file, which is where `test_model()` lives.
 
 ```{r}
-usethis::edit_file("5-debugging/functions.R")
+usethis::edit_file("4-debugging/functions.R")
 ```
 
 You have completed the exercise when `tar_make()` runs without error. Once you are done, remove the workspace files using `tar_undebug()`. This is good practice because workspace files can get quite large.

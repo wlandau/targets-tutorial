@@ -30,8 +30,8 @@ Intro | [slides](https://wlandau.github.io/targets-tutorial)
 Functions | [`1-functions.Rmd`](https://github.com/wlandau/targets-tutorial/blob/main/1-functions.Rmd)
 Pipelines | [`2-pipelines.Rmd`](https://github.com/wlandau/targets-tutorial/blob/main/2-pipelines.Rmd)
 Changes | [`3-changes.Rmd`](https://github.com/wlandau/targets-tutorial/blob/main/3-changes.Rmd)
-Files | [`4-files.Rmd`](https://github.com/wlandau/targets-tutorial/blob/main/4-files.Rmd)
-Debugging | [`5-debugging.Rmd`](https://github.com/wlandau/targets-tutorial/blob/main/5-debugging.Rmd)
+Debugging | [`4-debugging.Rmd`](https://github.com/wlandau/targets-tutorial/blob/main/4-debugging.Rmd)
+Files | [`5-files.Rmd`](https://github.com/wlandau/targets-tutorial/blob/main/5-files.Rmd)
 Branching | [`6-branching.Rmd`](https://github.com/wlandau/targets-tutorial/blob/main/6-branching.Rmd)
 Challenge | [`7-challenge.Rmd`](https://github.com/wlandau/targets-tutorial/blob/main/7-challenge.Rmd)
 
@@ -51,11 +51,11 @@ This schedule budgets time for a 4-hour iteration of the workshop (8 AM to noon)
 | Iterate on changes           | exercises  | yes            | 20      | 9:25  | 9:45  | [`3-changes.Rmd`](https://github.com/wlandau/targets-tutorial/blob/main/3-changes.Rmd)   |
 | Review iterating on changes               | lecture    | no             | 5       | 9:45  | 9:50  | [`3-changes.Rmd`](https://github.com/wlandau/targets-tutorial/blob/main/3-changes.Rmd)   |
 | Break                        | break      | no             | 10      | 9:50  | 10:00 |                                                                         |
-| External files               | exercises  | yes            | 20      | 10:00 | 10:20 | [`4-files.Rmd`](https://github.com/wlandau/targets-tutorial/blob/main/4-files.Rmd)     |
-| Review external files                 | lecture    | no             | 5       | 10:20 | 10:25 | [`4-files.Rmd`](https://github.com/wlandau/targets-tutorial/blob/main/4-files.Rmd)     |
-| Interactive debugging            | exercises  | yes            | 20      | 10:25 | 10:45 | [`5-debugging.Rmd`](https://github.com/wlandau/targets-tutorial/blob/main/5-debugging.Rmd) |
-| Review interactive debugging             | lecture    | no             | 5       | 10:45 | 10:50 | [`5-debugging.Rmd`](https://github.com/wlandau/targets-tutorial/blob/main/5-debugging.Rmd) |
+| Debugging pipelines  | exercises  | yes            | 20      | 10:25 | 10:45 | [`4-debugging.Rmd`](https://github.com/wlandau/targets-tutorial/blob/main/4-debugging.Rmd) |
+| Review interactive debugging             | lecture    | no             | 5       | 10:45 | 10:50 | [`4-debugging.Rmd`](https://github.com/wlandau/targets-tutorial/blob/main/4-debugging.Rmd) |
 | Break                        | break      | no             | 10      | 10:50 | 11:00 |                                                                         |
+| External files               | exercises  | yes            | 20      | 10:00 | 10:20 | [`5-files.Rmd`](https://github.com/wlandau/targets-tutorial/blob/main/5-files.Rmd)     |
+| Review external files                 | lecture    | no             | 5       | 10:20 | 10:25 | [`5-files.Rmd`](https://github.com/wlandau/targets-tutorial/blob/main/5-files.Rmd)     |
 | Dynamic branching        | exercises  | yes            | 20      | 11:00 | 11:20 | [`6-branching.Rmd`](https://github.com/wlandau/targets-tutorial/blob/main/6-branching.Rmd) |
 | Review dynamic branching           | lecture    | no             | 5       | 11:20 | 11:25 | [`6-branching.Rmd`](https://github.com/wlandau/targets-tutorial/blob/main/6-branching.Rmd) |
 | Challenge exercise           | exercises  | yes            | 20      | 11:25 | 11:45 | [`7-challenge.Rmd`](https://github.com/wlandau/targets-tutorial/blob/main/7-challenge.Rmd) |
