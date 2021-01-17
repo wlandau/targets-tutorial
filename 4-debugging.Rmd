@@ -93,7 +93,7 @@ list.files("_targets/workspaces")
 Load the workspace of this target to restore the packages, environment, and random number generator seed that were loaded when the target errored out.
 
 ```{r}
-tar_workspace(run_________) # Supply the failed target name.
+tar_workspace(run___) # Supply the failed target name.
 ```
 
 You environment should now have the correct values of `activations`, `units`, `churn_data`, and `churn_recipe` to supply to `test_model(act1 = activations, units1 = units, churn_data, churn_recipe)` (the target's command).
@@ -130,12 +130,12 @@ test_model(act1 = activations, units1 = units, churn_data, churn_recipe)
 
 Once you are inside the debugger, you can access objects in the runtime environment and gradually step through the code. Press `n` to advance to the next line, and press `c` to continue on to the next breakpoint (place where the debuggger pauses). Press `Q` to exit the debugger.
 
-# Interactive debugging in `targets`
+# Built-in interactive debugging in `targets`
 
 As an alternative technique, you can debug interactively while `tar_make()` is actually running. Set these options in `_targets.R`.
 
 ```{r}
-tar_option_set(debug = "run_________", cue = tar_cue(mode = "never"))
+tar_option_set(debug = "run___", cue = tar_cue(mode = "never"))
 ```
 
 Then, restart R and run `tar_make(callr_function = NULL)` in the R console (not in a chunk in this notebook). `targets` will drop you into an interactive debugger at the errored target. 
@@ -146,4 +146,4 @@ Then, restart R and run `tar_make(callr_function = NULL)` in the R console (not 
 tar_make(callr_function = NULL)
 ```
 
-Some situations may require you to debug this way instead of `error = "workspace"`. For example, this technique allows you to debug that did not necessarily throw an error. In addition, if some of your target's dependencies cannot be serialized with `qs::qsave()` (e.g. Keras model objects) then the workspace cannot be saved properly with `tar_option_set(error = "workspace")`.
+Debugging this way is not always possible: for example, if you run `tar_make_clustermq()` to distribute your targets on a cluster. However, it can often recreate the error more easily and quickly than the `error = "workspace"` approach.

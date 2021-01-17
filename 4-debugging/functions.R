@@ -255,7 +255,7 @@ define_model <- function(churn_recipe, units1, units2, act1, act2, act3) {
       kernel_initializer = "uniform",
       activation = act3
     )
-  if (act1 == "sigmoid" && units1 == 32) {
+  if (act1 == "sigmoid") {
     stop("cannot allocate vector of size 801.2 Mb", call. = FALSE)
   }
   out
