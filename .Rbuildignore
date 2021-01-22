@@ -13,8 +13,8 @@
 ^setup$
 ^2-pipelines$
 ^3-changes$
-^4-files$
-^5-debugging$
+^5-files$
+^4-debugging$
 ^6-branching$
 ^7-challenge$
 ^licenses$
