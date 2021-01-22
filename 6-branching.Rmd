@@ -100,7 +100,7 @@ D. All the model runs and everything downstream because the `activations` target
 answer5_map_runs("E")
 ```
 
-`map()` can branch over more than one grouping variable. As an example, let's vary the size of the first layer of the neural network. Make the following changes to `_targets.R`:
+`map()` can branch over more than one argument. As an example, let's vary the size of the first layer of the neural network. Make the following changes to `_targets.R`:
 
 1. Define a new target called `units` which returns `c(16, 32, 64)`.
 2. For the `run` target, change `map(activations)` to `map(activations, units)`.
@@ -141,7 +141,7 @@ In that call to `tar_make()`, how many `run_*` branches executed?
 
 A. All of them, because we changed the branching structure.
 B. None, because all targets stayed up to date.
-C. The 3 branches from the earlier `map()` call were still up to date, so they were skipped. `cross()` added 6 additional targets to the pipeline, and those ran for the first time.
+C. The 3 branches from the earlier `map()` call were still up to date, so they were skipped. `cross()` added 6 additional targets to the pipeline, and those 6 ran for the first time.
 D. The 9 branches from the earlier `map()` call were still up to date, so they were skipped. `cross()` added 3 additional targets to the pipeline, and those ran for the first time.
 
 ```{r}
