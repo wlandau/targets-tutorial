@@ -246,7 +246,13 @@ Then, rerun the pipeline.
 tar_make()
 ```
 
-Yes, I know we had to fit all 9 models all over again, and that took a lot of runtime. How do we save time if we need to frequently switch iteration methods?
+When you call `tar_read()`, `vctrs::vec_c()` aggregates the branches into a nice `tibble` behind the scenes.
+
+```{r}
+tar_read(run)
+```
+
+And yes, I know you just had to fit all 9 models all over again, and that took a lot of runtime. How do we save time if we need to frequently switch iteration methods?
 
 A. Split the `run` target into a model-fitting target that returns a Keras model and summarization step that computes the data frame with accuracy and hyperparameters. That way, the changes are absorbed by computationally cheaper targets.
 B. Combine all the `run` branches into a single target that fits all the models together.
