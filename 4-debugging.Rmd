@@ -149,7 +149,7 @@ Then, restart R and run `tar_make(callr_function = NULL)` in the R console (not 
 tar_make(callr_function = NULL)
 ```
 
-Debugging this way is not always possible: for example, if you run `tar_make_clustermq()` to distribute your targets on a cluster. However, it can often recreate the error more easily and quickly than the `error = "workspace"` approach.
+Debugging this way is not always possible: for example, if you run `tar_make_clustermq()` to distribute your targets on a cluster and your target can only run on a remote compute node. However, it can often recreate the error more easily and quickly than the `error = "workspace"` approach.
 
 # Dynamic branching
 
