@@ -333,7 +333,7 @@ Did `report_step` rerun? Why?
 
 A. No, because `data/churn.csv` is not a dependency of `report_step`.
 B. No, because the `report.Rmd` does not read `data/churn.csv`.
-C. Yes. The R Markdown report is downstream of a target that depends on `data/churn.csv`, and the change in the data file caused a chain reaction that invalidated `report_step`.
+C. Yes. The R Markdown report is downstream of a target that depends on `data/churn.csv`, and the change in the data file caused a chain reaction that changed the model outputs and thus invalidated `report_step`.
 D. Yes. If a single target imports a data file, all targets in the pipeline rerun.
 
 ```{r}
