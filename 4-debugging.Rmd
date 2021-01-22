@@ -138,7 +138,7 @@ Once you are inside the debugger, you can access objects in the runtime environm
 As an alternative technique, you can debug interactively while `tar_make()` is actually running. Set these options in `_targets.R`.
 
 ```{r}
-tar_option_set(debug = "run___", cue = tar_cue(mode = "never"))
+tar_option_set(debug = "run", cue = tar_cue(mode = "never"))
 ```
 
 Then, restart R and run `tar_make(callr_function = NULL)` in the R console (not in a chunk in this notebook). `targets` will drop you into an interactive debugger at the errored target. 
