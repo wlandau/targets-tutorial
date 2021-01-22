@@ -148,7 +148,7 @@ What happened? Why?
 
 A. All targets reran because we changed a file.
 B. No target reran because `targets` does not track the deleted file.
-C. Because `churn_cor` is a correctly configured file target, `tar_make()` noticed when `cor.png` changed and automatically reran in order to repair the file.
+C. Because `churn_cor` is a correctly configured file target, `tar_make()` noticed when `cor.png` changed and automatically reran the target in order to repair the file.
 D. `churn_cor` because `targets` always treats character strings as file names.
 
 ```{r}
