@@ -116,7 +116,7 @@ Go find that error and fix it! You may have to explore the `4-debugging/function
 usethis::edit_file("4-debugging/functions.R")
 ```
 
-You have completed the exercise when `tar_make()` runs without error. Once you are done, remove the workspace files using `tar_undebug()`. This is good practice because workspace files can get quite large.
+You have completed the exercise when `tar_make()` runs without error. Once you are done, you may remove the workspace files either with `tar_destroy(destroy = "workspaces")` or `unlink("_targets/workspaces/", recursive = TRUE)`.
 
 # Tip: workspaces option
 
