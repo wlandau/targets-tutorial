@@ -29,6 +29,7 @@ The first version of the pipeline consists of three *targets*, or steps of compu
 The steps above translate to the following R code.
 
 ```{r, eval = FALSE}
+# No need to run this code chunk.
 library(keras)
 library(recipes)
 library(rsample)

@@ -179,6 +179,9 @@ edit_file("results.Rmd", open = TRUE)
 Notice the calls to `tar_load()` and `tar_read()` in active the code chunks. `results.Rmd`. On its own, this report leverages the results of previous targets.
 
 ```{r}
+# Copy and paste the following directly into the R console.
+# This code chunk will not render results.Rmd properly
+# if called inside the R notebook.
 library(rmarkdown)
 render("results.Rmd")
 browseURL("results.html")
