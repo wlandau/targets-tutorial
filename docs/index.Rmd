@@ -898,7 +898,7 @@ remotes::install_github("ropensci/targets")
 
 * Code: <https://github.com/wlandau/targets-keras>
 * RStudio Cloud workspace: <https://rstudio.cloud/project/1430828/>
-* These slides: <https://docs.ropensci.org/targets-tutorial>
+* These slides: <https://wlandau.github.io/targets-tutorial>
 * Tutorial materials: <https://github.com/wlandau/targets-tutorial>
 * Development repository: <https://github.com/ropensci/targets>
 * Full user manual: <https://books.ropensci.org/targets/>
