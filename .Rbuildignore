@@ -10,6 +10,7 @@
 ^.*\.code-workspace$
 ^data$
 ^docs$
+^prework$
 ^setup$
 ^2-pipelines$
 ^3-changes$
