@@ -1,10 +1,10 @@
 ---
-title: "Reproducible Computation at Scale in R with targets"
+title: "Reproducible Computation at Scale in R"
 author: "Will Landau"
 output: pdf_document
 ---
 
-Welcome to the short course on Reproducible Computation at Scale in R with [`targets`](https://docs.ropensci.org/targets/). Through guided hands-on exercises, you will build a reproducible analysis pipeline that efficiently brings results up to date in response to changing code and data.
+Welcome to the short course on Reproducible Computation at Scale in R. Through guided hands-on exercises, you will learn how to use the [`targets`](https://docs.ropensci.org/targets/) R package, and you will build a pipeline that efficiently brings results up to date in response to changing code and data.
 
 ## Setup prework
 
