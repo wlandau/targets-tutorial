@@ -9,7 +9,7 @@ For pipelines with hundreds of targets, it is impractical to write out every sin
 
 # Static vs dynamic branching
 
-`targets` also supports static branching, an alternative kind of shorthand. This course does not cover it, but it is easier to understand just by reading about it: <https://books.ropensci.org/targets/static.html>.
+`targets` also supports static branching, an alternative kind of shorthand. This course does not cover static branching, but it is easier to learn than dynamic branching, and you can read about it at <https://books.ropensci.org/targets/static.html>.
 
 # Setup
 
