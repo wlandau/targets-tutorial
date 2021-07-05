@@ -736,7 +736,7 @@ Again, we see this clearly in the dependency graph. run_softmax is new, best_run
 ## New best model?
 
 - Only if the new run beats the old runs, which would invalidate target `best_run`.
-- Otherwise, `drake` does not bother to retrain the best model.
+- Otherwise, `targets` does not bother to retrain the best model.
 
 ```{r, eval = FALSE}
 tar_make()
