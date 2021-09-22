@@ -237,7 +237,6 @@ add_things &lt;- function(argument1, argument2) {
 
 add_things(1, 2)
 #&gt; [1] 3
-
 add_things(c(3, 4), c(5, 6))
 #&gt; [1]  8 10
 ```
@@ -363,7 +362,7 @@ At the bottom of _targets.R, you list out objects called targets. Each target is
 
 ```r
 tar_manifest(fields = c("name", "command"))
-#&gt; # A tibble: 3 x 2
+#&gt; # A tibble: 3 × 2
 #&gt;   name         command                      
 #&gt;   &lt;chr&gt;        &lt;chr&gt;                        
 #&gt; 1 churn_file   "\"data/customer_churn.csv\""
@@ -406,10 +405,13 @@ tar_make()
 
 
 ```
-#&gt; ● run target churn_file
-#&gt; ● run target churn_data
-#&gt; ● run target churn_recipe
-#&gt; ● end pipeline
+#&gt; • start target churn_file
+#&gt; • built target churn_file
+#&gt; • start target churn_data
+#&gt; • built target churn_data
+#&gt; • start target churn_recipe
+#&gt; • built target churn_recipe
+#&gt; • end pipeline
 ```
 
 ???
@@ -426,7 +428,6 @@ To actually run the workflow, we use a function called tar_make(). tar_make() cr
 ```r
 ncol(training(tar_read(churn_data)))
 #&gt; [1] 21
-
 tar_load(churn_recipe)
 ncol(juice(churn_recipe))
 #&gt; [1] 36
@@ -524,9 +525,11 @@ tar_make()
 #&gt; ✓ skip target churn_file
 #&gt; ✓ skip target churn_data
 #&gt; ✓ skip target churn_recipe
-#&gt; ● run target run_relu
-#&gt; ● run target run_sigmoid
-#&gt; ● end pipeline
+#&gt; • start target run_relu
+#&gt; • built target run_relu
+#&gt; • start target run_sigmoid
+#&gt; • built target run_sigmoid
+#&gt; • end pipeline
 ```
 
 ???
@@ -540,16 +543,15 @@ So when we run the pipeline again, only the models run. The tool skips the data 
 
 ```r
 tar_read(run_relu)
-#&gt; # A tibble: 1 x 6
+#&gt; # A tibble: 1 × 6
 #&gt;   accuracy units1 units2 act1  act2  act3   
 #&gt;      &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;  
-#&gt; 1    0.798     16     16 relu  relu  sigmoid
-
+#&gt; 1    0.797     16     16 relu  relu  sigmoid
 tar_read(run_sigmoid)
-#&gt; # A tibble: 1 x 6
+#&gt; # A tibble: 1 × 6
 #&gt;   accuracy units1 units2 act1    act2  act3   
 #&gt;      &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;  
-#&gt; 1    0.811     16     16 sigmoid relu  sigmoid
+#&gt; 1    0.805     16     16 sigmoid relu  sigmoid
 ```
 
 ???
@@ -606,9 +608,11 @@ tar_make()
 #&gt; ✓ skip target churn_recipe
 #&gt; ✓ skip target run_relu
 #&gt; ✓ skip target run_sigmoid
-#&gt; ● run target best_run
-#&gt; ● run target best_model
-#&gt; ● end pipeline
+#&gt; • start target best_run
+#&gt; • built target best_run
+#&gt; • start target best_model
+#&gt; • built target best_model
+#&gt; • end pipeline
 ```
 
 ???
