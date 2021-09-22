@@ -113,7 +113,7 @@ train_model <- function(
 #' churn_recipe <- prepare_recipe(churn_data)
 #' churn_model <- train_model(churn_recipe, 16, 16, "sigmoid", "relu", "relu")
 #' test_accuracy(churn_data, churn_recipe, churn_model)
-test_accuracy <- function(churn_data, churn_recipe, churn_model) {
+test_accuracy <- function(churn_data, churn_recipe, model) {
   testing_data <- bake(churn_recipe, testing(churn_data))
   x_test_tbl <- testing_data %>%
     select(-Churn) %>%
@@ -121,13 +121,15 @@ test_accuracy <- function(churn_data, churn_recipe, churn_model) {
   y_test_vec <- testing_data %>%
     select(Churn) %>%
     pull()
-  yhat_keras_class_vec <- churn_model %>%
-    predict_classes(x_test_tbl) %>%
+  yhat_keras_class_vec <- model %>%
+    predict(x_test_tbl) %>%
+    `>`(0.5) %>%
+    as.integer() %>%
     as.factor() %>%
     fct_recode(yes = "1", no = "0")
   yhat_keras_prob_vec <-
-    churn_model %>%
-    predict_proba(x_test_tbl) %>%
+    model %>%
+    predict(x_test_tbl) %>%
     as.vector()
   test_truth <- y_test_vec %>%
     as.factor() %>%
