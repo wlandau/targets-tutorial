@@ -108,24 +108,16 @@ I come from the life sciences, and we develop ambitious computational workflows 
 
 ---
 
-## Common features
+## Repetition: the overlooked bane of long computation
 
-1. Heavy use of the [R language](https://www.r-project.org/).
-2. Long runtimes.
-3. Multiple sub-tasks.
-4. Frequent changes to code and data.
-
-<img src = "./images/sisyphus.svg" align="left" style="border: none; box-shadow: none; height: 325px; text-align: center;">
 <br>
-<a href="https://openclipart.org/detail/275842/sisyphus-overcoming-silhouette">https://openclipart.org/detail/275842/sisyphus-overcoming-silhouette</a>
 
-???
-
-Many of these projects require long runtimes. Methods like Markov chain Monte Carlo and deep neural nets are computationally expensive. It could take hours or even days just to fit a single model. That's fine if you're only going to run the project once, or at regularly scheduled times. But if the code is still under development, it's easy to get trapped in a vicious Sisyphean cycle.
+![](./images/reality.png)
 
 ---
 
 ## Interconnected tasks
+
 <center>
 <img src = "./images/workflow.png" align="middle" style="border: none; box-shadow: none; text-align: center;">
 </center>
@@ -160,52 +152,38 @@ Then everything that depends on it is no longer valid, and you need to rerun the
 
 ---
 
-## Pipeline tools and workflow managers
+## Dilemma: short runtimes or reproducible results?
 
-<center>
-<img src = "./images/infographic.svg" align="middle" style="border: none; box-shadow: none; text-align: center;">
-</center>
-
-- Tons exist already: [github.com/pditommaso/awesome-pipeline](https://github.com/pditommaso/awesome-pipeline).
-- Most are language-agnostic or designed for Python or the shell.
-
-???
-
-...unless you use a pipeline tool. There are pipeline tools for production which resemble Apache Airflow, and there are pipeline tools for development which resemble GNU Make. Today, I'm going to focus on Make-like tools because those are the ones I think are designed for this part of the process. It's an action-packed space, and there are a lot of great options. But unfortunately, there's not a whole lot for R.
+![](./images/decisions.png)
 
 ---
 
-## What distinguishes `targets`?
+## Let a pipeline tool figure out what to rerun.
+
+![](./images/pipeline_graph.png)
+
+* Save time while ensuring computational reproducibility.
+* Automatic parallel/distributed computing based on the directed acyclic graph.
+
+
+---
+
+## Pipeline tools
 
 <center>
-<img src = "./images/R.png" align="middle" style="border: none; box-shadow: none; text-align: center; height: 80px">
+<img src="./images/infographic.png" height = "125px">
 </center>
+
+* Existing pipeline tools: https://github.com/pditommaso/awesome-pipeline
+* Most are language-agnostic or designed for Python or the shell.
+
+## {targets}
 
 * Fundamentally designed for R.
 * Supports a clean, modular, function-oriented programming style.
 * Abstracts files as R objects and automatically manages data.
-* Surpasses the permanent limitations of its predecessor, [`drake`](https://github.com/ropensci/drake).
-
-???
-
-That's where targets comes in. targets is a Make-like pipeline tool that is fundamentally designed for R. You can call it from an R session, it supports a clean, idiomatic, function-oriented style of programming, and it helps you store and retrieve your results. Most importantly, it gets you out of the Sisyphean loop of long computation, enhances reproducibility, and takes the frustration out of data science.
-
----
-
-## What about `drake`?
-
-* `drake` is still an excellent choice for pipeline management, but it has permanent user-side limitations.
-* `targets` was created to overcome these limitations and create a smoother user experience.
-    1. Stronger guardrails by design.
-    1. A friendlier, lighter, more transparent data management system.
-    1. Show which *functions* are up to date.
-    1. More flexible dynamic branching, including compatibility with `dplyr::group_by()`.
-    1. Improved parallel efficiency.
-    1. Designed for custom user-side [metaprogramming](https://books.ropensci.org/targets/static.html#metaprogramming) and target archetypes: <https://docs.ropensci.org/tarchetypes/>.
-
-???
-
-But what about drake? drake already does all these things, and it's still an excellent choice for Make-like pipeline management. But it does have permanent user-side limitations. We've been developing, improving, expanding, and refining drake for several years, and we've reached the point where the most important problems to tackle are exactly the problems we cannot solve in this tool. It's just too big and too set in its ways, and its architecture was originally designed around assumptions that no longer hold up. To overcome these permanent limitations, we need a new tool that borrows from drake's journey and advances the user experience beyond what drake is capable of, and that new tool is targets. targets has stronger guardrails, lighter data management, greater transparency around data and the process of watching for changes, more flexible dynamic branching, better parallel efficiency, and design that lets us build on top of it more easily. The targets package website has a statement of need describing the changes in more detail.
+* Surpasses the permanent limitations of its predecessor, [`drake`](https://github.com/ropensci/drake): <https://books.ropensci.org/targets/drake.html>.
+* Continuation of the ideas from `remake` by Rich FitzJohn: <https://github.com/richfitz/remake>.
 
 ---
 
