@@ -50,7 +50,7 @@ We need more information, so we invoke `tar_make()` with workspaces enabled. Fir
 tar_edit()
 ```
 
-In `tar_option_set()`, set `error` to `"workspace"`. Next time a target errors out, `targets` will save a workspace image file in `_targets/workspaces/`. (Alternatively, you could set `tar_option_set(workspace = c("target1", "target2"))` to always save workspaces for a specific set of targets.)
+In `tar_option_set()`, set `workspace_on_error` to `TRUE`. The next time a target errors out, `targets` will save a workspace image file in `_targets/workspaces/`. (Alternatively, you could set `tar_option_set(workspace = c("target1", "target2"))` to always save workspaces for a specific set of targets.)
 
 ```{r, eval = FALSE}
 # Do not run here.
@@ -63,7 +63,7 @@ tar_option_set(
     "tidyverse",
     "yardstick"
   ),
-  error = "workspace"
+  workspace_on_error = TRUE
 )
 ```
 
